@@ -76,6 +76,23 @@ python pipeline/run_pipeline.py
 
 ## Parsing Heuristics
 
+### Puppy count extraction (in facts, pipeline_01)
+
+| Platform | Raw Field | Parsing Rule | Coverage |
+|----------|-----------|--------------|----------|
+| pets4homes | `total_available` | Direct mapping | 100% |
+| foreverpuppy | `total_available` | Direct mapping | 94.2% |
+| petify | `males_available` + `females_available` | Sum when total missing | 100% (via gender) |
+| kennel_club | `litter_size` | Parse "X Bitch, Y Dog" → sum | 100% (411 listings) |
+| champdogs | `puppies_available` | Direct mapping (currently NULL in scrape) | 0% |
+| Other platforms | None | NOT extracted from raw CSVs | 0% |
+
+**Kennel Club Extraction Details** (Jan 22, 2026):
+- Added `parse_kennel_club_litter_size()` function to convert "2 Bitch, 3 Dog" → 5
+- Applied to 411 Kennel Club listings, extracting 2,453 puppies
+- Average 5.97 puppies per litter (min=1, max=12)
+- See: [pipeline_01_build_facts.py lines 25-54](pipeline_01_build_facts.py#L25)
+
 ### Ready-to-leave parsing (in views, not facts)
 
 | Platform | Approach | Example Values |
@@ -103,6 +120,19 @@ For platforms with `date_of_birth` but no `ready_to_leave`:
 2. **Puppies ready at 8 weeks**: Standard weaning age used for DOB-based estimation
 3. **180-day window**: Date anchoring assumes dates refer to the nearest reasonable year
 4. **asof_ts anchor**: Pipeline run timestamp used as reference for relative dates
+5. **Kennel Club litter format**: Assumes "X Bitch, Y Dog" format in litter_size field
+
+## Data Quality & Validation
+
+### Puppy count validation (pipeline_02)
+- Flags suspicious values: `total_available > 20` or year-like values (1800-2099) or prices > £500
+- 22 suspicious entries caught in freeads (data corruption with year/price values parsed as counts)
+- Recalculates from gender splits (`males_available + females_available`) when available
+- See: [pipeline_02_build_derived.py lines 358-410](pipeline_02_build_derived.py#L358)
+
+### Known data issues
+- **Champdogs**: `puppies_available` field exists in raw CSV but is 100% NULL (scraper issue, not extraction issue)
+- **Gumtree, Freeads, Preloved, Puppies**: No explicit puppy count in raw CSVs (could be extracted from title/description via pattern matching if needed)
 
 ## What's NOT in this pipeline (intentionally)
 

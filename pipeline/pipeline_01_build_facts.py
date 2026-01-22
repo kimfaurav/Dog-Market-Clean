@@ -12,6 +12,7 @@ Output: output/facts/facts.csv (single authoritative file, no timestamps)
 
 from pathlib import Path
 import pandas as pd
+import re
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 RAW_DIR = REPO_ROOT / "Input" / "Raw CSVs"
@@ -21,6 +22,87 @@ OUTPUT_PATH = REPO_ROOT / "output" / "facts" / "facts.csv"
 # Ensure output directory exists
 OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
+
+def parse_kennel_club_litter_size(val):
+    """
+    Parse Kennel Club litter_size field: '2 Bitch, 3 Dog' -> 5
+    
+    Args:
+        val: String like "2 Bitch, 3 Dog"
+    
+    Returns:
+        int: Total number of puppies, or None if parsing fails
+    """
+    if pd.isna(val) or not val:
+        return None
+    
+    text = str(val).strip().lower()
+    total = 0
+    
+    # Extract Bitch count (e.g., "2 Bitch" -> 2)
+    bitch_match = re.search(r'(\d+)\s*bitch', text)
+    if bitch_match:
+        total += int(bitch_match.group(1))
+    
+    # Extract Dog count (e.g., "3 Dog" -> 3)
+    dog_match = re.search(r'(\d+)\s*dog', text)
+    if dog_match:
+        total += int(dog_match.group(1))
+    
+    return total if total > 0 else None
+
+
+def parse_title_for_puppies(val, clamp: int = 12):
+    """Extract puppy counts from title/description text with simple heuristics.
+
+    - Supports digits and small number words (one-twelve)
+    - Patterns: "X puppies", "litter of X", "X pups", "X boys and Y girls", "X male, Y female"
+    - Optional clamp to avoid runaway counts
+    """
+    if pd.isna(val) or not val:
+        return None
+
+    text = str(val).strip().lower()
+
+    # Replace common number words with digits for easier matching
+    word_to_num = {
+        "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
+        "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11, "twelve": 12,
+    }
+    for word, num in word_to_num.items():
+        text = re.sub(fr"\b{word}\b", str(num), text)
+
+    def _clamp(val_int: int) -> int:
+        return min(val_int, clamp) if clamp else val_int
+
+    pup_match = re.search(r'(\d+)\s*(?:puppies?|pups?)\b', text)
+    if pup_match:
+        return _clamp(int(pup_match.group(1)))
+
+    litter_match = re.search(r'litter\s+(?:of|with)?\s*(\d+)', text)
+    if litter_match:
+        return _clamp(int(litter_match.group(1)))
+
+    gender_match = re.search(r'(\d+)\s*(?:boys?|males?)\s+(?:and\s+)?(\d+)\s*(?:girls?|females?)', text)
+    if gender_match:
+        return _clamp(int(gender_match.group(1)) + int(gender_match.group(2)))
+
+    gender_match2 = re.search(r'(\d+)\s*male[,\s]+(\d+)\s*female', text)
+    if gender_match2:
+        return _clamp(int(gender_match2.group(1)) + int(gender_match2.group(2)))
+
+    return None
+
+
+def combine_gender_counts(males_val, females_val):
+    """Combine males and females into total count."""
+    try:
+        males = int(males_val) if pd.notna(males_val) and str(males_val).strip() else 0
+        females = int(females_val) if pd.notna(females_val) and str(females_val).strip() else 0
+        total = males + females
+        return total if total > 0 else None
+    except (ValueError, TypeError):
+        return None
 
 def load_schema() -> list[str]:
     """Load schema field names from master schema CSV."""
@@ -90,6 +172,7 @@ PLATFORM_CONFIG = {
             "neutered": "wormed",
             "deflead": "flea_treated",
             "description": "title",  # Use as secondary title source
+            "total_available": "total_available",  # Filled by title/description parsing
         }
     },
     "freeads": {
@@ -110,7 +193,7 @@ PLATFORM_CONFIG = {
             "seller_name": "seller_name",
             "males_available": "males_available",
             "females_available": "females_available",
-            "litter_size": "total_available",
+            "total_available": "total_available",  # Set in parsing step (from litter_size/title/description)
             "kc_registered": "kc_registered",
             "microchipped": "microchipped",
             "vaccinated": "vaccinated",
@@ -150,6 +233,7 @@ PLATFORM_CONFIG = {
             "neutered": "wormed",
             "vaccinations": "vaccinated",
             "health_checks": "health_checked",
+            "total_available": "total_available",  # Filled by title parsing
         }
     },
     "kennel_club": {
@@ -173,6 +257,7 @@ PLATFORM_CONFIG = {
             "dam": "dam",
             "sire_health_tested": "sire_health_tested",
             "dam_health_tested": "dam_health_tested",
+            "litter_size": "total_available",  # Parse "X Bitch, Y Dog" format
         }
     },
     "foreverpuppy": {
@@ -237,6 +322,7 @@ PLATFORM_CONFIG = {
             "males_available": "males_available",
             "females_available": "females_available",
             "puppies_available": "total_available",
+            "total_available": "total_available",  # Filled by title/description parsing
             "health_tested": "health_tested",
             "vet_checked": "vet_checked",
             "wormed": "wormed",
@@ -293,8 +379,75 @@ def load_platform_data(platform: str, config: dict) -> pd.DataFrame:
     
     df = pd.read_csv(file_path, dtype=str, keep_default_na=False, low_memory=False)
     print(f"    Raw rows: {len(df)}")
-    
+    # Apply platform-specific parsing
+    if platform == "kennel_club" and "litter_size" in df.columns:
+        df["litter_size"] = df["litter_size"].apply(parse_kennel_club_litter_size)
+
+    elif platform == "freeads":
+        # Prefer numeric litter_size/puppies_in_litter, else parse text fields
+        for src in ["litter_size", "puppies_in_litter"]:
+            if src in df.columns:
+                df[src] = pd.to_numeric(df[src], errors="coerce")
+        if "litter_size" in df.columns:
+            df["total_available"] = df["litter_size"]
+        if "total_available" in df.columns and df["total_available"].isna().all():
+            if "puppies_in_litter" in df.columns:
+                df["total_available"] = df["puppies_in_litter"]
+        if "total_available" not in df.columns or df["total_available"].isna().all():
+            df["total_available"] = df["title"].apply(lambda x: parse_title_for_puppies(x, clamp=12))
+            if "description" in df.columns:
+                mask_missing = df["total_available"].isna()
+                df.loc[mask_missing, "total_available"] = df.loc[mask_missing, "description"].apply(lambda x: parse_title_for_puppies(x, clamp=12))
+
+    elif platform == "champdogs" and ("males_available" in df.columns and "females_available" in df.columns):
+        df["puppies_available"] = df.apply(
+            lambda row: combine_gender_counts(row.get("males_available"), row.get("females_available")),
+            axis=1,
+        )
+
+    elif platform == "foreverpuppy":
+        # Prefer explicit available/litter_size fields, else fall back to parsing title
+        for src in ["available", "litter_size"]:
+            if src in df.columns:
+                df[src] = pd.to_numeric(df[src], errors="coerce")
+        if "available" in df.columns:
+            df["total_available"] = df["available"]
+        if ("total_available" not in df.columns or df["total_available"].isna().all()) and "litter_size" in df.columns:
+            df["total_available"] = df["litter_size"]
+        if ("total_available" not in df.columns or df["total_available"].isna().all()) and "title" in df.columns:
+            df["total_available"] = df["title"].apply(lambda x: parse_title_for_puppies(x, clamp=12))
+        if "total_available" in df.columns:
+            df["available"] = df["total_available"]
+
+    elif platform in ["gumtree", "preloved"] and "title" in df.columns:
+        if platform == "gumtree" and "description" in df.columns:
+            df["_puppy_count"] = df["title"].apply(lambda x: parse_title_for_puppies(x, clamp=12))
+            mask_missing = df["_puppy_count"].isna()
+            df.loc[mask_missing, "_puppy_count"] = df.loc[mask_missing, "description"].apply(lambda x: parse_title_for_puppies(x, clamp=12))
+            if "total_available" not in df.columns or df["total_available"].isna().all():
+                df["total_available"] = df["_puppy_count"]
+            df.drop(columns=["_puppy_count"], inplace=True)
+        else:
+            df["total_available"] = df["title"].apply(lambda x: parse_title_for_puppies(x, clamp=12))
+
+    elif platform == "puppies" and "title" in df.columns:
+        df["_puppy_count"] = df["title"].apply(lambda x: parse_title_for_puppies(x, clamp=12))
+        if "description" in df.columns:
+            mask_missing = df["_puppy_count"].isna()
+            df.loc[mask_missing, "_puppy_count"] = df.loc[mask_missing, "description"].apply(lambda x: parse_title_for_puppies(x, clamp=12))
+        if "total_available" not in df.columns or df["total_available"].isna().all():
+            df["total_available"] = df["_puppy_count"]
+        df.drop(columns=["_puppy_count"], inplace=True)
+
+    # Final clamp at 12 for any total_available present (explicit or parsed)
+    if "total_available" in df.columns:
+        nums = pd.to_numeric(df["total_available"], errors="coerce")
+        df.loc[nums > 12, "total_available"] = 12
+        if "available" in df.columns:
+            df["available"] = df["total_available"]
+
     return df
+
 
 
 def map_to_schema(df: pd.DataFrame, platform: str, mapping: dict, schema_fields: list[str]) -> pd.DataFrame:

@@ -390,10 +390,15 @@ def validate_puppy_counts(df: pd.DataFrame) -> pd.DataFrame:
     
     # Nullify suspicious values
     out.loc[suspicious, "total_available_num"] = None
-    
+
     # Recalculate total from males+females if available
     mask_recalc = (out["total_available_num"].isna()) & (out["males_available_num"].notna()) & (out["females_available_num"].notna())
     out.loc[mask_recalc, "total_available_num"] = out.loc[mask_recalc, "males_available_num"] + out.loc[mask_recalc, "females_available_num"]
+
+    # Clamp any remaining totals over 12 to 12
+    mask_clamp = (out["total_available_num"].notna()) & (out["total_available_num"] > 12)
+    out.loc[mask_clamp & (out["total_available_flag"] == "ok"), "total_available_flag"] = "clamped_over_12"
+    out.loc[mask_clamp, "total_available_num"] = 12
     
     return out
 
