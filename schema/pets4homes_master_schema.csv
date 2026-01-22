@@ -1,0 +1,60 @@
+field_name,category,description,source_notes
+url,identity,Listing URL,Pets4Homes
+created_at,listing_lifecycle,Listing creation timestamp,Pets4Homes
+published_at,listing_lifecycle,Listing published date,Pets4Homes
+refreshed_at,listing_lifecycle,Listing last refreshed date,Pets4Homes
+title,dog_attributes,Listing title,Pets4Homes
+breed,dog_attributes,Dog breed,Pets4Homes
+date_of_birth,dog_lifecycle,Date of birth (if provided),Pets4Homes
+ready_to_leave,dog_lifecycle,Ready-to-leave date,Pets4Homes
+males_available,availability,Number of male puppies available,Pets4Homes
+females_available,availability,Number of female puppies available,Pets4Homes
+total_available,availability,Total puppies available,Pets4Homes
+price,price,Listing price,Pets4Homes
+location,location,Free-text location,Pets4Homes
+seller_id,seller,Unique seller identifier,Pets4Homes
+seller_name,seller,Seller name,Pets4Homes
+company_name,seller,Company or kennel name,Pets4Homes
+user_type,seller,Seller user type,Pets4Homes
+is_breeder,seller,Is seller marked as breeder,Pets4Homes
+license_num,compliance,Licence number,Pets4Homes
+license_auth,compliance,Licensing authority,Pets4Homes
+license_status,compliance,Licence status,Pets4Homes
+license_valid,compliance,Licence validity flag,Pets4Homes
+kc_license,compliance,Kennel Club licence flag,Pets4Homes
+member_since,reputation,Seller member since date,Pets4Homes
+last_active,reputation,Seller last active timestamp,Pets4Homes
+response_hours,reputation,Average seller response time,Pets4Homes
+reviews,reputation,Number of reviews,Pets4Homes
+rating,reputation,Average seller rating,Pets4Homes
+views_count,marketplace,Listing view count,Pets4Homes
+active_listings,marketplace,Seller active listings count,Pets4Homes
+active_pets,marketplace,Seller active pets count,Pets4Homes
+sex,dog_attributes,Puppy sex/gender (if specified),Multiple
+color,dog_attributes,Coat color,Multiple
+age,dog_attributes,Age in human-readable format,Multiple
+microchipped,dog_health,Is puppy microchipped,Multiple
+vaccinated,dog_health,Is puppy vaccinated,Multiple
+wormed,dog_health,Is puppy wormed,Multiple
+flea_treated,dog_health,Is puppy flea treated,Multiple
+health_checked,dog_health,Has puppy been health checked,Multiple
+vet_checked,dog_health,Has puppy been checked by vet,Multiple
+health_tested,dog_health,Health testing status,Multiple
+kc_registered,compliance,Is dog KC registered,Multiple
+sire,breeding,Sire (father) name,Multiple
+dam,breeding,Dam (mother) name,Multiple
+sire_health_tested,breeding,Sire health tested status,Multiple
+dam_health_tested,breeding,Dam health tested status,Multiple
+champion_bloodline,breeding,Is part of champion bloodline,Multiple
+pedigree,breeding,Has pedigree documentation,Multiple
+dna_tested,breeding,DNA tested status,Multiple
+home_reared,breeding,Raised in home environment,Multiple
+family_reared,breeding,Raised with family,Multiple
+breeder_verified,seller,Is breeder verified/verified email,Multiple
+five_star_breeder,seller,Breeder has five-star rating,Multiple
+assured_breeder,seller,Assured/certified breeder status,Multiple
+licensed_breeder,seller,Is breeder licensed,Multiple
+delivery_available,logistics,Delivery available option,Multiple
+puppy_contract,logistics,Puppy/health contract included,Multiple
+insurance_available,logistics,Health insurance available,Multiple
+ad_id,identity,Platform-specific ad identifier,Multiple
