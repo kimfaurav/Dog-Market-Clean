@@ -25,6 +25,21 @@ def run_command(cmd, desc):
 
 if __name__ == '__main__':
     print("\n" + "🔄 REGENERATING METRICS & SLIDES".center(60))
+
+    # Guard: refuse to run if git is dirty (prevents accidental overwrite)
+    git_status = subprocess.run(
+        "git status --porcelain",
+        shell=True,
+        cwd='/Users/kimfaura/Desktop/Dog_Market_Clean',
+        capture_output=True,
+        text=True,
+    )
+    if git_status.returncode != 0:
+        print("❌ Cannot check git status. Aborting.")
+        sys.exit(1)
+    if git_status.stdout.strip():
+        print("❌ Git working tree is not clean. Please commit or stash before regenerating.")
+        sys.exit(1)
     
     # Always snapshot the current slide before regenerating
     slide_path = Path('/Users/kimfaura/Desktop/Dog_Market_Clean/uk_dog_market_slide.html')
