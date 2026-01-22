@@ -355,6 +355,49 @@ def parse_ready_to_leave_other(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def validate_puppy_counts(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Validate total_available_num to catch parsing errors.
+    
+    Suspicious patterns:
+    - Values >20 (unrealistic for single litter)
+    - Values 1800-2099 (parsing prices or years)
+    - Values in common year range (2000-2099)
+    
+    Action: Flag suspicious values with new column 'total_available_flag'
+    and set total_available_num to NULL for investigation.
+    """
+    out = df.copy()
+    
+    if "total_available_num" not in out.columns:
+        return out
+    
+    out["total_available_flag"] = "ok"
+    
+    # Mark suspicious values
+    mask_over_20 = (out["total_available_num"].notna()) & (out["total_available_num"] > 20)
+    mask_year_range = (out["total_available_num"].notna()) & (out["total_available_num"] >= 1800) & (out["total_available_num"] <= 2099)
+    mask_price_like = (out["total_available_num"].notna()) & (out["total_available_num"] > 500)
+    
+    # Combine suspicious masks
+    suspicious = mask_over_20 | mask_year_range | mask_price_like
+    
+    out.loc[suspicious, "total_available_flag"] = "suspicious_over_20_or_year"
+    
+    # For Freeads specifically (known bad data), be more aggressive
+    freeads_mask = (out["platform"] == "freeads") & (out["total_available_num"].notna()) & (out["total_available_num"] > 20)
+    out.loc[freeads_mask, "total_available_flag"] = "suspicious_freeads_outlier"
+    
+    # Nullify suspicious values
+    out.loc[suspicious, "total_available_num"] = None
+    
+    # Recalculate total from males+females if available
+    mask_recalc = (out["total_available_num"].isna()) & (out["males_available_num"].notna()) & (out["females_available_num"].notna())
+    out.loc[mask_recalc, "total_available_num"] = out.loc[mask_recalc, "males_available_num"] + out.loc[mask_recalc, "females_available_num"]
+    
+    return out
+
+
 def add_availability_flags(df: pd.DataFrame) -> pd.DataFrame:
     """
     Add final availability flags based on parsed ready_to_leave.
@@ -395,8 +438,10 @@ def main():
     # Step 1: Add typed columns (timestamps, numerics)
     print("\nAdding typed columns...")
     df = add_typed_columns(df)
-    
-    # Step 2: Add age_days
+        # Step 1b: Validate puppy counts (catch parsing errors)
+    print("Validating puppy counts...")
+    df = validate_puppy_counts(df)
+        # Step 2: Add age_days
     print("Calculating age_days...")
     df = add_age_days(df)
     
@@ -425,6 +470,12 @@ def main():
     print(f"Output: {OUTPUT_PATH}")
     
     # Summary stats
+    print("\n=== Puppy Count Validation ===")
+    if "total_available_flag" in df.columns:
+        print(df["total_available_flag"].value_counts(dropna=False).to_string())
+        flagged = (df["total_available_flag"] != "ok").sum()
+        print(f"Total flagged as suspicious: {flagged} listings")
+    
     print("\n=== Parse Mode Distribution ===")
     print(df["ready_to_leave_parse_mode"].value_counts(dropna=False).to_string())
     
