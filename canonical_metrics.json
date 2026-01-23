@@ -3,15 +3,15 @@
     "raw_listings": 18960,
     "raw_puppies": 61564,
     "raw_avg_per_listing": 3.25,
-    "unique_listings": 17761,
-    "unique_puppies": 58071,
-    "duplicates_removed": 1199,
-    "within_platform_dups": 440,
+    "unique_listings": 18134,
+    "unique_puppies": 58703,
+    "duplicates_removed": 826,
+    "within_platform_dups": 65,
     "cross_platform_dups": 303,
-    "stale_removed": 456,
+    "stale_removed": 458,
     "non_sale_removed": 61,
-    "annualized_puppies": 847838,
-    "market_share_pct": 89.62
+    "annualized_puppies": 857066,
+    "market_share_pct": 90.6
   },
   "platforms": {
     "champdogs": {
@@ -691,9 +691,9 @@
   },
   "qa": {
     "total_rows": 18960,
-    "unique_after_dedupe": 17761,
-    "duplicates_removed": 1199,
-    "duplicate_groups": 439,
+    "unique_after_dedupe": 18134,
+    "duplicates_removed": 826,
+    "duplicate_groups": 342,
     "sellers_total": 17156,
     "sellers_high_volume": 187,
     "platforms_count": 9

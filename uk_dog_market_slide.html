@@ -32,13 +32,9 @@
             letter-spacing: 1px;
         }
 
-        /* Decorative elements */
+        /* Decorative elements - hidden for clean PDF export */
         .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.5;
-            z-index: 0;
+            display: none;
         }
         .blob-1 {
             width: 400px;
@@ -64,6 +60,11 @@
             left: 50%;
             transform: translate(-50%, -50%);
             opacity: 0.04;
+        }
+
+        /* Hide blobs in print/PDF */
+        @media print {
+            .blob { display: none !important; }
         }
 
         /* SLIDE 1 - Title */
@@ -1564,7 +1565,7 @@
     <div class="main-content-v2">
         <div class="flow-horizontal">
             <div class="flow-step">
-                <div class="flow-number">58k</div>
+                <div class="flow-number">59k</div>
                 <div class="flow-label">Unique dogs<br>for sale today</div>
             </div>
 
@@ -1589,7 +1590,7 @@
             </div>
 
             <div class="flow-step">
-                <div class="flow-number">848k</div>
+                <div class="flow-number">857k</div>
                 <div class="flow-label">Annualised<br>(seasonality adjusted)</div>
             </div>
 
@@ -1600,7 +1601,7 @@
             </div>
 
             <div class="flow-step">
-                <div class="flow-number">90%</div>
+                <div class="flow-number">91%</div>
                 <div class="flow-label">Of total UK market</div>
                 <div class="flow-source">946k/year · Nature Watch 2025</div>
             </div>
@@ -1639,7 +1640,7 @@
     <div class="deck-title">UK Dog Marketplace Analysis</div>
 
     <div class="header">
-        <h1>1 in 16 listings appear on multiple sites —<br><span>58k unique dogs</span> remain after deduplication</h1>
+        <h1>1 in 23 listings appear on multiple sites —<br><span>59k unique dogs</span> remain after deduplication</h1>
     </div>
 
     <div class="journey-content-v2">
@@ -1665,7 +1666,7 @@
                 </svg>
             </div>
             <div class="hero-box">
-                <div class="hero-number">58k</div>
+                <div class="hero-number">59k</div>
                 <div class="hero-label">Unique dogs</div>
                 <div class="hero-sub">for sale in January</div>
             </div>
@@ -1674,11 +1675,11 @@
         <div class="journey-cards">
             <div class="jc-card">
                 <div class="jc-header">
-                    <div class="jc-icon">-743</div>
+                    <div class="jc-icon">-368</div>
                     <div class="jc-title">Duplicates removed</div>
                 </div>
                 <div class="jc-list">
-                    <div class="jc-row"><span>Within-platform</span><span>-440</span></div>
+                    <div class="jc-row"><span>Within-platform</span><span>-65</span></div>
                     <div class="jc-row"><span>Cross-platform</span><span>-303</span></div>
                 </div>
 
@@ -1686,7 +1687,7 @@
 
             <div class="jc-card">
                 <div class="jc-header">
-                    <div class="jc-icon">-456</div>
+                    <div class="jc-icon">-458</div>
                     <div class="jc-title">Stale removed</div>
                 </div>
                 <div class="jc-body">
@@ -2735,9 +2736,6 @@
                     <span class="seller-pct">£2,000</span>
                 </div>
             </div>
-        </div>
-    </div>
-    </div>
         </div>
     </div>
     <div class="slide-number">11</div>

@@ -342,25 +342,34 @@ def compute_metrics():
     raw_avg = raw_puppies / raw_listings
 
     # Deduplication with two rules:
-    # 1. Within-platform: same seller + same title (accidental reposts)
+    # 1. Scrape artifacts: same URL (true duplicates from re-scraping)
     # 2. Cross-platform: same breed + location + price_band (cross-posting)
     has_price = df[df['price_num'].notna()].copy()
     no_price = df[df['price_num'].isna()].copy()
     has_price['pb'] = (has_price['price_num'] / 50).round(0).astype(int)
     has_price['cross_dk'] = has_price['breed'] + '|' + has_price['location'].fillna('') + '|' + has_price['pb'].astype(str)
 
-    # Mark within-platform duplicates for has_price (same platform + seller + title)
-    has_price['within_dk'] = has_price['platform'] + '|' + has_price['seller_key'] + '|' + has_price['title'].fillna('')
-    has_price['is_within_dup'] = has_price.duplicated(subset=['within_dk'], keep='first')
+    # Extract listing ID from URL for platforms that use them
+    def extract_listing_id(url):
+        if pd.isna(url):
+            return None
+        url = str(url)
+        # Gumtree: ends with /123456789
+        match = re.search(r'/(\d{7,})/?$', url)
+        return match.group(1) if match else url  # Fall back to full URL
+
+    # Mark scrape artifacts (same URL or same extracted listing ID)
+    has_price['listing_id'] = has_price['url'].apply(extract_listing_id)
+    has_price['is_within_dup'] = has_price.duplicated(subset=['listing_id'], keep='first') & has_price['listing_id'].notna()
     within_dups_priced = int(has_price['is_within_dup'].sum())
 
-    # Mark within-platform duplicates for no_price too
-    no_price['within_dk'] = no_price['platform'] + '|' + no_price['seller_key'] + '|' + no_price['title'].fillna('')
-    no_price['is_within_dup'] = no_price.duplicated(subset=['within_dk'], keep='first')
+    # Mark scrape artifacts for no_price too
+    no_price['listing_id'] = no_price['url'].apply(extract_listing_id)
+    no_price['is_within_dup'] = no_price.duplicated(subset=['listing_id'], keep='first') & no_price['listing_id'].notna()
     within_dups_no_price = int(no_price['is_within_dup'].sum())
     within_dups = within_dups_priced + within_dups_no_price
 
-    # Remove within-platform dups first
+    # Remove scrape artifacts first
     after_within = has_price[~has_price['is_within_dup']].copy()
     no_price_after_within = no_price[~no_price['is_within_dup']].copy()
 
@@ -387,9 +396,9 @@ def compute_metrics():
     stale_removed_total = stale_removed + stale_removed_no_price
 
     # Count duplicate groups for QA
-    # Within-platform: count of within_dk values that appear more than once (both priced and no_price)
-    within_groups_priced = int((has_price.groupby('within_dk').size() > 1).sum())
-    within_groups_no_price = int((no_price.groupby('within_dk').size() > 1).sum())
+    # Scrape artifacts: count of listing_ids that appear more than once
+    within_groups_priced = int((has_price[has_price['listing_id'].notna()].groupby('listing_id').size() > 1).sum())
+    within_groups_no_price = int((no_price[no_price['listing_id'].notna()].groupby('listing_id').size() > 1).sum())
     within_groups = within_groups_priced + within_groups_no_price
     # Cross-platform: count of cross_dk values that appear on multiple platforms
     cross_groups = sum(1 for dk, g in after_within.groupby('cross_dk') if g['platform'].nunique() > 1)
