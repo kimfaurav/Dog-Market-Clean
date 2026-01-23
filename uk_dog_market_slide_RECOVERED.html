@@ -1,0 +1,2787 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>UK Dog Market Analysis - January 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        .slide {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(145deg, #1a1612 0%, #241e18 40%, #2a231c 70%, #1a1612 100%);
+            color: #ffffff;
+            width: 900px;
+            height: 600px;
+            padding: 45px 55px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            page-break-after: always;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            font-size: 11px;
+            color: #5a4a3a;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Decorative elements */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            z-index: 0;
+        }
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #f59e0b 0%, #d97706 100%);
+            top: -150px;
+            right: -100px;
+            opacity: 0.1;
+        }
+        .blob-2 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, #14b8a6 0%, #0d9488 100%);
+            bottom: -120px;
+            left: -100px;
+            opacity: 0.08;
+        }
+        .blob-3 {
+            width: 200px;
+            height: 200px;
+            background: #fbbf24;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.04;
+        }
+
+        /* SLIDE 1 - Title */
+        .title-slide {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .title-slide h1 {
+            font-size: 44px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 14px;
+            letter-spacing: -1.5px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 4px 30px rgba(251, 191, 36, 0.2);
+        }
+        .title-slide h1 span {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #ea580c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .title-slide .subtitle {
+            font-size: 17px;
+            color: #a8998a;
+            font-weight: 500;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.5px;
+        }
+        .puppy-gallery {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 45px;
+            position: relative;
+            z-index: 1;
+        }
+        .puppy-card {
+            width: 105px;
+            height: 105px;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(251, 191, 36, 0.1);
+            border: 2px solid rgba(251, 191, 36, 0.25);
+            transition: transform 0.3s ease;
+        }
+        .puppy-card:nth-child(1) {
+            transform: rotate(-3deg);
+        }
+        .puppy-card:nth-child(2) {
+            transform: translateY(-12px) scale(1.05);
+            border-color: rgba(245, 158, 11, 0.4);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(251, 191, 36, 0.15);
+        }
+        .puppy-card:nth-child(3) {
+            transform: rotate(3deg);
+        }
+        .puppy-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .title-slide .meta {
+            font-size: 12px;
+            color: #7a6a5a;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .title-slide .author {
+            font-size: 15px;
+            color: #fbbf24;
+            margin-top: 28px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.5px;
+        }
+        .title-slide .date {
+            font-size: 12px;
+            color: #6a5a4a;
+            margin-top: 8px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+        }
+
+        /* SLIDE 2 - Market Overview */
+        .deck-title {
+            position: absolute;
+            top: 22px;
+            left: 55px;
+            font-size: 10px;
+            color: #6a5a4a;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            z-index: 2;
+        }
+        .deck-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 2px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .content-slide .header {
+            margin-bottom: 25px;
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        .content-slide .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.35;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 20px rgba(251, 191, 36, 0.15);
+        }
+        .content-slide .header h1 span {
+            background: linear-gradient(135deg, #fcd34d 0%, #fbbf24 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .platforms-label {
+            font-size: 9px;
+            color: #6a5a4a;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+        .platforms-tags {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        .platform-tag {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.08) 0%, rgba(245, 158, 11, 0.04) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+            color: #a8998a;
+            font-size: 9px;
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-weight: 500;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .right-section {
+            flex: 0.7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .donut-wrapper {
+            position: relative;
+        }
+        .donut-container {
+            width: 200px;
+            height: 200px;
+            position: relative;
+        }
+        .donut {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                #818cf8 0deg 208deg,
+                rgba(255,255,255,0.1) 208deg 360deg
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .donut-inner {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .donut-percentage {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .donut-label {
+            font-size: 9px;
+            color: #8888a0;
+            text-align: center;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .market-context {
+            margin-top: 18px;
+            text-align: center;
+        }
+        /* Slide 2 - New horizontal flow */
+        .main-content-v2 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .flow-horizontal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 45px;
+        }
+
+        .flow-step {
+            text-align: center;
+            padding: 28px 24px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.12);
+            border-radius: 24px;
+            min-width: 160px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .flow-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.3), transparent);
+        }
+
+        .flow-step-highlight {
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.12) 0%, rgba(245, 158, 11, 0.08) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.25);
+            padding: 28px 24px;
+            min-width: 160px;
+        }
+
+        .flow-number {
+            font-size: 44px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .flow-number-big {
+            font-size: 56px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .flow-label {
+            font-size: 11px;
+            color: #a8998a;
+            margin-top: 12px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .flow-label strong {
+            color: #c8b8a8;
+        }
+
+        .flow-source {
+            font-size: 9px;
+            color: #7a6a5a;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            opacity: 0.9;
+        }
+
+        .platforms-section {
+            text-align: center;
+        }
+
+        .source-footer {
+            position: absolute;
+            bottom: 20px;
+            left: 55px;
+            font-size: 10px;
+            color: #4a4a60;
+        }
+
+        /* SLIDE 3 - Journey to 54k v2 */
+        .journey-content-v2 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 35px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .journey-hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .hero-box {
+            text-align: center;
+            padding: 28px 24px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.12);
+            border-radius: 24px;
+            min-width: 160px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .hero-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.3), transparent);
+        }
+
+
+        .hero-number {
+            font-size: 44px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .hero-label {
+            font-size: 11px;
+            color: #a8998a;
+            margin-top: 12px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .hero-sub {
+            font-size: 9px;
+            color: #7a6a5a;
+            margin-top: 4px;
+        }
+
+        .hero-arrow {
+            opacity: 0.7;
+        }
+
+        .journey-cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .jc-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 14px;
+            padding: 18px 22px;
+            width: 230px;
+        }
+
+
+        .jc-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .jc-icon {
+            font-size: 18px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .jc-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #c8b8a8;
+        }
+
+        .jc-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .jc-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #a8998a;
+        }
+
+        .jc-row-main {
+            color: #c8b8a8;
+            font-weight: 500;
+        }
+
+        .jc-body {
+            font-size: 11px;
+            color: #a8998a;
+            line-height: 1.5;
+        }
+
+        .jc-body p {
+            margin: 0;
+        }
+
+        .jc-footer {
+            font-size: 9px;
+            color: #6a5a4a;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(251, 191, 36, 0.08);
+        }
+
+        /* Author footer */
+        .author-footer {
+            position: absolute;
+            bottom: 20px;
+            left: 55px;
+            font-size: 10px;
+            color: #6a5a4a;
+            font-weight: 500;
+        }
+
+        /* SLIDE 4 - Platform Breakdown */
+        .platform-breakdown-content {
+            flex: 1;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .platform-table {
+            flex: 1;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: flex;
+            background: rgba(251, 191, 36, 0.08);
+            border-bottom: 1px solid rgba(251, 191, 36, 0.1);
+        }
+
+        .th {
+            padding: 12px 14px;
+            font-size: 9px;
+            font-weight: 600;
+            color: #a8998a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .th-platform { flex: 1.3; }
+        .th-num { flex: 0.8; text-align: right; }
+        .th-highlight {
+            flex: 0.9;
+            text-align: center;
+            color: #fbbf24;
+        }
+
+        .table-body {
+            max-height: 320px;
+        }
+
+        .table-row {
+            display: flex;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.05);
+            transition: background 0.2s ease;
+        }
+
+        .table-row:hover {
+            background: rgba(251, 191, 36, 0.03);
+        }
+
+        .row-top {
+            background: rgba(251, 191, 36, 0.05);
+        }
+
+        .td {
+            padding: 10px 14px;
+            font-size: 12px;
+            color: #c8b8a8;
+            display: flex;
+            align-items: center;
+        }
+
+        .td-platform {
+            flex: 1.3;
+            font-weight: 500;
+            gap: 10px;
+        }
+
+        .td-num {
+            flex: 0.8;
+            justify-content: flex-end;
+            font-variant-numeric: tabular-nums;
+            color: #a8998a;
+        }
+
+        .td-highlight {
+            flex: 0.9;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            color: #ffffff;
+        }
+
+
+        .platform-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .dot-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+        .dot-2 { background: #60a5fa; }
+        .dot-3 { background: #34d399; }
+        .dot-4 { background: #f472b6; }
+        .dot-5 { background: #14b8a6; }
+        .dot-6 { background: #a78bfa; }
+        .dot-7 { background: #fb7185; }
+        .dot-8 { background: #2dd4bf; }
+        .dot-9 { background: #94a3b8; }
+
+        .table-footer {
+            display: flex;
+            background: rgba(251, 191, 36, 0.1);
+            border-top: 2px solid rgba(251, 191, 36, 0.2);
+            margin-top: 4px;
+        }
+
+        .tf {
+            padding: 12px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .tf-platform { flex: 1.3; }
+        .tf-num {
+            flex: 0.8;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+        .tf-highlight {
+            flex: 0.9;
+            text-align: center;
+            font-size: 14px;
+            color: #ffffff;
+        }
+
+        .insight-panel {
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .insight-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .insight-card-highlight {
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+            border-color: rgba(251, 191, 36, 0.25);
+        }
+
+        .insight-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .insight-label {
+            font-size: 10px;
+            color: #a8998a;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
+        .insight-desc {
+            font-size: 9px;
+            color: #7a6a5a;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        /* SLIDE 5 - Duplication */
+        .duplication-content {
+            flex: 1;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dupe-table {
+            flex: 1;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .th-pair { flex: 1.8; }
+        .td-pair {
+            flex: 1.8;
+            font-weight: 500;
+            gap: 10px;
+        }
+
+        .insight-card-wide {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .insight-card-wide .insight-label {
+            font-size: 12px;
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .insight-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            padding: 6px 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+        }
+
+        .breakdown-label {
+            color: #a8998a;
+        }
+
+        .breakdown-value {
+            color: #ffffff;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Slide 5 - Dual table layout */
+        .dual-table-content {
+            flex: 1;
+            display: flex;
+            gap: 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dual-table-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dual-table-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .table-section-label {
+            font-size: 10px;
+            color: #a8998a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .table-section-label + .seller-table,
+        .table-section-label + .mini-table,
+        .table-section-label + .regulation-box,
+        .table-section-label + .platform-safeguard,
+        .table-section-label + .freshness-bars,
+        .table-section-label + .age-distribution,
+        .table-section-label + .stacked-bars,
+        .table-section-label + .age-insight-card,
+        .table-section-label + .price-bars {
+            margin-top: 0;
+        }
+
+        .age-insight-card + .age-insight-card {
+            margin-top: 8px;
+        }
+
+        .table-section-label.spaced {
+            margin-top: 14px;
+        }
+
+        .mini-table, .seller-table {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .mini-row {
+            display: flex;
+            padding: 8px 14px;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.05);
+            font-size: 10px;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .seller-row {
+            display: flex;
+            padding: 7px 14px;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.05);
+            font-size: 11px;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mini-row-top, .seller-row-top {
+            background: rgba(251, 191, 36, 0.05);
+        }
+
+        .mini-header {
+            background: rgba(251, 191, 36, 0.08);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mini-header .mini-label,
+        .mini-header .mini-count,
+        .mini-header .mini-val,
+        .mini-header .mini-pct {
+            color: #8a7a6a;
+            font-weight: 600;
+        }
+
+        .mini-label {
+            color: #a8998a;
+            flex: 2;
+            min-width: 0;
+        }
+
+        .mini-count {
+            color: #c8b8a8;
+            flex: 1;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .mini-val {
+            color: #ffffff;
+            font-weight: 600;
+            flex: 1;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .mini-pct {
+            color: #fbbf24;
+            font-weight: 700;
+            flex: 1;
+            text-align: center;
+        }
+
+        .mini-footer {
+            background: rgba(251, 191, 36, 0.08);
+            border-top: 1px solid rgba(251, 191, 36, 0.15);
+        }
+
+        .mini-footer .mini-label {
+            font-weight: 600;
+            color: #c8b8a8;
+        }
+
+        .seller-header {
+            background: rgba(251, 191, 36, 0.08);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .seller-header .seller-name,
+        .seller-header .seller-listings,
+        .seller-header .seller-platforms,
+        .seller-header .seller-rank,
+        .seller-header .seller-pct {
+            color: #8a7a6a;
+            font-weight: 600;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .seller-rank {
+            color: #fbbf24;
+            font-weight: 600;
+            width: 18px;
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .seller-name {
+            color: #c8b8a8;
+            font-weight: 500;
+            flex: 1.5;
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .seller-listings {
+            color: #ffffff;
+            font-weight: 600;
+            flex: 0.8;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .seller-platforms {
+            color: #7a6a5a;
+            font-size: 9px;
+            text-align: center;
+            flex: 1.5;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .seller-pct {
+            color: #fbbf24;
+            font-weight: 700;
+            flex: 0.8;
+            text-align: center;
+        }
+
+        /* SLIDE 7 - Freshness */
+        .freshness-content {
+            flex: 1;
+            display: flex;
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .freshness-left {
+            flex: 1.1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .freshness-right {
+            flex: 0.9;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .freshness-bars {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .freshness-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .freshness-label {
+            width: 100px;
+            font-size: 11px;
+            color: #a8998a;
+            font-weight: 500;
+        }
+
+        .bar-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            height: 22px;
+        }
+
+        .bar {
+            height: 100%;
+            border-radius: 4px;
+            min-width: 4px;
+        }
+
+        .bar-fresh { background: linear-gradient(90deg, #34d399, #10b981); }
+        .bar-good { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+        .bar-moderate { background: linear-gradient(90deg, #f97316, #ea580c); }
+        .bar-stale { background: linear-gradient(90deg, #ef4444, #dc2626); }
+        .bar-old { background: linear-gradient(90deg, #991b1b, #7f1d1d); }
+
+        .bar-value {
+            font-size: 11px;
+            color: #c8b8a8;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .freshness-legend {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 14px;
+            font-size: 9px;
+            color: #7a6a5a;
+        }
+
+        .legend-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+
+        /* Price bars for breed pricing */
+        .price-bars {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .price-breed {
+            width: 130px;
+            font-size: 10px;
+            color: #d4c4b0;
+            flex-shrink: 0;
+        }
+
+        .price-bar-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .price-bar {
+            height: 16px;
+            background: linear-gradient(90deg, #34d399, #10b981);
+            border-radius: 4px;
+        }
+
+        .price-value {
+            font-size: 10px;
+            color: #fbbf24;
+            font-weight: 600;
+            min-width: 50px;
+        }
+
+        .age-distribution {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .age-header {
+            display: flex;
+            background: rgba(251, 191, 36, 0.08);
+            padding: 10px 14px;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8a7a6a;
+            font-weight: 600;
+        }
+
+        .age-platform {
+            flex: 1.3;
+        }
+
+        .age-bucket {
+            flex: 0.7;
+            text-align: center;
+        }
+
+        .age-row {
+            display: flex;
+            padding: 8px 14px;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.05);
+            font-size: 11px;
+        }
+
+        .age-row .age-platform {
+            color: #a8998a;
+            font-weight: 500;
+        }
+
+        .age-val {
+            flex: 0.7;
+            text-align: center;
+            color: #c8b8a8;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .age-fresh { color: #34d399; font-weight: 700; }
+        .age-good { color: #fbbf24; font-weight: 600; }
+        .age-moderate { color: #f97316; font-weight: 600; }
+        .age-stale { color: #ef4444; font-weight: 600; }
+        .age-old { color: #dc2626; font-weight: 700; }
+        .age-dim { color: #5a4a3a; }
+
+        .age-row-highlight {
+            background: rgba(52, 211, 153, 0.08);
+        }
+
+        .age-row-bad {
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .freshness-insight {
+            margin-top: 14px;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .insight-icon {
+            width: 20px;
+            height: 20px;
+            background: #ef4444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .insight-text {
+            font-size: 10px;
+            color: #a8998a;
+            line-height: 1.5;
+        }
+
+        .insight-text strong {
+            color: #ef4444;
+        }
+
+        /* SLIDE 8 - Puppy Age Profile */
+        .puppy-age-content {
+            flex: 1;
+            display: flex;
+            gap: 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .puppy-age-left {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .puppy-age-right {
+            flex: 0.8;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stacked-bars {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 12px;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .stacked-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stacked-row-highlight {
+            background: rgba(107, 114, 128, 0.1);
+            margin: 0 -18px;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+
+        .stacked-label {
+            width: 95px;
+            font-size: 11px;
+            color: #a8998a;
+            font-weight: 500;
+        }
+
+        .stacked-bar-container {
+            flex: 1;
+            height: 24px;
+            display: flex;
+            border-radius: 4px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .stack-segment {
+            height: 100%;
+            transition: opacity 0.2s;
+        }
+
+        .stack-segment:hover {
+            opacity: 0.8;
+        }
+
+        .stack-too-young { background: #f87171; }
+        .stack-ideal { background: #34d399; }
+        .stack-young { background: #60a5fa; }
+        .stack-adolescent { background: #a78bfa; }
+        .stack-adult { background: #6b7280; }
+
+        .stacked-median {
+            width: 40px;
+            font-size: 10px;
+            color: #7a6a5a;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .stacked-legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 14px;
+            font-size: 9px;
+            color: #7a6a5a;
+        }
+
+        .age-insight-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .age-insight-card.warning {
+            background: rgba(248, 113, 113, 0.08);
+            border-color: rgba(248, 113, 113, 0.2);
+        }
+
+        .age-insight-card.good {
+            background: rgba(52, 211, 153, 0.08);
+            border-color: rgba(52, 211, 153, 0.2);
+        }
+
+        .age-insight-card.neutral {
+            background: rgba(107, 114, 128, 0.08);
+            border-color: rgba(107, 114, 128, 0.2);
+        }
+
+        .age-insight-icon {
+            width: 28px;
+            height: 28px;
+            background: #f87171;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .age-insight-content {
+            flex: 1;
+        }
+
+        .age-insight-stat {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .age-insight-text {
+            font-size: 10px;
+            color: #a8998a;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        .age-insight-text .dim {
+            color: #6a5a4a;
+            font-size: 9px;
+        }
+
+        /* SLIDE 7 - Welfare & Regulation */
+        .welfare-content {
+            flex: 1;
+            display: flex;
+            gap: 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welfare-left {
+            flex: 1.1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .welfare-right {
+            flex: 0.9;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .regulation-box {
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.08) 0%, rgba(245, 158, 11, 0.04) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            border-radius: 12px;
+            padding: 16px 18px;
+        }
+
+        .reg-rule {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .reg-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .reg-text {
+            font-size: 12px;
+            color: #c8b8a8;
+            line-height: 1.5;
+        }
+
+        .reg-text strong {
+            color: #ffffff;
+            font-size: 13px;
+        }
+
+        .reg-text .dim {
+            color: #8a7a6a;
+            font-size: 10px;
+        }
+
+        .welfare-stat-card {
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.08) 0%, rgba(245, 158, 11, 0.04) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            border-radius: 12px;
+            padding: 16px 18px;
+            text-align: center;
+        }
+
+        .welfare-stat {
+            font-size: 36px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .welfare-stat-label {
+            font-size: 11px;
+            color: #a8998a;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        .welfare-stat-label .dim {
+            color: #6a5a4a;
+            font-size: 9px;
+        }
+
+        .welfare-note {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 9px;
+            color: #7a6a5a;
+            line-height: 1.5;
+            margin-top: auto;
+        }
+
+        .welfare-note strong {
+            color: #a8998a;
+        }
+
+        .welfare-stat-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .welfare-stat-card-small {
+            flex: 1;
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.08) 0%, rgba(245, 158, 11, 0.04) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            border-radius: 10px;
+            padding: 12px 14px;
+            text-align: center;
+        }
+
+        .welfare-stat-card-small .welfare-stat {
+            font-size: 28px;
+        }
+
+        .welfare-stat-card-small .welfare-stat-label {
+            font-size: 9px;
+            margin-top: 4px;
+        }
+
+        .platform-safeguard {
+            background: linear-gradient(145deg, rgba(52, 211, 153, 0.08) 0%, rgba(52, 211, 153, 0.02) 100%);
+            border: 1px solid rgba(52, 211, 153, 0.2);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-top: 6px;
+        }
+
+        .safeguard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .safeguard-platform {
+            font-size: 12px;
+            font-weight: 600;
+            color: #34d399;
+        }
+
+        .safeguard-badge {
+            font-size: 8px;
+            background: rgba(52, 211, 153, 0.2);
+            color: #34d399;
+            padding: 3px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .safeguard-body {
+            font-size: 11px;
+            color: #c8b8a8;
+            line-height: 1.5;
+        }
+
+        .safeguard-body strong {
+            color: #ffffff;
+        }
+
+        .safeguard-body .dim {
+            color: #7a6a5a;
+            font-size: 9px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- SLIDE 1: Title -->
+<div class="slide title-slide">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="puppy-gallery">
+        <div class="puppy-card">
+            <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=200&h=200&fit=crop" alt="">
+        </div>
+        <div class="puppy-card">
+            <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?w=200&h=200&fit=crop" alt="">
+        </div>
+        <div class="puppy-card">
+            <img src="https://images.unsplash.com/photo-1534361960057-19889db9621e?w=200&h=200&fit=crop" alt="">
+        </div>
+    </div>
+
+    <h1>UK Dog <span>Marketplace</span><br>Analysis</h1>
+    <div class="subtitle">Market sizing & platform coverage</div>
+
+    <div class="meta">Data from 9 online marketplaces</div>
+    
+    <div class="date">January 2026</div>
+
+    <div class="slide-number">1</div>
+</div>
+
+<!-- SLIDE 2: Market Overview -->
+<div class="slide content-slide">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="deck-title">UK Dog Marketplace Analysis</div>
+
+    <div class="header">
+        <h1>Nearly <span>60%</span> of all dogs sold in the UK<br>are listed on an online marketplace</h1>
+    </div>
+
+    <div class="main-content-v2">
+        <div class="flow-horizontal">
+            <div class="flow-step">
+                <div class="flow-number">54k</div>
+                <div class="flow-label">Unique dogs<br>for sale today</div>
+            </div>
+
+            <div class="flow-arrow">
+                <svg width="50" height="24" viewBox="0 0 50 24">
+                    <defs>
+                        <linearGradient id="arrowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.2" />
+                            <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:0.6" />
+                            <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+                        </linearGradient>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <path d="M0 12 L38 12 M30 6 L42 12 L30 18" stroke="url(#arrowGrad)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+                </svg>
+            </div>
+
+            <div class="flow-step">
+                <div class="flow-number">550k</div>
+                <div class="flow-label">Annualised<br>(seasonality adjusted)</div>
+            </div>
+
+            <div class="flow-arrow">
+                <svg width="50" height="24" viewBox="0 0 50 24">
+                    <path d="M0 12 L38 12 M30 6 L42 12 L30 18" stroke="url(#arrowGrad)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+                </svg>
+            </div>
+
+            <div class="flow-step">
+                <div class="flow-number">58%</div>
+                <div class="flow-label">Of total UK market</div>
+                <div class="flow-source">946k/year · Nature Watch 2025</div>
+            </div>
+        </div>
+
+        <div class="platforms-section">
+            <div class="platforms-label">9 Marketplaces analysed</div>
+            <div class="platforms-tags">
+                <span class="platform-tag">Pets4Homes</span>
+                <span class="platform-tag">FreeAds</span>
+                <span class="platform-tag">Gumtree</span>
+                <span class="platform-tag">Preloved</span>
+                <span class="platform-tag">Puppies.co.uk</span>
+                <span class="platform-tag">Kennel Club</span>
+                <span class="platform-tag">Petify</span>
+                <span class="platform-tag">ForeverPuppy</span>
+                <span class="platform-tag">Champdogs</span>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="methodology-footer" style="font-size:10px; color:#a8998a; text-align:center; margin-top:18px;">
+        <strong>Methodology:</strong> All steps from data collection, cleaning, analysis, and this presentation were generated by AI using automated scripts and models. Listings were deduplicated by breed, location, and price band, and annualized using a 1.2x seasonality adjustment. Puppy/adult status, seller type, and freshness were validated using platform fields and text parsing.
+    </div>
+</div>
+
+<!-- SLIDE 3: From Raw Listings to 54k Dogs -->
+<div class="slide content-slide">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="deck-title">UK Dog Marketplace Analysis</div>
+
+    <div class="header">
+        <h1>1 in 5 listings appear on multiple sites —<br><span>54k unique dogs</span> remain after deduplication</h1>
+    </div>
+
+    <div class="journey-content-v2">
+        <div class="journey-hero">
+            <div class="hero-box">
+                <div class="hero-number">19k</div>
+                <div class="hero-label">Raw listings</div>
+                <div class="hero-sub">across 9 platforms</div>
+            </div>
+            <div class="hero-arrow">
+                <svg width="80" height="32" viewBox="0 0 80 32">
+                    <path d="M0 16 L60 16 M52 8 L68 16 L52 24" stroke="url(#arrowGrad)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <div class="hero-box">
+                <div class="hero-number">16k</div>
+                <div class="hero-label">Unique listings</div>
+                <div class="hero-sub">after deduplication</div>
+            </div>
+            <div class="hero-arrow">
+                <svg width="80" height="32" viewBox="0 0 80 32">
+                    <path d="M0 16 L60 16 M52 8 L68 16 L52 24" stroke="url(#arrowGrad)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <div class="hero-box">
+                <div class="hero-number">54k</div>
+                <div class="hero-label">Unique dogs</div>
+                <div class="hero-sub">for sale in January</div>
+            </div>
+        </div>
+
+        <div class="journey-cards">
+            <div class="jc-card">
+                <div class="jc-header">
+                    <div class="jc-icon">-3.3k</div>
+                    <div class="jc-title">Duplicates removed</div>
+                </div>
+                <div class="jc-list">
+                    <div class="jc-row"><span>Within-platform</span><span>-139</span></div>
+                    <div class="jc-row"><span>Stale (&gt;6 months)</span><span>-530</span></div>
+                    <div class="jc-row jc-row-main"><span>Cross-platform</span><span>-2,679</span></div>
+                </div>
+
+            </div>
+
+            <div class="jc-card">
+                <div class="jc-header">
+                    <div class="jc-icon">17%</div>
+                    <div class="jc-title">Cross-listed</div>
+                </div>
+                <div class="jc-body">
+                    <p>Nearly 1 in 5 listings appeared on multiple platforms simultaneously.</p>
+                </div>
+
+            </div>
+
+            <div class="jc-card">
+                <div class="jc-header">
+                    <div class="jc-icon">×3.4</div>
+                    <div class="jc-title">Dogs per listing</div>
+                </div>
+                <div class="jc-body">
+                    <p>Most ads are litter listings with multiple puppies available, not single dogs.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="methodology-footer" style="font-size:10px; color:#a8998a; text-align:center; margin-top:18px;">
+        <strong>Methodology:</strong> Listings were deduplicated by matching breed, location, and price band (±20%), removing stale ads (>6 months), and consolidating cross-listed dogs across platforms. The number of dogs per listing was derived using litter size fields, sex counts, and text parsing of titles and descriptions. All steps were fully automated using AI-driven scripts and data validation.
+    </div>
+    <div class="slide-number">3</div>
+</div>
+
+<!-- SLIDE 4: Platform Breakdown -->
+<div class="slide content-slide">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="deck-title">UK Dog Marketplace Analysis</div>
+
+    <div class="header">
+        <h1>Specialist pet sites list <span>litters</span>, not individual dogs</h1>
+    </div>
+
+    <div class="platform-breakdown-content">
+        <div class="platform-table">
+            <div class="table-header">
+                <div class="th th-platform">Platform</div>
+                <div class="th th-num">Raw Listings</div>
+                <div class="th th-num">Raw Dogs</div>
+                <div class="th th-highlight">Dogs/Listing</div>
+            </div>
+            <div class="table-body">
+                <div class="table-row row-top">
+                    <div class="td td-platform">
+                        <span class="platform-dot dot-1"></span>Pets4Homes
+                    </div>
+                    <div class="td td-num">7,621</div>
+                    <div class="td td-num">31,246</div>
+                    <div class="td td-highlight">4.1</div>
+                </div>
+                <div class="table-row">
+                    <div class="td td-platform">
+                        <span class="platform-dot dot-2"></span>FreeAds
+                    </div>
+                    <div class="td td-num">6,561</div>
+                    <div class="td td-num">16,403</div>
+                    <div class="td td-highlight">2.5</div>
+                </div>
+                <div class="table-row">
+                    <div class="td td-platform">
+                        <span class="platform-dot dot-3"></span>Gumtree
+                    </div>
+                    <div class="td td-num">1,775</div>
+                    <div class="td td-num">4,438</div>
+                    <div class="td td-highlight">2.5</div>
+                </div>
+                <div class="table-row">
+                    <div class="td td-platform">
+                        <span class="platform-dot dot-7"></span>Petify
+                    </div>
+                    <div class="td td-num">603</div>
+                    <div class="td td-num">3,075</div>
+                    <div class="td td-highlight">5.1</div>
+                </div>
+                <div class="table-row">
+                    <div class="td td-platform">
+                        <span class="platform-dot dot-4"></span>ForeverPuppy
+                    </div>
+                    <div class="td td-num">636</div>
+                    <div class="td td-num">2,544</div>
+                    <div class="td td-highlight">4.0</div>
+                </div>
+                <div class="table-row">
+                    <div class="td td-platform">
+                        <span class="platform-dot dot-5"></span>Kennel Club
+                    </div>
+                    <div class="td td-num">411</div>
+                    <div class="td td-num">2,425</div>
+                    <div class="td td-highlight">5.9</div>
+                </div>
+                <div class="table-row">
+                    <div class="td td-platform">
+                        <span class="platform-dot dot-6"></span>Puppies.co.uk
+                    </div>
+                    <div class="td td-num">575</div>
+                    <div class="td td-num">1,725</div>
+                    <div class="td td-highlight">3.0</div>
+                </div>
+                <div class="table-row">
+                    <div class="td td-platform">
+                        <span class="platform-dot dot-8"></span>Preloved
+                    </div>
+                    <div class="td td-num">678</div>
+                    <div class="td td-num">1,356</div>
+                    <div class="td td-highlight">2.0</div>
+                </div>
+                <div class="table-row">
+                    <div class="td td-platform">
+                        <span class="platform-dot dot-9"></span>Champdogs
+                    </div>
+                    <div class="td td-num">162</div>
+                    <div class="td td-num">648</div>
+                    <div class="td td-highlight">4.0</div>
+                </div>
+            </div>
+            <div class="table-footer">
+                <div class="tf tf-platform">Total</div>
+                <div class="tf tf-num">19,022</div>
+                <div class="tf tf-num">63,860</div>
+                <div class="tf tf-highlight">3.4</div>
+            </div>
+        </div>
+
+        <div class="insight-panel">
+            <div class="insight-card">
+                <div class="insight-value">58%</div>
+                <div class="insight-label">Pets4Homes share</div>
+                <div class="insight-desc">Of all dogs listed<br>across 9 platforms</div>
+            </div>
+            <div class="insight-card">
+                <div class="insight-value">4.1</div>
+                <div class="insight-label">Pet specialists avg</div>
+                <div class="insight-desc">Litter-based listings<br>(P4H, KC, Petify...)</div>
+            </div>
+            <div class="insight-card">
+                <div class="insight-value">2.4</div>
+                <div class="insight-label">Classifieds avg</div>
+                <div class="insight-desc">Individual dogs<br>(FreeAds, Gumtree...)</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="author-footer">Kim Faura</div>
+    <div class="slide-number">4</div>
+</div>
+
+<!-- SLIDE 5: Cross-Platform Duplication -->
+<div class="slide content-slide">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="deck-title">UK Dog Marketplace Analysis</div>
+
+    <div class="header">
+        <h1>Only <span>48%</span> of Petify inventory is unique —<br>smaller platforms overlap most with the leader</h1>
+    </div>
+
+    <div class="dual-table-content">
+        <div class="dual-table-left">
+            <div class="table-section-label">Unique Inventory by Platform</div>
+            <div class="seller-table">
+                <div class="seller-row seller-header">
+                    <span class="seller-name">Platform</span>
+                    <span class="seller-listings">Total</span>
+                    <span class="seller-listings">Unique</span>
+                    <span class="seller-pct">% Unique</span>
+                </div>
+                <div class="seller-row seller-row-top">
+                    <span class="seller-name">ForeverPuppy</span>
+                    <span class="seller-listings">636</span>
+                    <span class="seller-listings">528</span>
+                    <span class="seller-pct">83%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Kennel Club</span>
+                    <span class="seller-listings">411</span>
+                    <span class="seller-listings">304</span>
+                    <span class="seller-pct">74%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Champdogs</span>
+                    <span class="seller-listings">162</span>
+                    <span class="seller-listings">120</span>
+                    <span class="seller-pct">74%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Preloved</span>
+                    <span class="seller-listings">678</span>
+                    <span class="seller-listings">495</span>
+                    <span class="seller-pct">73%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Pets4Homes</span>
+                    <span class="seller-listings">7,621</span>
+                    <span class="seller-listings">4,801</span>
+                    <span class="seller-pct">63%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Puppies.co.uk</span>
+                    <span class="seller-listings">575</span>
+                    <span class="seller-listings">362</span>
+                    <span class="seller-pct">63%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">FreeAds</span>
+                    <span class="seller-listings">6,561</span>
+                    <span class="seller-listings">4,068</span>
+                    <span class="seller-pct">62%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Gumtree</span>
+                    <span class="seller-listings">1,775</span>
+                    <span class="seller-listings">976</span>
+                    <span class="seller-pct">55%</span>
+                </div>
+                <div class="seller-row" style="background: rgba(251, 191, 36, 0.08);">
+                    <span class="seller-name">Petify</span>
+                    <span class="seller-listings">603</span>
+                    <span class="seller-listings">289</span>
+                    <span class="seller-pct">48%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dual-table-right">
+            <div class="table-section-label">Listings on Multiple Platforms</div>
+            <div class="mini-table">
+                <div class="mini-row mini-header">
+                    <span class="mini-label"># Platforms</span>
+                    <span class="mini-val">Listings</span>
+                </div>
+                <div class="mini-row">
+                    <span class="mini-label">2 platforms</span>
+                    <span class="mini-val">1,749</span>
+                </div>
+                <div class="mini-row">
+                    <span class="mini-label">3 platforms</span>
+                    <span class="mini-val">447</span>
+                </div>
+                <div class="mini-row">
+                    <span class="mini-label">4+ platforms</span>
+                    <span class="mini-val">104</span>
+                </div>
+                <div class="mini-row mini-footer">
+                    <span class="mini-label">Total cross-listed</span>
+                    <span class="mini-val">2,300</span>
+                </div>
+            </div>
+            <div class="table-section-label spaced">Platform Pair Overlap</div>
+            <div class="mini-table">
+                <div class="mini-row mini-header">
+                    <span class="mini-label">Platform Pair</span>
+                    <span class="mini-count">Shared</span>
+                    <span class="mini-pct">% Overlap</span>
+                </div>
+                <div class="mini-row mini-row-top">
+                    <span class="mini-label">P4H ↔ Petify</span>
+                    <span class="mini-count">222</span>
+                    <span class="mini-pct">37%</span>
+                </div>
+                <div class="mini-row">
+                    <span class="mini-label">P4H ↔ Gumtree</span>
+                    <span class="mini-count">569</span>
+                    <span class="mini-pct">32%</span>
+                </div>
+                <div class="mini-row">
+                    <span class="mini-label">P4H ↔ Puppies</span>
+                    <span class="mini-count">149</span>
+                    <span class="mini-pct">26%</span>
+                </div>
+                <div class="mini-row">
+                    <span class="mini-label">FreeAds ↔ Petify</span>
+                    <span class="mini-count">153</span>
+                    <span class="mini-pct">25%</span>
+                </div>
+                <div class="mini-row">
+                    <span class="mini-label">FreeAds ↔ Gumtree</span>
+                    <span class="mini-count">431</span>
+                    <span class="mini-pct">24%</span>
+                </div>
+                <div class="mini-row">
+                    <span class="mini-label">P4H ↔ FreeAds</span>
+                    <span class="mini-count">1,444</span>
+                    <span class="mini-pct">22%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="author-footer">Kim Faura</div>
+    <div class="slide-number">5</div>
+</div>
+
+<!-- SLIDE 6: Seller Analysis -->
+<div class="slide content-slide">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="deck-title">UK Dog Marketplace Analysis</div>
+
+    <div class="header">
+        <h1><span>94%</span> of sellers have just one listing —<br>private sellers dominate the market</h1>
+    </div>
+
+    <div class="dual-table-content">
+        <div class="dual-table-left">
+            <div class="table-section-label">Seller Distribution by Platform</div>
+            <div class="seller-table">
+                <div class="seller-row seller-header">
+                    <span class="seller-name">Platform</span>
+                    <span class="seller-listings">Sellers</span>
+                    <span class="seller-pct">% 1 List</span>
+                    <span class="seller-listings">Max/Seller</span>
+                </div>
+                <div class="seller-row seller-row-top">
+                    <span class="seller-name">Pets4Homes</span>
+                    <span class="seller-listings">7,190</span>
+                    <span class="seller-pct">95%</span>
+                    <span class="seller-listings">8</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">FreeAds</span>
+                    <span class="seller-listings">5,765</span>
+                    <span class="seller-pct">93%</span>
+                    <span class="seller-listings">9</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Gumtree</span>
+                    <span class="seller-listings">1,674</span>
+                    <span class="seller-pct">94%</span>
+                    <span class="seller-listings">3</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">ForeverPuppy</span>
+                    <span class="seller-listings">566</span>
+                    <span class="seller-pct">95%</span>
+                    <span class="seller-listings">3</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Puppies.co.uk</span>
+                    <span class="seller-listings">558</span>
+                    <span class="seller-pct">98%</span>
+                    <span class="seller-listings">2</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Preloved</span>
+                    <span class="seller-listings">538</span>
+                    <span class="seller-pct">95%</span>
+                    <span class="seller-listings">81</span>
+                </div>
+            </div>
+            <div class="table-section-label spaced">Summary</div>
+            <div class="mini-table">
+                <div class="mini-row">
+                    <span class="mini-label">Total unique sellers</span>
+                    <span class="mini-val">16,291</span>
+                </div>
+                <div class="mini-row">
+                    <span class="mini-label">With 1 listing only</span>
+                    <span class="mini-val">94%</span>
+                </div>
+                <div class="mini-row">
+                    <span class="mini-label">Confirmed rescues</span>
+                    <span class="mini-val">14</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dual-table-right">
+            <div class="table-section-label">Top Sellers</div>
+            <div class="seller-table">
+                <div class="seller-row seller-header">
+                    <span class="seller-rank">#</span>
+                    <span class="seller-name">Seller</span>
+                    <span class="seller-listings">List</span>
+                    <span class="seller-platforms">Platforms</span>
+                </div>
+                <div class="seller-row" style="background: rgba(20, 184, 166, 0.1);">
+                    <span class="seller-rank" style="color: #14b8a6;">1</span>
+                    <span class="seller-name" style="color: #14b8a6;">Pawprints2freedom</span>
+                    <span class="seller-listings">81</span>
+                    <span class="seller-platforms">Preloved</span>
+                </div>
+                <div class="seller-row" style="background: rgba(20, 184, 166, 0.1);">
+                    <span class="seller-rank" style="color: #14b8a6;">2</span>
+                    <span class="seller-name" style="color: #14b8a6;">Lurcher Link Rescue</span>
+                    <span class="seller-listings">11</span>
+                    <span class="seller-platforms">Preloved</span>
+                </div>
+                <div class="seller-row" style="background: rgba(251, 191, 36, 0.1);">
+                    <span class="seller-rank" style="color: #fbbf24;">3</span>
+                    <span class="seller-name" style="color: #fbbf24;">Ritchie</span>
+                    <span class="seller-listings">11</span>
+                    <span class="seller-platforms">P4H, FreeAds, Puppies</span>
+                </div>
+                <div class="seller-row" style="background: rgba(20, 184, 166, 0.1);">
+                    <span class="seller-rank" style="color: #14b8a6;">4</span>
+                    <span class="seller-name" style="color: #14b8a6;">Val</span>
+                    <span class="seller-listings">11</span>
+                    <span class="seller-platforms">Preloved</span>
+                </div>
+                <div class="seller-row" style="background: rgba(251, 191, 36, 0.1);">
+                    <span class="seller-rank" style="color: #fbbf24;">5</span>
+                    <span class="seller-name" style="color: #fbbf24;">justdogz</span>
+                    <span class="seller-listings">9</span>
+                    <span class="seller-platforms">FreeAds</span>
+                </div>
+                <div class="seller-row" style="background: rgba(251, 191, 36, 0.1);">
+                    <span class="seller-rank" style="color: #fbbf24;">6</span>
+                    <span class="seller-name" style="color: #fbbf24;">The Canine Club</span>
+                    <span class="seller-listings">8</span>
+                    <span class="seller-platforms">Pets4Homes</span>
+                </div>
+                <div class="seller-row" style="background: rgba(251, 191, 36, 0.1);">
+                    <span class="seller-rank" style="color: #fbbf24;">7</span>
+                    <span class="seller-name" style="color: #fbbf24;">Wiggle Waggle</span>
+                    <span class="seller-listings">7</span>
+                    <span class="seller-platforms">Pets4Homes</span>
+                </div>
+                <div class="seller-row" style="background: rgba(251, 191, 36, 0.1);">
+                    <span class="seller-rank" style="color: #fbbf24;">8</span>
+                    <span class="seller-name" style="color: #fbbf24;">marta.sobkowiak9911</span>
+                    <span class="seller-listings">7</span>
+                    <span class="seller-platforms">FreeAds</span>
+                </div>
+                <div class="seller-row" style="background: rgba(251, 191, 36, 0.1);">
+                    <span class="seller-rank" style="color: #fbbf24;">9</span>
+                    <span class="seller-name" style="color: #fbbf24;">5 Star Licensed Breeder</span>
+                    <span class="seller-listings">6</span>
+                    <span class="seller-platforms">Pets4Homes</span>
+                </div>
+                <div class="seller-row" style="background: rgba(20, 184, 166, 0.1);">
+                    <span class="seller-rank" style="color: #14b8a6;">10</span>
+                    <span class="seller-name" style="color: #14b8a6;">La'al Marras Rescue</span>
+                    <span class="seller-listings">6</span>
+                    <span class="seller-platforms">FreeAds</span>
+                </div>
+            </div>
+            <div style="font-size: 9px; color: #6a5a4a; margin-top: 8px; display: flex; justify-content: center; gap: 16px;">
+                <span><span style="color: #14b8a6;">■</span> Rescue</span>
+                <span><span style="color: #fbbf24;">■</span> Breeder</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="author-footer">Kim Faura</div>
+    <div class="slide-number">6</div>
+</div>
+
+<!-- SLIDE 7: Welfare & Regulation -->
+<div class="slide content-slide">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="deck-title">UK Dog Marketplace Analysis</div>
+
+    <div class="header">
+        <h1><span>52%</span> of high-volume sellers are on FreeAds with no license tracking</h1>
+    </div>
+
+    <div class="welfare-content">
+        <div class="welfare-left">
+            <div class="table-section-label">UK Breeding License Requirement</div>
+            <div class="regulation-box">
+                <div class="reg-rule">
+                    <div class="reg-number">3+</div>
+                    <div class="reg-text">
+                        <strong>Litters per year</strong><br>
+                        <span class="dim">Requires a local authority breeding license under the Animal Welfare (Licensing of Activities Involving Animals) Regulations 2018</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-section-label spaced">Top Breeders (3+ listings)</div>
+            <div class="seller-table">
+                <div class="seller-row seller-header">
+                    <span class="seller-name">Seller</span>
+                    <span class="seller-listings">#</span>
+                    <span class="seller-platforms">Platform</span>
+                    <span class="seller-pct">Lic</span>
+                </div>
+                <div class="seller-row" style="background: rgba(52, 211, 153, 0.08);">
+                    <span class="seller-name">Ritchie</span>
+                    <span class="seller-listings">11</span>
+                    <span class="seller-platforms">P4H, FreeAds</span>
+                    <span class="seller-pct" style="color: #34d399;">✓</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">justdogz</span>
+                    <span class="seller-listings">9</span>
+                    <span class="seller-platforms">FreeAds</span>
+                    <span class="seller-pct" style="color: #5a4a3a;">—</span>
+                </div>
+                <div class="seller-row" style="background: rgba(52, 211, 153, 0.08);">
+                    <span class="seller-name">The Canine Club</span>
+                    <span class="seller-listings">8</span>
+                    <span class="seller-platforms">P4H</span>
+                    <span class="seller-pct" style="color: #34d399;">✓</span>
+                </div>
+                <div class="seller-row" style="background: rgba(52, 211, 153, 0.08);">
+                    <span class="seller-name">Wiggle Waggle</span>
+                    <span class="seller-listings">7</span>
+                    <span class="seller-platforms">P4H</span>
+                    <span class="seller-pct" style="color: #34d399;">✓</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">marta.sobkowiak99</span>
+                    <span class="seller-listings">7</span>
+                    <span class="seller-platforms">FreeAds</span>
+                    <span class="seller-pct" style="color: #5a4a3a;">—</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="welfare-right">
+            <div class="table-section-label">License Tracking (3+ listings)</div>
+            <div class="seller-table" style="font-size: 10px;">
+                <div class="seller-row seller-header">
+                    <span class="seller-name">Platform</span>
+                    <span class="seller-listings">Sellers</span>
+                    <span class="seller-platforms">Tracking</span>
+                    <span class="seller-pct">%</span>
+                </div>
+                <div class="seller-row" style="background: rgba(239, 68, 68, 0.08);">
+                    <span class="seller-name">FreeAds</span>
+                    <span class="seller-listings">75</span>
+                    <span class="seller-platforms" style="color: #ef4444;">None</span>
+                    <span class="seller-pct" style="color: #ef4444;">0%</span>
+                </div>
+                <div class="seller-row" style="background: rgba(52, 211, 153, 0.08);">
+                    <span class="seller-name">Pets4Homes</span>
+                    <span class="seller-listings">54</span>
+                    <span class="seller-platforms" style="color: #34d399;">Yes</span>
+                    <span class="seller-pct" style="color: #34d399;">81%</span>
+                </div>
+                <div class="seller-row" style="background: rgba(239, 68, 68, 0.08);">
+                    <span class="seller-name">Preloved</span>
+                    <span class="seller-listings">14</span>
+                    <span class="seller-platforms" style="color: #ef4444;">None</span>
+                    <span class="seller-pct" style="color: #ef4444;">0%</span>
+                </div>
+                <div class="seller-row" style="background: rgba(52, 211, 153, 0.08);">
+                    <span class="seller-name">Gumtree</span>
+                    <span class="seller-listings">1</span>
+                    <span class="seller-platforms" style="color: #34d399;">Enforced</span>
+                    <span class="seller-pct" style="color: #34d399;">✓</span>
+                </div>
+            </div>
+
+            <div class="table-section-label spaced">Gumtree's Proactive Approach (2025)</div>
+            <div class="platform-safeguard" style="background: rgba(52, 211, 153, 0.05); border-color: rgba(52, 211, 153, 0.2);">
+                <div class="safeguard-body" style="font-size: 9px;">
+                    <strong>2-litter limit with verification</strong><br>
+                    <span class="dim">Sellers listing a 3rd dog must provide license proof. Recently introduced vetting for licensed breeders & rescues.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="author-footer">Kim Faura</div>
+    <div class="slide-number">7</div>
+</div>
+
+<!-- SLIDE 8: Listing Freshness -->
+<div class="slide content-slide">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="deck-title">UK Dog Marketplace Analysis</div>
+
+    <div class="header">
+        <h1><span>81%</span> of Petify listings are over 3 months old —<br>Gumtree is the freshest marketplace</h1>
+    </div>
+
+    <div class="freshness-content">
+        <div class="freshness-left">
+            <div class="table-section-label">Median Listing Age by Platform</div>
+            <div class="freshness-bars">
+                <div class="freshness-row">
+                    <span class="freshness-label">Gumtree</span>
+                    <div class="bar-container">
+                        <div class="bar bar-fresh" style="width: 3.5%;"></div>
+                        <span class="bar-value">7 days</span>
+                    </div>
+                </div>
+                <div class="freshness-row">
+                    <span class="freshness-label">Pets4Homes</span>
+                    <div class="bar-container">
+                        <div class="bar bar-good" style="width: 10%;"></div>
+                        <span class="bar-value">20 days</span>
+                    </div>
+                </div>
+                <div class="freshness-row">
+                    <span class="freshness-label">FreeAds</span>
+                    <div class="bar-container">
+                        <div class="bar bar-good" style="width: 14%;"></div>
+                        <span class="bar-value">28 days</span>
+                    </div>
+                </div>
+                <div class="freshness-row">
+                    <span class="freshness-label">ForeverPuppy</span>
+                    <div class="bar-container">
+                        <div class="bar bar-moderate" style="width: 22%;"></div>
+                        <span class="bar-value">44 days</span>
+                    </div>
+                </div>
+                <div class="freshness-row">
+                    <span class="freshness-label">Preloved</span>
+                    <div class="bar-container">
+                        <div class="bar bar-moderate" style="width: 24%;"></div>
+                        <span class="bar-value">47 days</span>
+                    </div>
+                </div>
+                <div class="freshness-row">
+                    <span class="freshness-label">Puppies.co.uk</span>
+                    <div class="bar-container">
+                        <div class="bar bar-stale" style="width: 35%;"></div>
+                        <span class="bar-value">69 days</span>
+                    </div>
+                </div>
+                <div class="freshness-row">
+                    <span class="freshness-label">Petify</span>
+                    <div class="bar-container">
+                        <div class="bar bar-old" style="width: 100%;"></div>
+                        <span class="bar-value">210 days</span>
+                    </div>
+                </div>
+            </div>
+            <div class="freshness-legend">
+                <span><span class="legend-dot" style="background: #34d399;"></span> Fresh (&lt;14d)</span>
+                <span><span class="legend-dot" style="background: #fbbf24;"></span> Good (14-30d)</span>
+                <span><span class="legend-dot" style="background: #f97316;"></span> Moderate (30-60d)</span>
+                <span><span class="legend-dot" style="background: #ef4444;"></span> Stale (&gt;60d)</span>
+            </div>
+        </div>
+
+        <div class="freshness-right">
+            <div class="table-section-label">Age Distribution</div>
+            <div class="age-distribution">
+                <div class="age-header">
+                    <span class="age-platform">Platform</span>
+                    <span class="age-bucket">&lt;7d</span>
+                    <span class="age-bucket">7-30d</span>
+                    <span class="age-bucket">30-90d</span>
+                    <span class="age-bucket">&gt;90d</span>
+                </div>
+                <div class="age-row age-row-highlight">
+                    <span class="age-platform">Gumtree</span>
+                    <span class="age-val age-fresh">47%</span>
+                    <span class="age-val">52%</span>
+                    <span class="age-val age-dim">0%</span>
+                    <span class="age-val age-dim">0%</span>
+                </div>
+                <div class="age-row">
+                    <span class="age-platform">Pets4Homes</span>
+                    <span class="age-val">21%</span>
+                    <span class="age-val age-good">41%</span>
+                    <span class="age-val">36%</span>
+                    <span class="age-val age-dim">2%</span>
+                </div>
+                <div class="age-row">
+                    <span class="age-platform">FreeAds</span>
+                    <span class="age-val">17%</span>
+                    <span class="age-val">33%</span>
+                    <span class="age-val age-moderate">39%</span>
+                    <span class="age-val">11%</span>
+                </div>
+                <div class="age-row">
+                    <span class="age-platform">ForeverPuppy</span>
+                    <span class="age-val age-dim">7%</span>
+                    <span class="age-val">26%</span>
+                    <span class="age-val age-moderate">65%</span>
+                    <span class="age-val age-dim">3%</span>
+                </div>
+                <div class="age-row">
+                    <span class="age-platform">Preloved</span>
+                    <span class="age-val age-dim">4%</span>
+                    <span class="age-val">26%</span>
+                    <span class="age-val age-moderate">51%</span>
+                    <span class="age-val age-stale">20%</span>
+                </div>
+                <div class="age-row">
+                    <span class="age-platform">Puppies.co.uk</span>
+                    <span class="age-val age-dim">3%</span>
+                    <span class="age-val">21%</span>
+                    <span class="age-val">39%</span>
+                    <span class="age-val age-stale">37%</span>
+                </div>
+                <div class="age-row age-row-bad">
+                    <span class="age-platform">Petify</span>
+                    <span class="age-val age-dim">4%</span>
+                    <span class="age-val age-dim">4%</span>
+                    <span class="age-val">11%</span>
+                    <span class="age-val age-old">81%</span>
+                </div>
+            </div>
+
+            <div class="freshness-insight">
+                <div class="insight-icon">!</div>
+                <div class="insight-text">
+                    <strong>Petify inventory concern:</strong> Over 80% of listings are stale, suggesting many dogs may already be sold but listings remain active.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="author-footer">Kim Faura</div>
+    <div class="slide-number">8</div>
+</div>
+
+<!-- SLIDE 9: Puppy Age Profile -->
+<div class="slide content-slide">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="deck-title">UK Dog Marketplace Analysis</div>
+
+    <div class="header">
+        <h1><span>80-100%</span> of listings are puppies under 1 year —<br>only Preloved skews toward adult rehoming</h1>
+    </div>
+
+    <div class="puppy-age-content">
+        <div class="puppy-age-left">
+            <div class="table-section-label">Age Distribution by Platform</div>
+            <div class="stacked-bars">
+                <div class="stacked-row">
+                    <span class="stacked-label">Gumtree</span>
+                    <div class="stacked-bar-container">
+                        <div class="stack-segment stack-too-young" style="width: 30%;" title="<8 weeks: 30%"></div>
+                        <div class="stack-segment stack-ideal" style="width: 36%;" title="8-12 weeks: 36%"></div>
+                        <div class="stack-segment stack-young" style="width: 16%;" title="12-26 weeks: 16%"></div>
+                        <div class="stack-segment stack-adolescent" style="width: 5%;" title="6mo-1yr: 5%"></div>
+                        <div class="stack-segment stack-adult" style="width: 13%;" title=">1yr: 14%"></div>
+                    </div>
+                    <span class="stacked-median">10wk</span>
+                </div>
+                <div class="stacked-row">
+                    <span class="stacked-label">Pets4Homes</span>
+                    <div class="stacked-bar-container">
+                        <div class="stack-segment stack-too-young" style="width: 32%;" title="<8 weeks: 32%"></div>
+                        <div class="stack-segment stack-ideal" style="width: 23%;" title="8-12 weeks: 23%"></div>
+                        <div class="stack-segment stack-young" style="width: 22%;" title="12-26 weeks: 22%"></div>
+                        <div class="stack-segment stack-adolescent" style="width: 7%;" title="6mo-1yr: 7%"></div>
+                        <div class="stack-segment stack-adult" style="width: 16%;" title=">1yr: 16%"></div>
+                    </div>
+                    <span class="stacked-median">11wk</span>
+                </div>
+                <div class="stacked-row">
+                    <span class="stacked-label">Kennel Club</span>
+                    <div class="stacked-bar-container">
+                        <div class="stack-segment stack-too-young" style="width: 25%;" title="<8 weeks: 25%"></div>
+                        <div class="stack-segment stack-ideal" style="width: 29%;" title="8-12 weeks: 29%"></div>
+                        <div class="stack-segment stack-young" style="width: 45%;" title="12-26 weeks: 45%"></div>
+                        <div class="stack-segment stack-adolescent" style="width: 1%;" title="6mo-1yr: 2%"></div>
+                        <div class="stack-segment stack-adult" style="width: 0%;" title=">1yr: 0%"></div>
+                    </div>
+                    <span class="stacked-median">11wk</span>
+                </div>
+                <div class="stacked-row">
+                    <span class="stacked-label">FreeAds</span>
+                    <div class="stacked-bar-container">
+                        <div class="stack-segment stack-too-young" style="width: 23%;" title="<8 weeks: 23%"></div>
+                        <div class="stack-segment stack-ideal" style="width: 25%;" title="8-12 weeks: 25%"></div>
+                        <div class="stack-segment stack-young" style="width: 15%;" title="12-26 weeks: 15%"></div>
+                        <div class="stack-segment stack-adolescent" style="width: 9%;" title="6mo-1yr: 9%"></div>
+                        <div class="stack-segment stack-adult" style="width: 28%;" title=">1yr: 28%"></div>
+                    </div>
+                    <span class="stacked-median">12wk</span>
+                </div>
+                <div class="stacked-row">
+                    <span class="stacked-label">ForeverPuppy</span>
+                    <div class="stacked-bar-container">
+                        <div class="stack-segment stack-too-young" style="width: 22%;" title="<8 weeks: 22%"></div>
+                        <div class="stack-segment stack-ideal" style="width: 23%;" title="8-12 weeks: 23%"></div>
+                        <div class="stack-segment stack-young" style="width: 52%;" title="12-26 weeks: 52%"></div>
+                        <div class="stack-segment stack-adolescent" style="width: 2%;" title="6mo-1yr: 2%"></div>
+                        <div class="stack-segment stack-adult" style="width: 1%;" title=">1yr: 1%"></div>
+                    </div>
+                    <span class="stacked-median">12wk</span>
+                </div>
+                <div class="stacked-row">
+                    <span class="stacked-label">Champdogs</span>
+                    <div class="stacked-bar-container">
+                        <div class="stack-segment stack-too-young" style="width: 100%;" title="<8 weeks: 100%"></div>
+                    </div>
+                    <span class="stacked-median">2wk</span>
+                </div>
+                <div class="stacked-row stacked-row-highlight">
+                    <span class="stacked-label">Preloved</span>
+                    <div class="stacked-bar-container">
+                        <div class="stack-segment stack-too-young" style="width: 9%;" title="<8 weeks: 9%"></div>
+                        <div class="stack-segment stack-ideal" style="width: 17%;" title="8-12 weeks: 17%"></div>
+                        <div class="stack-segment stack-young" style="width: 27%;" title="12-26 weeks: 27%"></div>
+                        <div class="stack-segment stack-adolescent" style="width: 8%;" title="6mo-1yr: 8%"></div>
+                        <div class="stack-segment stack-adult" style="width: 39%;" title=">1yr: 40%"></div>
+                    </div>
+                    <span class="stacked-median">26wk</span>
+                </div>
+            </div>
+            <div class="stacked-legend">
+                <span><span class="legend-dot" style="background: #f87171;"></span> &lt;8 weeks</span>
+                <span><span class="legend-dot" style="background: #34d399;"></span> 8-12 weeks</span>
+                <span><span class="legend-dot" style="background: #60a5fa;"></span> 3-6 months</span>
+                <span><span class="legend-dot" style="background: #a78bfa;"></span> 6-12 months</span>
+                <span><span class="legend-dot" style="background: #6b7280;"></span> Adult (&gt;1 year)</span>
+            </div>
+        </div>
+
+        <div class="puppy-age-right">
+            <div class="table-section-label">Puppies vs Adults</div>
+            <div class="age-insight-card" style="background: linear-gradient(145deg, rgba(251, 191, 36, 0.08) 0%, rgba(245, 158, 11, 0.04) 100%); border-color: rgba(251, 191, 36, 0.2);">
+                <div class="age-insight-content">
+                    <div class="age-insight-stat" style="color: #ffffff;">~80%</div>
+                    <div class="age-insight-text">P4H, Gumtree & FreeAds puppies<br><span class="dim">Main marketplaces avg 72-86% under 1 year</span></div>
+                </div>
+            </div>
+
+            <div class="age-insight-card" style="background: linear-gradient(145deg, rgba(251, 191, 36, 0.08) 0%, rgba(245, 158, 11, 0.04) 100%); border-color: rgba(251, 191, 36, 0.2);">
+                <div class="age-insight-content">
+                    <div class="age-insight-stat" style="color: #ffffff;">100%</div>
+                    <div class="age-insight-text">KC, ForeverPuppy & Champdogs<br><span class="dim">Specialist platforms — exclusively puppies</span></div>
+                </div>
+            </div>
+
+            <div class="age-insight-card" style="background: linear-gradient(145deg, rgba(251, 191, 36, 0.08) 0%, rgba(245, 158, 11, 0.04) 100%); border-color: rgba(251, 191, 36, 0.2);">
+                <div class="age-insight-content">
+                    <div class="age-insight-stat" style="color: #ffffff;">40%</div>
+                    <div class="age-insight-text">Preloved listings are adult dogs<br><span class="dim">Platform favoured for rehoming</span></div>
+                </div>
+            </div>
+
+            <div style="font-size: 8px; color: #5a4a3a; margin-top: 12px; text-align: center;">
+                Petify & Puppies.co.uk excluded (no age data)
+            </div>
+        </div>
+    </div>
+
+    <div class="author-footer">Kim Faura</div>
+    <div class="slide-number">9</div>
+</div>
+
+<!-- SLIDE 10: 8-Week Regulation -->
+<div class="slide content-slide">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="deck-title">UK Dog Marketplace Analysis</div>
+
+    <div class="header">
+        <h1><span>100%</span> of under-8-week puppies on P4H & Gumtree<br>have future ready-to-leave dates set</h1>
+    </div>
+
+    <div class="welfare-content">
+        <div class="welfare-left">
+            <div class="table-section-label">UK Law: 8-Week Minimum</div>
+            <div class="regulation-box">
+                <div class="reg-rule">
+                    <div class="reg-number">8</div>
+                    <div class="reg-text">
+                        <strong>Weeks minimum age</strong><br>
+                        <span class="dim">Puppies cannot leave their mother before 8 weeks under the Animal Welfare Regulations 2018 (Lucy's Law)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-section-label spaced">Ready-to-Leave Enforcement</div>
+            <div class="seller-table">
+                <div class="seller-row seller-header">
+                    <span class="seller-name">Platform</span>
+                    <span class="seller-listings">&lt;8wk</span>
+                    <span class="seller-platforms">Protected</span>
+                    <span class="seller-pct">Method</span>
+                </div>
+                <div class="seller-row" style="background: rgba(52, 211, 153, 0.08);">
+                    <span class="seller-name">Pets4Homes</span>
+                    <span class="seller-listings">2,503</span>
+                    <span class="seller-platforms" style="color: #34d399;">100%</span>
+                    <span class="seller-pct">Required</span>
+                </div>
+                <div class="seller-row" style="background: rgba(52, 211, 153, 0.08);">
+                    <span class="seller-name">Gumtree</span>
+                    <span class="seller-listings">502</span>
+                    <span class="seller-platforms" style="color: #34d399;">100%</span>
+                    <span class="seller-pct">Required</span>
+                </div>
+                <div class="seller-row" style="background: rgba(239, 68, 68, 0.08);">
+                    <span class="seller-name">FreeAds</span>
+                    <span class="seller-listings">559</span>
+                    <span class="seller-platforms" style="color: #ef4444;">23%</span>
+                    <span class="seller-pct">Optional</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="welfare-right">
+            <div class="table-section-label">How Platforms Protect Puppies</div>
+            <div class="platform-safeguard" style="background: rgba(52, 211, 153, 0.05); border-color: rgba(52, 211, 153, 0.2);">
+                <div class="safeguard-body" style="font-size: 9px;">
+                    <strong>Pets4Homes & Gumtree</strong><br>
+                    <span class="dim">Mandatory ready-to-leave field. 100% of under-8-week puppies have future dates set. Buyers cannot collect early.</span>
+                </div>
+            </div>
+            <div class="platform-safeguard" style="background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2);">
+                <div class="safeguard-body" style="font-size: 9px;">
+                    <strong>FreeAds Gap</strong><br>
+                    <span class="dim">559 puppies under 8 weeks — 77% have no ready date. Of those with dates, many say "Now". Field is optional with no enforcement.</span>
+                </div>
+            </div>
+
+            <div class="table-section-label spaced">Why It Matters</div>
+            <div class="age-insight-card" style="background: linear-gradient(145deg, rgba(251, 191, 36, 0.08) 0%, rgba(245, 158, 11, 0.04) 100%); border-color: rgba(251, 191, 36, 0.2);">
+                <div class="age-insight-content">
+                    <div class="age-insight-stat" style="color: #ffffff; font-size: 22px;">Early separation</div>
+                    <div class="age-insight-text">causes behavioural issues, anxiety, and health problems in puppies</div>
+                </div>
+            </div>
+            <div class="age-insight-card" style="background: linear-gradient(145deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.04) 100%); border-color: rgba(239, 68, 68, 0.2);">
+                <div class="age-insight-content">
+                    <div class="age-insight-stat" style="color: #ef4444; font-size: 22px;">432 puppies</div>
+                    <div class="age-insight-text">under 8 weeks on FreeAds with no ready-to-leave protection</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="author-footer">Kim Faura</div>
+    <div class="slide-number">10</div>
+</div>
+
+<!-- SLIDE 11: Top Breeds -->
+<div class="slide content-slide">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="deck-title">UK Dog Marketplace Analysis</div>
+
+    <div class="header">
+        <h1><span>French Bulldog</span> is most popular with 2,896 dogs for sale —<br>Australian Labradoodle commands highest prices at £2,336</h1>
+    </div>
+
+    <div class="dual-table-content">
+        <div class="dual-table-left">
+            <div class="table-section-label">Top 10 Breeds by Dogs for Sale</div>
+            <div class="seller-table">
+                <div class="seller-row seller-header">
+                    <span class="seller-name">Breed</span>
+                    <span class="seller-listings">Dogs</span>
+                    <span class="seller-pct">Share</span>
+                </div>
+                <div class="seller-row" style="background: rgba(251, 191, 36, 0.1);">
+                    <span class="seller-name">French Bulldog</span>
+                    <span class="seller-listings">2,896</span>
+                    <span class="seller-pct" style="color: #fbbf24;">6.6%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Labrador Retriever</span>
+                    <span class="seller-listings">2,847</span>
+                    <span class="seller-pct">6.5%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Miniature Dachshund</span>
+                    <span class="seller-listings">2,683</span>
+                    <span class="seller-pct">6.1%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Cockapoo</span>
+                    <span class="seller-listings">2,606</span>
+                    <span class="seller-pct">6.0%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Cocker Spaniel</span>
+                    <span class="seller-listings">2,573</span>
+                    <span class="seller-pct">5.9%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">German Shepherd</span>
+                    <span class="seller-listings">1,671</span>
+                    <span class="seller-pct">3.8%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Dachshund</span>
+                    <span class="seller-listings">1,365</span>
+                    <span class="seller-pct">3.1%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Cane Corso</span>
+                    <span class="seller-listings">1,250</span>
+                    <span class="seller-pct">2.9%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Cavapoo</span>
+                    <span class="seller-listings">1,190</span>
+                    <span class="seller-pct">2.7%</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-name">Staffordshire Bull Terrier</span>
+                    <span class="seller-listings">1,112</span>
+                    <span class="seller-pct">2.5%</span>
+                </div>
+            </div>
+            <div style="font-size: 8px; color: #5a4a3a; margin-top: 8px;">
+                ~44,000 dogs | 9 platforms | Excludes "Mixed Breed"
+            </div>
+        </div>
+
+        <div class="dual-table-right">
+            <div class="table-section-label">Most Expensive Breeds (avg price)</div>
+            <div class="price-bars">
+                <div class="price-row">
+                    <span class="price-breed">Australian Labradoodle</span>
+                    <div class="price-bar-container">
+                        <div class="price-bar" style="width: 100%;"></div>
+                        <span class="price-value">£2,336</span>
+                    </div>
+                </div>
+                <div class="price-row">
+                    <span class="price-breed">Maltipoo</span>
+                    <div class="price-bar-container">
+                        <div class="price-bar" style="width: 84%;"></div>
+                        <span class="price-value">£1,957</span>
+                    </div>
+                </div>
+                <div class="price-row">
+                    <span class="price-breed">English Bulldog</span>
+                    <div class="price-bar-container">
+                        <div class="price-bar" style="width: 80%;"></div>
+                        <span class="price-value">£1,863</span>
+                    </div>
+                </div>
+                <div class="price-row">
+                    <span class="price-breed">French Bulldog</span>
+                    <div class="price-bar-container">
+                        <div class="price-bar" style="width: 80%;"></div>
+                        <span class="price-value">£1,860</span>
+                    </div>
+                </div>
+                <div class="price-row">
+                    <span class="price-breed">West Highland Terrier</span>
+                    <div class="price-bar-container">
+                        <div class="price-bar" style="width: 75%;"></div>
+                        <span class="price-value">£1,760</span>
+                    </div>
+                </div>
+                <div class="price-row">
+                    <span class="price-breed">Golden Retriever</span>
+                    <div class="price-bar-container">
+                        <div class="price-bar" style="width: 74%;"></div>
+                        <span class="price-value">£1,737</span>
+                    </div>
+                </div>
+                <div class="price-row">
+                    <span class="price-breed">Samoyed</span>
+                    <div class="price-bar-container">
+                        <div class="price-bar" style="width: 74%;"></div>
+                        <span class="price-value">£1,730</span>
+                    </div>
+                </div>
+                <div class="price-row">
+                    <span class="price-breed">Boxer</span>
+                    <div class="price-bar-container">
+                        <div class="price-bar" style="width: 74%;"></div>
+                        <span class="price-value">£1,728</span>
+                    </div>
+                </div>
+                <div class="price-row">
+                    <span class="price-breed">Toy Poodle</span>
+                    <div class="price-bar-container">
+                        <div class="price-bar" style="width: 73%;"></div>
+                        <span class="price-value">£1,703</span>
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 8px; color: #5a4a3a; margin-top: 8px;">
+                Min 100 dogs per breed | Market avg: £1,176
+            </div>
+        </div>
+    </div>
+
+    <div class="author-footer">Kim Faura</div>
+    <div class="slide-number">11</div>
+</div>
+
+</body>
+</html>

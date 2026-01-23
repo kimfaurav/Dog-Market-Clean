@@ -1,89 +1,196 @@
 {
   "summary": {
     "raw_listings": 19021,
-    "raw_puppies": 47175,
-    "raw_avg_per_listing": 2.48,
-    "unique_listings": 17594,
-    "unique_puppies": 44087,
-    "duplicates_removed": 1427,
-    "annualized_puppies": 643671,
-    "market_share_pct": 68.04
+    "raw_puppies": 61675,
+    "raw_avg_per_listing": 3.24,
+    "unique_listings": 17794,
+    "unique_puppies": 58137,
+    "duplicates_removed": 1227,
+    "within_platform_dups": 440,
+    "cross_platform_dups": 309,
+    "stale_removed": 478,
+    "annualized_puppies": 848802,
+    "market_share_pct": 89.73
   },
   "platforms": {
     "champdogs": {
       "listings": 162,
-      "puppies": 0,
-      "unique": 152,
-      "avg": 0.0,
-      "share": 0.0
+      "puppies": 972,
+      "unique": 145,
+      "avg": 6.0,
+      "share": 1.6
     },
     "foreverpuppy": {
       "listings": 636,
-      "puppies": 2497,
-      "unique": 497,
-      "avg": 3.9,
-      "share": 5.3
+      "puppies": 2535,
+      "unique": 634,
+      "avg": 4.0,
+      "share": 4.1
     },
     "freeads": {
       "listings": 6561,
-      "puppies": 4467,
-      "unique": 6132,
-      "avg": 0.7,
-      "share": 9.5
+      "puppies": 14268,
+      "unique": 6245,
+      "avg": 2.2,
+      "share": 23.1
     },
     "gumtree": {
       "listings": 1775,
-      "puppies": 2195,
-      "unique": 1687,
-      "avg": 1.2,
-      "share": 4.7
+      "puppies": 4515,
+      "unique": 1710,
+      "avg": 2.5,
+      "share": 7.3
     },
     "kennel_club": {
       "listings": 411,
       "puppies": 2453,
       "unique": 404,
       "avg": 6.0,
-      "share": 5.2
+      "share": 4.0
     },
     "petify": {
       "listings": 602,
-      "puppies": 2926,
-      "unique": 595,
+      "puppies": 2947,
+      "unique": 600,
       "avg": 4.9,
-      "share": 6.2
+      "share": 4.8
     },
     "pets4homes": {
       "listings": 7621,
-      "puppies": 31317,
-      "unique": 7259,
+      "puppies": 31318,
+      "unique": 7595,
       "avg": 4.1,
-      "share": 66.4
+      "share": 50.8
     },
     "preloved": {
       "listings": 678,
-      "puppies": 17,
-      "unique": 587,
-      "avg": 0.0,
-      "share": 0.0
+      "puppies": 917,
+      "unique": 675,
+      "avg": 1.4,
+      "share": 1.5
     },
     "puppies": {
       "listings": 575,
-      "puppies": 1303,
-      "unique": 566,
-      "avg": 2.3,
+      "puppies": 1750,
+      "unique": 573,
+      "avg": 3.0,
       "share": 2.8
     }
   },
   "cross_platform_duplicates": {
-    "2": 950,
-    "3": 89,
-    "4": 16,
-    "5": 3,
-    "7": 2,
-    "8": 1,
-    "55": 1,
-    "19": 1
+    "2": 280,
+    "3": 3
   },
+  "platform_pair_overlap": [
+    {
+      "pair": "gumtree|pets4homes",
+      "platforms": [
+        "gumtree",
+        "pets4homes"
+      ],
+      "count": 193,
+      "pct": 11
+    },
+    {
+      "pair": "freeads|puppies",
+      "platforms": [
+        "freeads",
+        "puppies"
+      ],
+      "count": 30,
+      "pct": 5
+    },
+    {
+      "pair": "freeads|petify",
+      "platforms": [
+        "freeads",
+        "petify"
+      ],
+      "count": 20,
+      "pct": 3
+    },
+    {
+      "pair": "pets4homes|preloved",
+      "platforms": [
+        "pets4homes",
+        "preloved"
+      ],
+      "count": 15,
+      "pct": 2
+    },
+    {
+      "pair": "freeads|kennel_club",
+      "platforms": [
+        "freeads",
+        "kennel_club"
+      ],
+      "count": 8,
+      "pct": 2
+    },
+    {
+      "pair": "freeads|gumtree",
+      "platforms": [
+        "freeads",
+        "gumtree"
+      ],
+      "count": 8,
+      "pct": 0
+    },
+    {
+      "pair": "foreverpuppy|freeads",
+      "platforms": [
+        "foreverpuppy",
+        "freeads"
+      ],
+      "count": 5,
+      "pct": 1
+    },
+    {
+      "pair": "petify|puppies",
+      "platforms": [
+        "petify",
+        "puppies"
+      ],
+      "count": 5,
+      "pct": 1
+    },
+    {
+      "pair": "gumtree|preloved",
+      "platforms": [
+        "gumtree",
+        "preloved"
+      ],
+      "count": 2,
+      "pct": 0
+    },
+    {
+      "pair": "kennel_club|puppies",
+      "platforms": [
+        "kennel_club",
+        "puppies"
+      ],
+      "count": 1,
+      "pct": 0
+    },
+    {
+      "pair": "foreverpuppy|puppies",
+      "platforms": [
+        "foreverpuppy",
+        "puppies"
+      ],
+      "count": 1,
+      "pct": 0
+    },
+    {
+      "pair": "kennel_club|petify",
+      "platforms": [
+        "kennel_club",
+        "petify"
+      ],
+      "count": 1,
+      "pct": 0
+    }
+  ],
   "sellers": {
     "total": 16578,
     "high_volume": 191,
@@ -241,8 +348,8 @@
     "gumtree": {
       "median_days": 6,
       "total": 1775,
-      "under_7d": 1078,
-      "under_7d_pct": 61,
+      "under_7d": 1109,
+      "under_7d_pct": 62,
       "7_30d": 657,
       "7_30d_pct": 37,
       "30_90d": 6,
@@ -251,15 +358,15 @@
       "over_90d_pct": 0
     },
     "pets4homes": {
-      "median_days": 21,
+      "median_days": 22,
       "total": 7621,
-      "under_7d": 1569,
-      "under_7d_pct": 21,
-      "7_30d": 3145,
-      "7_30d_pct": 41,
-      "30_90d": 2765,
-      "30_90d_pct": 36,
-      "over_90d": 141,
+      "under_7d": 1362,
+      "under_7d_pct": 18,
+      "7_30d": 3280,
+      "7_30d_pct": 43,
+      "30_90d": 2832,
+      "30_90d_pct": 37,
+      "over_90d": 146,
       "over_90d_pct": 2
     },
     "freeads": {
@@ -275,22 +382,22 @@
       "over_90d_pct": 7
     },
     "foreverpuppy": {
-      "median_days": 45,
+      "median_days": 46,
       "total": 636,
-      "under_7d": 38,
-      "under_7d_pct": 6,
-      "7_30d": 153,
-      "7_30d_pct": 24,
-      "30_90d": 377,
-      "30_90d_pct": 59,
+      "under_7d": 31,
+      "under_7d_pct": 5,
+      "7_30d": 158,
+      "7_30d_pct": 25,
+      "30_90d": 379,
+      "30_90d_pct": 60,
       "over_90d": 15,
       "over_90d_pct": 2
     },
     "preloved": {
-      "median_days": 57,
+      "median_days": 56,
       "total": 678,
-      "under_7d": 28,
-      "under_7d_pct": 4,
+      "under_7d": 31,
+      "under_7d_pct": 5,
       "7_30d": 144,
       "7_30d_pct": 21,
       "30_90d": 279,
@@ -299,28 +406,28 @@
       "over_90d_pct": 33
     },
     "puppies": {
-      "median_days": 71,
+      "median_days": 72,
       "total": 575,
-      "under_7d": 17,
-      "under_7d_pct": 3,
-      "7_30d": 119,
-      "7_30d_pct": 21,
-      "30_90d": 222,
-      "30_90d_pct": 39,
-      "over_90d": 217,
+      "under_7d": 10,
+      "under_7d_pct": 2,
+      "7_30d": 125,
+      "7_30d_pct": 22,
+      "30_90d": 221,
+      "30_90d_pct": 38,
+      "over_90d": 219,
       "over_90d_pct": 38
     },
     "petify": {
-      "median_days": null,
+      "median_days": 209,
       "total": 602,
-      "under_7d": 0,
-      "under_7d_pct": 0,
-      "7_30d": 0,
-      "7_30d_pct": 0,
-      "30_90d": 0,
-      "30_90d_pct": 0,
-      "over_90d": 0,
-      "over_90d_pct": 0
+      "under_7d": 28,
+      "under_7d_pct": 5,
+      "7_30d": 21,
+      "7_30d_pct": 3,
+      "30_90d": 123,
+      "30_90d_pct": 20,
+      "over_90d": 429,
+      "over_90d_pct": 71
     }
   },
   "age_distribution": {
@@ -476,9 +583,9 @@
   },
   "qa": {
     "total_rows": 19021,
-    "unique_after_dedupe": 17594,
-    "duplicates_removed": 1427,
-    "duplicate_groups": 1063,
+    "unique_after_dedupe": 17794,
+    "duplicates_removed": 1227,
+    "duplicate_groups": 445,
     "sellers_total": 16578,
     "sellers_high_volume": 191,
     "platforms_count": 9

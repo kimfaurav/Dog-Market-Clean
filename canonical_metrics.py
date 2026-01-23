@@ -49,14 +49,16 @@ import re
 
 
 def parse_relative_date(text, reference_date):
-    """Parse relative date strings like '5 days ago' or '2 weeks ago'"""
-    if pd.isna(text):
+    """Parse relative date strings like '5 days ago', '2 weeks ago', or '12 hours ago'"""
+    if pd.isna(text) or pd.isna(reference_date):
         return None
     text = str(text).lower().strip()
-    match = re.match(r'(\d+)\s+(day|week|month)s?\s+ago', text)
+    match = re.match(r'(\d+)\s+(hour|day|week|month)s?\s+ago', text)
     if match:
         num = int(match.group(1))
         unit = match.group(2)
+        if unit == 'hour':
+            return reference_date - timedelta(hours=num)
         if unit == 'day':
             return reference_date - timedelta(days=num)
         if unit == 'week':
@@ -125,45 +127,234 @@ def compute_breed_stats(df):
     }
 
 
+def infer_puppy_count(row):
+    """
+    Infer number of puppies from available fields.
+    Priority:
+      1. total_available_num if present and valid (1-15)
+      2. males_available_num + females_available_num if valid (each <= 12)
+      3. Parse sex field (e.g., "Male (2)", "2 male, 2 female", "Mixed Litter")
+      4. Parse title for patterns like "X puppies", "litter of X"
+      5. Fallback to 1
+
+    Max realistic litter size capped at 15.
+    """
+    MAX_LITTER = 15
+
+    # 1. Use total_available_num if valid (sanity: 1-15)
+    total = row.get('total_available_num')
+    if pd.notna(total) and 1 <= total <= MAX_LITTER:
+        return int(total)
+
+    # 2. Use males + females if available (sanity: each <= 12, avoids price misparses)
+    males = row.get('males_available_num')
+    females = row.get('females_available_num')
+    males = males if pd.notna(males) and males <= 12 else 0
+    females = females if pd.notna(females) and females <= 12 else 0
+    if males + females > 0:
+        return min(int(males + females), MAX_LITTER)
+
+    # 3. Parse sex field
+    sex = str(row.get('sex', '')).lower()
+    if sex and sex != 'nan':
+        # Pattern: "male (2)" or "female (3)"
+        match = re.search(r'\((\d+)\)', sex)
+        if match:
+            count = int(match.group(1))
+            if 1 <= count <= MAX_LITTER:
+                return count
+        # Pattern: "2 male, 2 female" or "1 male, 1 female"
+        match = re.search(r'(\d+)\s*male.*?(\d+)\s*female', sex)
+        if match:
+            count = int(match.group(1)) + int(match.group(2))
+            if 2 <= count <= MAX_LITTER:
+                return count
+        match = re.search(r'(\d+)\s*female.*?(\d+)\s*male', sex)
+        if match:
+            count = int(match.group(1)) + int(match.group(2))
+            if 2 <= count <= MAX_LITTER:
+                return count
+        # "Mixed Litter" or "Mixed" implies at least 2
+        if 'mixed' in sex:
+            return 2
+
+    # 4. Parse title for puppy counts
+    title = str(row.get('title', '')).lower()
+    if title and title != 'nan':
+        # Word numbers to digits
+        word_nums = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5,
+                     'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10}
+        for word, num in word_nums.items():
+            if word in title and 2 <= num <= MAX_LITTER:
+                # Check it's followed by puppy-related words
+                if re.search(rf'\b{word}\b.*(?:puppy|puppies|pups|pup|boys?|girls?|males?|females?|litter|remaining|left|available)', title):
+                    return num
+
+        # Patterns in priority order
+        patterns = [
+            # "litter of 8", "litter of 8 puppies"
+            (r'litter\s*of\s*(\d+)', 1),
+            # "have 4 american bulldog puppies", "got 3 pups"
+            (r'\b(?:have|got|selling)\s+(\d+)\s+\w+', 1),
+            # "8 cockapoo puppies", "4 pups available"
+            (r'\b(\d+)\s+\w+\s*(?:puppy|puppies|pups)\b', 1),
+            # "3 puppies", "5 pups left"
+            (r'\b(\d+)\s*(?:puppy|puppies|pups|pup)\b', 1),
+            # "3 beautiful king charles puppies", "2 stunning boys"
+            (r'\b(\d+)\s+(?:beautiful|gorgeous|stunning|lovely|adorable|amazing)\s+.*?(?:puppy|puppies|pups|boys?|girls?)', 1),
+            # "only 1 left", "only 2 remaining"
+            (r'\bonly\s+(\d+)\s+(?:\w+\s+)?(?:left|remaining|available)', 1),
+            # "2 left", "3 remaining" (but not "2 weeks left")
+            (r'\b(\d+)\s+(?:left|remaining)\b(?!\s*(?:week|month|year|day))', 1),
+            # "last 2 from litter"
+            (r'\blast\s+(\d+)\b', 1),
+            # "3 boys and 2 girls", "2 males 1 female"
+            (r'\b(\d+)\s*(?:boys?|males?)\s*(?:and|&|,)?\s*(\d+)\s*(?:girls?|females?)', 2),
+            (r'\b(\d+)\s*(?:girls?|females?)\s*(?:and|&|,)?\s*(\d+)\s*(?:boys?|males?)', 2),
+        ]
+
+        for pattern, groups in patterns:
+            match = re.search(pattern, title)
+            if match:
+                if groups == 1:
+                    count = int(match.group(1))
+                else:
+                    count = int(match.group(1)) + int(match.group(2))
+                if 1 <= count <= MAX_LITTER:
+                    return count
+
+    # 5. Platform-specific defaults (Champdogs behaves like Kennel Club - litter listings)
+    platform = str(row.get('platform', '')).lower()
+    if platform == 'champdogs':
+        return 6  # Assume similar to Kennel Club avg
+
+    # 6. Fallback
+    return 1
+
+
 def compute_metrics():
     '''Compute all metrics from canonical derived.csv'''
     df = pd.read_csv('output/views/derived.csv', low_memory=False)
-    
+
     # Seller key for deduplication
     df['seller_key'] = df['seller_name'].fillna('UNKNOWN') + '|' + df['location'].fillna('UNKNOWN')
-    
+
+    # Infer puppy count from multiple sources
+    df['total_available_num'] = df.apply(infer_puppy_count, axis=1)
+
+    # Calculate listing age early (needed for stale removal)
+    df['published_dt'] = pd.to_datetime(df['published_at_ts'], errors='coerce')
+    df['asof_dt'] = pd.to_datetime(df['asof_ts'], errors='coerce')
+
+    for idx, row in df[df['published_dt'].isna() & df['published_at'].notna()].iterrows():
+        parsed_date = parse_relative_date(row['published_at'], row['asof_dt'])
+        if parsed_date:
+            df.at[idx, 'published_dt'] = parsed_date
+
+    # Handle petify: load posted_ago from raw CSV (not in derived.csv)
+    try:
+        petify_raw = pd.read_csv('Input/Raw CSVs/petify_data_clean copy.csv', low_memory=False)
+        petify_raw['asof_dt'] = df[df['platform'] == 'petify']['asof_dt'].iloc[0] if len(df[df['platform'] == 'petify']) > 0 else pd.NaT
+        # Create lookup by URL
+        petify_dates = {}
+        for _, row in petify_raw[petify_raw['posted_ago'].notna()].iterrows():
+            parsed = parse_relative_date(row['posted_ago'], petify_raw['asof_dt'].iloc[0])
+            if parsed:
+                petify_dates[row['url']] = parsed
+        # Apply to main df
+        petify_mask = (df['platform'] == 'petify') & df['published_dt'].isna()
+        for idx, row in df[petify_mask].iterrows():
+            if row['url'] in petify_dates:
+                df.at[idx, 'published_dt'] = petify_dates[row['url']]
+    except Exception as e:
+        print(f"Warning: Could not load petify dates: {e}")
+
+    # Note: champdogs and kennel_club don't have listing dates in their data
+    # (they have DOB which is different). Treat as fresh by default.
+
+    reference_date = df['published_dt'].max()
+    df['listing_age_days'] = (reference_date - df['published_dt']).dt.days
+
     # Raw counts
     raw_listings = len(df)
     raw_puppies = int(df['total_available_num'].sum())
     raw_avg = raw_puppies / raw_listings
     
-    # Deduplication using breed + location + price_band
+    # Deduplication with two rules:
+    # 1. Within-platform: same seller + same title (accidental reposts)
+    # 2. Cross-platform: same breed + location + price_band (cross-posting)
     has_price = df[df['price_num'].notna()].copy()
     no_price = df[df['price_num'].isna()].copy()
     has_price['pb'] = (has_price['price_num'] / 50).round(0).astype(int)
-    has_price['dk'] = has_price['breed'] + '|' + has_price['location'] + '|' + has_price['pb'].astype(str)
-    unique_df = has_price.drop_duplicates(subset=['dk'], keep='first')
+    has_price['cross_dk'] = has_price['breed'] + '|' + has_price['location'].fillna('') + '|' + has_price['pb'].astype(str)
+
+    # Mark within-platform duplicates for has_price (same platform + seller + title)
+    has_price['within_dk'] = has_price['platform'] + '|' + has_price['seller_key'] + '|' + has_price['title'].fillna('')
+    has_price['is_within_dup'] = has_price.duplicated(subset=['within_dk'], keep='first')
+    within_dups_priced = int(has_price['is_within_dup'].sum())
+
+    # Mark within-platform duplicates for no_price too
+    no_price['within_dk'] = no_price['platform'] + '|' + no_price['seller_key'] + '|' + no_price['title'].fillna('')
+    no_price['is_within_dup'] = no_price.duplicated(subset=['within_dk'], keep='first')
+    within_dups_no_price = int(no_price['is_within_dup'].sum())
+    within_dups = within_dups_priced + within_dups_no_price
+
+    # Remove within-platform dups first
+    after_within = has_price[~has_price['is_within_dup']].copy()
+    no_price_after_within = no_price[~no_price['is_within_dup']].copy()
+
+    # Mark cross-platform duplicates (same breed+loc+price on different platforms)
+    # For each cross_dk that appears on multiple platforms, keep first row, mark rest as dups
+    after_within['is_cross_dup'] = False
+    for dk, group in after_within.groupby('cross_dk'):
+        if group['platform'].nunique() > 1:
+            # Keep first occurrence, mark all others as cross-platform dups
+            for idx in group.index[1:]:
+                after_within.loc[idx, 'is_cross_dup'] = True
+
+    cross_dups = int(after_within['is_cross_dup'].sum())
+
+    # Remove stale listings (>180 days / 6 months old)
+    after_cross = after_within[~after_within['is_cross_dup']].copy()
+    STALE_THRESHOLD_DAYS = 180
+    after_cross['is_stale'] = after_cross['listing_age_days'].fillna(0) > STALE_THRESHOLD_DAYS
+    stale_removed = int(after_cross['is_stale'].sum())
+
+    # Also remove stale from no_price listings (after within-platform dedup)
+    no_price_after_within['is_stale'] = no_price_after_within['listing_age_days'].fillna(0) > STALE_THRESHOLD_DAYS
+    stale_removed_no_price = int(no_price_after_within['is_stale'].sum())
+    stale_removed_total = stale_removed + stale_removed_no_price
+
+    # Count duplicate groups for QA
+    # Within-platform: count of within_dk values that appear more than once (both priced and no_price)
+    within_groups_priced = int((has_price.groupby('within_dk').size() > 1).sum())
+    within_groups_no_price = int((no_price.groupby('within_dk').size() > 1).sum())
+    within_groups = within_groups_priced + within_groups_no_price
+    # Cross-platform: count of cross_dk values that appear on multiple platforms
+    cross_groups = sum(1 for dk, g in after_within.groupby('cross_dk') if g['platform'].nunique() > 1)
+    dup_groups = within_groups + cross_groups
+
+    # Final unique set (after removing within-dups, cross-dups, and stale)
+    unique_df = after_cross[~after_cross['is_stale']]
+    unique_no_price = no_price_after_within[~no_price_after_within['is_stale']]
     unique_pups_priced = int(unique_df['total_available_num'].sum())
-    unique_pups_no_price = int(no_price['total_available_num'].sum())
+    unique_pups_no_price = int(unique_no_price['total_available_num'].sum())
     unique_pups = unique_pups_priced + unique_pups_no_price
-    unique_listings = len(unique_df) + len(no_price)
-    dup_rows = raw_listings - unique_listings
-    groups = has_price.groupby('dk').size()
-    dup_groups = (groups > 1).sum()
+    unique_listings = len(unique_df) + len(unique_no_price)
+    total_removed = within_dups + cross_dups + stale_removed_total
     
     # Annualization
     annualized = int(unique_pups * 12.1667 * 1.2)
     market_share = (annualized / 946000) * 100
     
-    # Platform breakdown
+    # Platform breakdown - use same dedup logic as within-platform (seller_key + title)
     platforms = {}
     for p in sorted(df['platform'].unique()):
-        pdf = df[df['platform'] == p]
+        pdf = df[df['platform'] == p].copy()
         pups = int(pdf['total_available_num'].sum())
-        p_priced = pdf[pdf['price_num'].notna()].copy()
-        p_priced['pb'] = (p_priced['price_num'] / 50).round(0).astype(int)
-        p_priced['dk'] = p_priced['breed'] + '|' + p_priced['location'] + '|' + p_priced['pb'].astype(str)
-        p_unique = p_priced['dk'].nunique() + len(pdf[pdf['price_num'].isna()])
+        # Calculate unique using seller_key + title (same as within-platform dedup)
+        pdf['within_dk'] = pdf['seller_key'] + '|' + pdf['title'].fillna('')
+        p_unique = pdf['within_dk'].nunique()
         platforms[p] = {
             'listings': len(pdf),
             'puppies': pups,
@@ -172,12 +363,39 @@ def compute_metrics():
             'share': round((pups / raw_puppies) * 100, 1) if raw_puppies > 0 else 0
         }
     
-    # Cross-platform duplicates
+    # Cross-platform duplicates - count by number of platforms
     cross = {}
-    for dk, cnt in groups.items():
-        if cnt >= 2:
-            cross[cnt] = cross.get(cnt, 0) + 1
-    
+    platform_counts = after_within.groupby('cross_dk')['platform'].nunique()
+    for dk, num_platforms in platform_counts.items():
+        if num_platforms >= 2:
+            key = int(num_platforms)
+            cross[key] = cross.get(key, 0) + 1
+
+    # Platform pair overlap - count shared listings between each pair
+    from itertools import combinations
+    pair_counts = {}
+    for dk, group in after_within.groupby('cross_dk'):
+        plats = group['platform'].unique()
+        if len(plats) >= 2:
+            for p1, p2 in combinations(sorted(plats), 2):
+                pair_key = f"{p1}|{p2}"
+                pair_counts[pair_key] = pair_counts.get(pair_key, 0) + 1
+
+    # Calculate percentages (overlap / smaller platform's unique count)
+    platform_pair_overlap = []
+    for pair_key, count in sorted(pair_counts.items(), key=lambda x: -x[1]):
+        p1, p2 = pair_key.split('|')
+        p1_unique = platforms.get(p1, {}).get('unique', 1)
+        p2_unique = platforms.get(p2, {}).get('unique', 1)
+        smaller = min(p1_unique, p2_unique)
+        pct = round(count / smaller * 100) if smaller > 0 else 0
+        platform_pair_overlap.append({
+            'pair': pair_key,
+            'platforms': [p1, p2],
+            'count': count,
+            'pct': pct
+        })
+
     # Seller analysis (excluding rescues)
     rescue_mask = (
         df['user_type'].str.contains('rescue', case=False, na=False) | 
@@ -233,18 +451,7 @@ def compute_metrics():
             'has_license': has_license
         })
     
-    # Listing freshness
-    df['published_dt'] = pd.to_datetime(df['published_at_ts'], errors='coerce')
-    df['asof_dt'] = pd.to_datetime(df['asof_ts'], errors='coerce')
-    
-    for idx, row in df[df['published_dt'].isna() & df['published_at'].notna()].iterrows():
-        parsed_date = parse_relative_date(row['published_at'], row['asof_dt'])
-        if parsed_date:
-            df.at[idx, 'published_dt'] = parsed_date
-    
-    reference_date = df['published_dt'].max()
-    df['listing_age_days'] = (reference_date - df['published_dt']).dt.days
-    
+    # Listing freshness (date columns already calculated earlier for stale removal)
     freshness = {}
     for p in ('gumtree', 'pets4homes', 'freeads', 'foreverpuppy', 'preloved', 'puppies', 'petify'):
         pdf = df[df['platform'] == p].copy()
@@ -324,7 +531,7 @@ def compute_metrics():
     qa = {
         'total_rows': raw_listings,
         'unique_after_dedupe': unique_listings,
-        'duplicates_removed': dup_rows,
+        'duplicates_removed': total_removed,
         'duplicate_groups': int(dup_groups),
         'sellers_total': total_sellers,
         'sellers_high_volume': total_high_volume,
@@ -339,12 +546,16 @@ def compute_metrics():
             'raw_avg_per_listing': round(raw_avg, 2),
             'unique_listings': unique_listings,
             'unique_puppies': unique_pups,
-            'duplicates_removed': dup_rows,
+            'duplicates_removed': total_removed,
+            'within_platform_dups': within_dups,
+            'cross_platform_dups': cross_dups,
+            'stale_removed': stale_removed_total,
             'annualized_puppies': annualized,
             'market_share_pct': round(market_share, 2)
         },
         'platforms': platforms,
         'cross_platform_duplicates': cross,
+        'platform_pair_overlap': platform_pair_overlap,
         'sellers': {
             'total': total_sellers,
             'high_volume': total_high_volume,
