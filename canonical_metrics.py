@@ -70,6 +70,16 @@ def categorize_age(dob, ref_date='2026-01-22'):
     """Categorize puppy age into buckets."""
     if pd.isna(dob):
         return None
+    try:
+        birth = pd.to_datetime(dob)
+        ref = pd.to_datetime(ref_date)
+    except:
+        return None
+    age_days = (ref - birth).days
+    age_weeks = age_days / 7
+    """Categorize puppy age into buckets."""
+    if pd.isna(dob):
+        return None
     birth = pd.to_datetime(dob)
     ref = pd.to_datetime(ref_date)
     age_days = (ref - birth).days
