@@ -1,16 +1,17 @@
 {
   "summary": {
-    "raw_listings": 19021,
-    "raw_puppies": 61675,
-    "raw_avg_per_listing": 3.24,
-    "unique_listings": 17794,
-    "unique_puppies": 58137,
-    "duplicates_removed": 1227,
+    "raw_listings": 18960,
+    "raw_puppies": 61564,
+    "raw_avg_per_listing": 3.25,
+    "unique_listings": 17761,
+    "unique_puppies": 58071,
+    "duplicates_removed": 1199,
     "within_platform_dups": 440,
-    "cross_platform_dups": 309,
-    "stale_removed": 478,
-    "annualized_puppies": 848802,
-    "market_share_pct": 89.73
+    "cross_platform_dups": 303,
+    "stale_removed": 456,
+    "non_sale_removed": 61,
+    "annualized_puppies": 847838,
+    "market_share_pct": 89.62
   },
   "platforms": {
     "champdogs": {
@@ -21,25 +22,25 @@
       "share": 1.6
     },
     "foreverpuppy": {
-      "listings": 636,
-      "puppies": 2535,
-      "unique": 634,
+      "listings": 630,
+      "puppies": 2529,
+      "unique": 628,
       "avg": 4.0,
       "share": 4.1
     },
     "freeads": {
-      "listings": 6561,
-      "puppies": 14268,
-      "unique": 6245,
+      "listings": 6551,
+      "puppies": 14258,
+      "unique": 6235,
       "avg": 2.2,
-      "share": 23.1
+      "share": 23.2
     },
     "gumtree": {
-      "listings": 1775,
-      "puppies": 4515,
-      "unique": 1710,
+      "listings": 1758,
+      "puppies": 4450,
+      "unique": 1693,
       "avg": 2.5,
-      "share": 7.3
+      "share": 7.2
     },
     "kennel_club": {
       "listings": 411,
@@ -56,16 +57,16 @@
       "share": 4.8
     },
     "pets4homes": {
-      "listings": 7621,
-      "puppies": 31318,
-      "unique": 7595,
+      "listings": 7617,
+      "puppies": 31312,
+      "unique": 7591,
       "avg": 4.1,
-      "share": 50.8
+      "share": 50.9
     },
     "preloved": {
-      "listings": 678,
-      "puppies": 917,
-      "unique": 675,
+      "listings": 654,
+      "puppies": 893,
+      "unique": 651,
       "avg": 1.4,
       "share": 1.5
     },
@@ -78,7 +79,7 @@
     }
   },
   "cross_platform_duplicates": {
-    "2": 280,
+    "2": 274,
     "3": 3
   },
   "platform_pair_overlap": [
@@ -88,7 +89,7 @@
         "gumtree",
         "pets4homes"
       ],
-      "count": 193,
+      "count": 187,
       "pct": 11
     },
     {
@@ -192,101 +193,113 @@
     }
   ],
   "sellers": {
-    "total": 16578,
-    "high_volume": 191,
+    "total": 17156,
+    "pct_one_listing": 94,
+    "rescue_count": 21,
+    "high_volume": 187,
     "by_platform": {
       "champdogs": {
-        "sellers": 0,
-        "pct": 0.0,
+        "total_sellers": 145,
+        "pct_one_listing": 96,
+        "max_listings": 0,
+        "high_volume": 0,
+        "hv_pct": 0.0,
         "license_sellers": 0,
         "license_pct": 0
       },
       "foreverpuppy": {
-        "sellers": 5,
-        "pct": 2.6,
+        "total_sellers": 586,
+        "pct_one_listing": 94,
+        "max_listings": 3,
+        "high_volume": 5,
+        "hv_pct": 2.7,
         "license_sellers": 0,
         "license_pct": 0.0
       },
       "freeads": {
-        "sellers": 75,
-        "pct": 39.3,
+        "total_sellers": 5763,
+        "pct_one_listing": 93,
+        "max_listings": 9,
+        "high_volume": 74,
+        "hv_pct": 39.6,
         "license_sellers": 0,
         "license_pct": 0.0
       },
       "gumtree": {
-        "sellers": 1,
-        "pct": 0.5,
+        "total_sellers": 1657,
+        "pct_one_listing": 94,
+        "max_listings": 3,
+        "high_volume": 1,
+        "hv_pct": 0.5,
         "license_sellers": 0,
         "license_pct": 0.0
       },
       "kennel_club": {
-        "sellers": 1,
-        "pct": 0.5,
+        "total_sellers": 398,
+        "pct_one_listing": 97,
+        "max_listings": 4,
+        "high_volume": 1,
+        "hv_pct": 0.5,
         "license_sellers": 0,
         "license_pct": 0.0
       },
       "petify": {
-        "sellers": 40,
-        "pct": 20.9,
+        "total_sellers": 375,
+        "pct_one_listing": 73,
+        "max_listings": 0,
+        "high_volume": 40,
+        "hv_pct": 21.4,
         "license_sellers": 0,
         "license_pct": 0.0
       },
       "pets4homes": {
-        "sellers": 52,
-        "pct": 27.2,
-        "license_sellers": 43,
-        "license_pct": 82.7
+        "total_sellers": 7186,
+        "pct_one_listing": 95,
+        "max_listings": 8,
+        "high_volume": 54,
+        "hv_pct": 28.9,
+        "license_sellers": 44,
+        "license_pct": 81.5
       },
       "preloved": {
-        "sellers": 13,
-        "pct": 6.8,
+        "total_sellers": 530,
+        "pct_one_listing": 95,
+        "max_listings": 81,
+        "high_volume": 8,
+        "hv_pct": 4.3,
         "license_sellers": 0,
         "license_pct": 0.0
       },
       "puppies": {
-        "sellers": 0,
-        "pct": 0.0,
+        "total_sellers": 562,
+        "pct_one_listing": 98,
+        "max_listings": 2,
+        "high_volume": 0,
+        "hv_pct": 0.0,
         "license_sellers": 0,
         "license_pct": 0
       }
     },
     "top_10": [
       {
-        "name": "UNKNOWN",
-        "location": "London",
-        "listings": 16,
+        "name": "Pawprints2freedom",
+        "location": "Leeds, England",
+        "listings": 81,
         "platforms": [
-          "petify"
+          "preloved"
         ],
-        "has_license": false
+        "has_license": false,
+        "is_rescue": true
       },
       {
-        "name": "UNKNOWN",
-        "location": "Birmingham",
-        "listings": 16,
-        "platforms": [
-          "freeads",
-          "petify"
-        ],
-        "has_license": false
-      },
-      {
-        "name": "UNKNOWN",
-        "location": "Doncaster South Yorkshire",
-        "listings": 15,
-        "platforms": [
-          "petify"
-        ],
-        "has_license": false
-      },
-      {
-        "name": "Val",
-        "location": "Eastry, Kent",
+        "name": "Lurcher Link Rescue",
+        "location": "Halifax, West Yorkshire",
         "listings": 11,
         "platforms": [
           "preloved"
         ],
-        "has_license": false
+        "has_license": false,
+        "is_rescue": true
       },
       {
         "name": "justdogz",
@@ -295,25 +308,8 @@
         "platforms": [
           "freeads"
         ],
-        "has_license": false
-      },
-      {
-        "name": "Pawprints2freedom",
-        "location": "Leeds, England",
-        "listings": 9,
-        "platforms": [
-          "preloved"
-        ],
-        "has_license": false
-      },
-      {
-        "name": "The Canine Club",
-        "location": "Godstone, Surrey",
-        "listings": 8,
-        "platforms": [
-          "pets4homes"
-        ],
-        "has_license": true
+        "has_license": false,
+        "is_rescue": false
       },
       {
         "name": "Ritchie",
@@ -322,16 +318,18 @@
         "platforms": [
           "pets4homes"
         ],
-        "has_license": true
+        "has_license": true,
+        "is_rescue": false
       },
       {
-        "name": "UNKNOWN",
-        "location": "Liverpool",
+        "name": "The Canine Club",
+        "location": "Godstone, Surrey",
         "listings": 8,
         "platforms": [
-          "petify"
+          "pets4homes"
         ],
-        "has_license": false
+        "has_license": true,
+        "is_rescue": false
       },
       {
         "name": "Wiggle Waggle",
@@ -340,17 +338,58 @@
         "platforms": [
           "pets4homes"
         ],
-        "has_license": true
+        "has_license": true,
+        "is_rescue": false
+      },
+      {
+        "name": "marta.sobkowiak9911",
+        "location": "Hull",
+        "listings": 7,
+        "platforms": [
+          "freeads"
+        ],
+        "has_license": false,
+        "is_rescue": false
+      },
+      {
+        "name": "La'al Marras Rescue Group",
+        "location": "Cumbria",
+        "listings": 6,
+        "platforms": [
+          "freeads"
+        ],
+        "has_license": false,
+        "is_rescue": true
+      },
+      {
+        "name": "5 Star Licensed Breeder",
+        "location": "Blackpool, Lancashire",
+        "listings": 6,
+        "platforms": [
+          "pets4homes"
+        ],
+        "has_license": true,
+        "is_rescue": false
+      },
+      {
+        "name": "Chi-Chi's Premier Pooches",
+        "location": "Blackpool, Blackpool",
+        "listings": 5,
+        "platforms": [
+          "pets4homes"
+        ],
+        "has_license": true,
+        "is_rescue": false
       }
     ]
   },
   "freshness": {
     "gumtree": {
       "median_days": 6,
-      "total": 1775,
-      "under_7d": 1109,
-      "under_7d_pct": 62,
-      "7_30d": 657,
+      "total": 1758,
+      "under_7d": 1100,
+      "under_7d_pct": 63,
+      "7_30d": 649,
       "7_30d_pct": 37,
       "30_90d": 6,
       "30_90d_pct": 0,
@@ -359,51 +398,51 @@
     },
     "pets4homes": {
       "median_days": 22,
-      "total": 7621,
+      "total": 7617,
       "under_7d": 1362,
       "under_7d_pct": 18,
-      "7_30d": 3280,
+      "7_30d": 3277,
       "7_30d_pct": 43,
-      "30_90d": 2832,
+      "30_90d": 2831,
       "30_90d_pct": 37,
       "over_90d": 146,
       "over_90d_pct": 2
     },
     "freeads": {
       "median_days": 27,
-      "total": 6561,
-      "under_7d": 1781,
+      "total": 6551,
+      "under_7d": 1776,
       "under_7d_pct": 27,
       "7_30d": 1282,
       "7_30d_pct": 20,
-      "30_90d": 2550,
+      "30_90d": 2549,
       "30_90d_pct": 39,
-      "over_90d": 483,
+      "over_90d": 480,
       "over_90d_pct": 7
     },
     "foreverpuppy": {
       "median_days": 46,
-      "total": 636,
+      "total": 630,
       "under_7d": 31,
       "under_7d_pct": 5,
-      "7_30d": 158,
+      "7_30d": 156,
       "7_30d_pct": 25,
-      "30_90d": 379,
+      "30_90d": 377,
       "30_90d_pct": 60,
-      "over_90d": 15,
+      "over_90d": 13,
       "over_90d_pct": 2
     },
     "preloved": {
-      "median_days": 56,
-      "total": 678,
+      "median_days": 54,
+      "total": 654,
       "under_7d": 31,
       "under_7d_pct": 5,
-      "7_30d": 144,
-      "7_30d_pct": 21,
-      "30_90d": 279,
-      "30_90d_pct": 41,
-      "over_90d": 222,
-      "over_90d_pct": 33
+      "7_30d": 143,
+      "7_30d_pct": 22,
+      "30_90d": 278,
+      "30_90d_pct": 43,
+      "over_90d": 200,
+      "over_90d_pct": 31
     },
     "puppies": {
       "median_days": 72,
@@ -456,7 +495,7 @@
       "6-12mo": 7,
       "over_1yr": 16,
       "median_weeks": 11,
-      "total_with_age": 7621
+      "total_with_age": 7617
     },
     "puppies": {
       "under_8w": 8,
@@ -469,57 +508,57 @@
     }
   },
   "puppies_vs_adults": {
-    "total_with_age": 8219,
+    "total_with_age": 8215,
     "under_1yr": 7031,
-    "under_1yr_pct": 85.5,
-    "over_1yr": 1188,
-    "over_1yr_pct": 14.5
+    "under_1yr_pct": 85.6,
+    "over_1yr": 1184,
+    "over_1yr_pct": 14.4
   },
   "breeds": {
     "top_by_count": [
       {
         "breed": "French Bulldog",
-        "count": 1413,
+        "count": 1408,
         "share": 8.0
       },
       {
         "breed": "Miniature Dachshund",
-        "count": 1061,
+        "count": 1058,
         "share": 6.0
       },
       {
         "breed": "Cocker Spaniel",
-        "count": 841,
+        "count": 837,
         "share": 4.8
       },
       {
         "breed": "Cockapoo",
-        "count": 839,
+        "count": 837,
         "share": 4.8
       },
       {
         "breed": "Labrador Retriever",
-        "count": 785,
+        "count": 780,
         "share": 4.5
       },
       {
         "breed": "German Shepherd",
-        "count": 665,
+        "count": 661,
         "share": 3.8
       },
       {
         "breed": "Dachshund",
-        "count": 651,
+        "count": 649,
         "share": 3.7
       },
       {
         "breed": "Chihuahua",
-        "count": 516,
+        "count": 514,
         "share": 2.9
       },
       {
         "breed": "Pomeranian",
-        "count": 488,
+        "count": 487,
         "share": 2.8
       },
       {
@@ -582,12 +621,12 @@
     ]
   },
   "qa": {
-    "total_rows": 19021,
-    "unique_after_dedupe": 17794,
-    "duplicates_removed": 1227,
-    "duplicate_groups": 445,
-    "sellers_total": 16578,
-    "sellers_high_volume": 191,
+    "total_rows": 18960,
+    "unique_after_dedupe": 17761,
+    "duplicates_removed": 1199,
+    "duplicate_groups": 439,
+    "sellers_total": 17156,
+    "sellers_high_volume": 187,
     "platforms_count": 9
   }
 }

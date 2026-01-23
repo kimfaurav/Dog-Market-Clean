@@ -358,17 +358,108 @@ def replace_slide5_duplication(html: str, m: dict) -> str:
 def replace_slide6_sellers(html: str, m: dict) -> str:
     """Slide 6: Seller Analysis."""
     sellers = m["sellers"]
+    by_platform = sellers.get("by_platform", {})
 
-    # Total unique sellers
+    # Header: X% of sellers have just one listing
+    pct_one = sellers.get("pct_one_listing", 94)
+    html = re.sub(
+        r'(<h1><span>)\d+(%</span> of sellers have just one listing)',
+        rf'\g<1>{pct_one}\2',
+        html
+    )
+
+    # Seller Distribution by Platform table
+    platform_display = [
+        ("Pets4Homes", "pets4homes"),
+        ("FreeAds", "freeads"),
+        ("Gumtree", "gumtree"),
+        ("ForeverPuppy", "foreverpuppy"),
+        ("Puppies.co.uk", "puppies"),
+        ("Preloved", "preloved"),
+    ]
+
+    for display_name, key in platform_display:
+        if key not in by_platform:
+            continue
+        p = by_platform[key]
+        sellers_str = fmt_comma(p["total_sellers"])
+        pct_str = f"{p['pct_one_listing']}%"
+        max_str = str(p["max_listings"])
+
+        # Match: platform name ... sellers ... % 1 list ... max
+        pattern = rf'(<span class="seller-name">{re.escape(display_name)}</span>\s*<span class="seller-listings">)[^<]+(</span>\s*<span class="seller-pct">)[^<]+(</span>\s*<span class="seller-listings">)[^<]+(</span>)'
+
+        def make_seller_repl(s, pct, mx):
+            return lambda match: f'{match.group(1)}{s}{match.group(2)}{pct}{match.group(3)}{mx}{match.group(4)}'
+
+        html = re.sub(pattern, make_seller_repl(sellers_str, pct_str, max_str), html)
+
+    # Summary section
     html = re.sub(
         r'(<span class="mini-label">Total unique sellers</span>\s*<span class="mini-val">)[^<]+(</span>)',
         rf'\g<1>{fmt_comma(sellers["total"])}\2',
         html
     )
+    html = re.sub(
+        r'(<span class="mini-label">With 1 listing only</span>\s*<span class="mini-val">)[^<]+(</span>)',
+        rf'\g<1>{pct_one}%\2',
+        html
+    )
+    html = re.sub(
+        r'(<span class="mini-label">Confirmed rescues</span>\s*<span class="mini-val">)[^<]+(</span>)',
+        rf'\g<1>{sellers.get("rescue_count", 0)}\2',
+        html
+    )
 
-    # Header: X% of sellers have just one listing
-    # This is derived - we'd need more data, keep as placeholder or estimate
-    # For now, keep existing value as it's not directly in the JSON
+    # Top sellers table - rebuild entire table from canonical data
+    top_10 = sellers.get("top_10", [])
+
+    # Platform name mapping for display
+    plat_display = {
+        'pets4homes': 'P4H',
+        'freeads': 'FreeAds',
+        'gumtree': 'Gumtree',
+        'foreverpuppy': 'ForeverPuppy',
+        'puppies': 'Puppies',
+        'preloved': 'Preloved',
+        'kennel_club': 'KC',
+        'champdogs': 'Champdogs',
+        'petify': 'Petify',
+    }
+
+    # Build new table rows
+    rows_html = []
+    for i, seller in enumerate(top_10, 1):
+        is_rescue = seller.get("is_rescue", False)
+        if is_rescue:
+            bg_color = "rgba(20, 184, 166, 0.1)"
+            text_color = "#14b8a6"
+        else:
+            bg_color = "rgba(251, 191, 36, 0.1)"
+            text_color = "#fbbf24"
+
+        name = seller["name"]
+        listings = seller["listings"]
+        platforms = [plat_display.get(p, p) for p in seller.get("platforms", [])]
+        plat_str = ", ".join(platforms)
+
+        row = f'''                <div class="seller-row" style="background: {bg_color};">
+                    <span class="seller-rank" style="color: {text_color};">{i}</span>
+                    <span class="seller-name" style="color: {text_color};">{name}</span>
+                    <span class="seller-listings">{listings}</span>
+                    <span class="seller-platforms">{plat_str}</span>
+                </div>'''
+        rows_html.append(row)
+
+    new_table = "\n".join(rows_html)
+
+    # Replace the entire top sellers table body (between header and legend)
+    pattern = r'(<div class="table-section-label">Top Sellers</div>\s*<div class="seller-table">\s*<div class="seller-row seller-header">.*?</div>)\s*(?:<div class="seller-row".*?</div>\s*)+(<div style="font-size: 9px)'
+
+    def table_replacer(match):
+        return f'{match.group(1)}\n{new_table}\n            </div>\n            {match.group(2)}'
+
+    html = re.sub(pattern, table_replacer, html, flags=re.DOTALL)
 
     return html
 
@@ -377,29 +468,10 @@ def replace_slide7_welfare(html: str, m: dict) -> str:
     """Slide 7: Welfare & Regulation - high volume sellers."""
     sellers = m["sellers"]
     by_platform = sellers.get("by_platform", {})
-
-    # High volume sellers by platform
-    platform_map = {
-        "FreeAds": "freeads",
-        "Pets4Homes": "pets4homes",
-        "Preloved": "preloved",
-        "Gumtree": "gumtree",
-    }
-
-    # Update the license tracking table
-    for display_name, key in platform_map.items():
-        if key not in by_platform:
-            continue
-        p = by_platform[key]
-        seller_count = p.get("sellers", 0)
-        license_pct = p.get("license_pct", 0)
-
-        # This table has a different structure - sellers count and license %
-        # Pattern matching is complex here, skip detailed replacement for now
+    total_hv = sellers.get("high_volume", 1)
 
     # Header: X% of high-volume sellers are on FreeAds
-    freeads_hv = by_platform.get("freeads", {}).get("sellers", 0)
-    total_hv = sellers.get("high_volume", 1)
+    freeads_hv = by_platform.get("freeads", {}).get("high_volume", 0)
     freeads_pct = round(freeads_hv / total_hv * 100) if total_hv > 0 else 0
 
     html = re.sub(
@@ -407,6 +479,86 @@ def replace_slide7_welfare(html: str, m: dict) -> str:
         rf'\g<1>{freeads_pct}%\2',
         html
     )
+
+    # License Tracking table - update each platform row (top 3 by HV count)
+    license_platforms = [
+        ("FreeAds", "freeads", "None", "#ef4444"),
+        ("Pets4Homes", "pets4homes", "Yes", "#34d399"),
+        ("Preloved", "preloved", "None", "#ef4444"),
+    ]
+
+    for display_name, key, tracking, color in license_platforms:
+        if key not in by_platform:
+            continue
+        p = by_platform[key]
+        hv_count = p.get("high_volume", 0)
+        lic_pct = p.get("license_pct", 0)
+
+        # Format license percentage
+        if tracking == "Enforced":
+            pct_str = "✓"
+        elif lic_pct > 0:
+            pct_str = f"{round(lic_pct)}%"
+        else:
+            pct_str = "0%"
+
+        # Match and update the row
+        pattern = rf'(<span class="seller-name">{re.escape(display_name)}</span>\s*<span class="seller-listings">)[^<]+(</span>\s*<span class="seller-platforms"[^>]*>)[^<]+(</span>\s*<span class="seller-pct"[^>]*>)[^<]+(</span>)'
+
+        def make_lic_repl(cnt, trk, pct):
+            return lambda match: f'{match.group(1)}{cnt}{match.group(2)}{trk}{match.group(3)}{pct}{match.group(4)}'
+
+        html = re.sub(pattern, make_lic_repl(hv_count, tracking, pct_str), html)
+
+    # Top Breeders table - rebuild from top_10 (excluding rescues, 3+ listings)
+    top_10 = sellers.get("top_10", [])
+    breeders = [s for s in top_10 if not s.get("is_rescue", False) and s.get("listings", 0) >= 3][:5]
+
+    plat_display = {
+        'pets4homes': 'P4H',
+        'freeads': 'FreeAds',
+        'gumtree': 'Gumtree',
+        'preloved': 'Preloved',
+        'foreverpuppy': 'ForeverPuppy',
+        'puppies': 'Puppies',
+        'kennel_club': 'KC',
+    }
+
+    # Build new breeder rows
+    breeder_rows = []
+    for seller in breeders:
+        has_license = seller.get("has_license", False)
+        if has_license:
+            bg_style = 'style="background: rgba(52, 211, 153, 0.08);"'
+            lic_style = 'style="color: #34d399;"'
+            lic_icon = "✓"
+        else:
+            bg_style = ''
+            lic_style = 'style="color: #5a4a3a;"'
+            lic_icon = "—"
+
+        name = seller["name"][:18]  # Truncate long names
+        listings = seller["listings"]
+        platforms = [plat_display.get(p, p) for p in seller.get("platforms", [])]
+        plat_str = ", ".join(platforms)
+
+        row = f'''                <div class="seller-row" {bg_style}>
+                    <span class="seller-name">{name}</span>
+                    <span class="seller-listings">{listings}</span>
+                    <span class="seller-platforms">{plat_str}</span>
+                    <span class="seller-pct" {lic_style}>{lic_icon}</span>
+                </div>'''
+        breeder_rows.append(row)
+
+    new_breeders = "\n".join(breeder_rows)
+
+    # Replace the Top Breeders table body
+    pattern = r'(<div class="table-section-label spaced">Top Breeders \(3\+ listings\)</div>\s*<div class="seller-table">\s*<div class="seller-row seller-header">.*?</div>)\s*(?:<div class="seller-row".*?</div>\s*)+(</div>\s*</div>)'
+
+    def breeders_replacer(match):
+        return f'{match.group(1)}\n{new_breeders}\n            {match.group(2)}'
+
+    html = re.sub(pattern, breeders_replacer, html, flags=re.DOTALL)
 
     return html
 

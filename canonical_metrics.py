@@ -275,11 +275,36 @@ def compute_metrics():
     reference_date = df['published_dt'].max()
     df['listing_age_days'] = (reference_date - df['published_dt']).dt.days
 
-    # Raw counts
+    # Raw counts (before filtering non-sales)
+    raw_listings_before_filter = len(df)
+
+    # Remove non-dog-sale listings
+    # 1. Stud services (breeding services, not dogs for sale)
+    stud_mask = df['title'].str.contains(r'\bat stud\b|\bstanding at stud\b|\bstud service|\bstud dog\b',
+                                          case=False, na=False, regex=True)
+    # 2. Lost/Missing dogs
+    lost_mask = df['title'].str.contains(r'\bmissing\b(?! out)|\blost dog',
+                                          case=False, na=False, regex=True)
+    # 3. Merchandise (low price + accessory keywords)
+    merch_mask = (df['price_num'] < 50) & df['title'].str.contains(
+        r'\bmug[s]?\b|\bmuzzle|\bshoe[s]?\b|\bshirt|\bcanvas|\bprint|\bcleaning|\bposter|\bhoodie',
+        case=False, na=False, regex=True)
+    # 4. Genuine "wanted" ads (looking to buy, not "home wanted" which is selling)
+    wanted_mask = df['title'].str.contains(r'^wanted\b|dog share wanted|small dog wanted|puppy wanted',
+                                            case=False, na=False, regex=True)
+
+    # Combine all non-sale masks
+    non_sale_mask = stud_mask | lost_mask | merch_mask | wanted_mask
+    non_sale_removed = int(non_sale_mask.sum())
+
+    # Filter out non-sales
+    df = df[~non_sale_mask].copy()
+
+    # Raw counts (after filtering)
     raw_listings = len(df)
     raw_puppies = int(df['total_available_num'].sum())
     raw_avg = raw_puppies / raw_listings
-    
+
     # Deduplication with two rules:
     # 1. Within-platform: same seller + same title (accidental reposts)
     # 2. Cross-platform: same breed + location + price_band (cross-posting)
@@ -396,59 +421,89 @@ def compute_metrics():
             'pct': pct
         })
 
-    # Seller analysis (excluding rescues)
+    # Seller analysis (including rescues)
     rescue_mask = (
-        df['user_type'].str.contains('rescue', case=False, na=False) | 
-        df['seller_name'].fillna('').str.contains('rescue', case=False, na=False) | 
-        ((df['age_days'] > 365) & (df['price_num'] < 500))
+        df['user_type'].str.contains('rescue', case=False, na=False) |
+        df['seller_name'].fillna('').str.contains('rescue', case=False, na=False)
     )
-    seller_df = df[(df['seller_key'] != 'UNKNOWN|UNKNOWN') & ~rescue_mask].copy()
-    seller_counts = seller_df.groupby('seller_key').size()
-    total_sellers = len(seller_counts)
-    high_volume_keys = seller_counts[seller_counts >= 3].index.tolist()
-    total_high_volume_global = len(high_volume_keys)
-    total_high_volume = total_high_volume_global
-    
-    # Seller platforms breakdown
+
+    # All sellers (including rescues, for slide 6)
+    all_seller_counts = df.groupby('seller_key').size()
+    total_sellers = len(all_seller_counts)
+    one_listing_sellers = (all_seller_counts == 1).sum()
+    pct_one_listing = round(one_listing_sellers / total_sellers * 100) if total_sellers > 0 else 0
+
+    # Rescue count
+    rescue_sellers = df[rescue_mask]['seller_key'].nunique()
+
+    # Known sellers (excluding UNKNOWN for max/top calculations)
+    known_mask = ~df['seller_key'].str.contains('UNKNOWN', case=False, na=False)
+    known_df = df[known_mask].copy()
+
+    # High volume sellers (3+ listings, excluding rescues - for slide 7)
+    non_rescue_df = df[~rescue_mask & (df['seller_key'] != 'UNKNOWN|UNKNOWN')].copy()
+    non_rescue_counts = non_rescue_df.groupby('seller_key').size()
+    high_volume_keys = non_rescue_counts[non_rescue_counts >= 3].index.tolist()
+    total_high_volume = len(high_volume_keys)
+
+    # Per-platform seller stats (for slide 6)
     seller_platforms = {}
     for p in sorted(df['platform'].unique()):
-        p_sellers = seller_df[seller_df['platform'] == p]
-        p_counts = p_sellers.groupby('seller_key').size()
-        p_high_volume = p_counts[p_counts >= 3]
-        sellers_cnt = len(p_high_volume)
-        p_hv_keys = p_high_volume.index.tolist()
-        p_hv_data = p_sellers[p_sellers['seller_key'].isin(p_hv_keys)]
-        
+        pdf = df[df['platform'] == p]
+        p_counts = pdf.groupby('seller_key').size()
+        p_total = len(p_counts)
+        p_one_listing = (p_counts == 1).sum()
+        p_pct_one = round(p_one_listing / p_total * 100) if p_total > 0 else 0
+
+        # Max from known sellers only
+        known_pdf = known_df[known_df['platform'] == p]
+        known_counts = known_pdf.groupby('seller_key').size()
+        p_max = int(known_counts.max()) if len(known_counts) > 0 else 0
+
+        # High-volume sellers (for slide 7)
+        p_non_rescue = non_rescue_df[non_rescue_df['platform'] == p]
+        p_nr_counts = p_non_rescue.groupby('seller_key').size()
+        p_hv = p_nr_counts[p_nr_counts >= 3]
+        hv_count = len(p_hv)
+
         # License tracking for high-volume sellers
-        if len(p_hv_data) > 0:
+        if hv_count > 0:
+            p_hv_keys = p_hv.index.tolist()
+            p_hv_data = p_non_rescue[p_non_rescue['seller_key'].isin(p_hv_keys)]
             license_sellers = p_hv_data.groupby('seller_key')['license_num'].apply(
                 lambda x: x.notna().any()
             ).sum()
-            license_pct = round((license_sellers / sellers_cnt) * 100, 1) if sellers_cnt > 0 else 0
+            license_pct = round((license_sellers / hv_count) * 100, 1) if hv_count > 0 else 0
         else:
             license_sellers = 0
             license_pct = 0
-        
+
         seller_platforms[p] = {
-            'sellers': sellers_cnt,
-            'pct': round((sellers_cnt / total_high_volume) * 100, 1) if total_high_volume else 0,
+            'total_sellers': p_total,
+            'pct_one_listing': p_pct_one,
+            'max_listings': p_max,
+            'high_volume': hv_count,
+            'hv_pct': round((hv_count / total_high_volume) * 100, 1) if total_high_volume else 0,
             'license_sellers': int(license_sellers),
             'license_pct': license_pct
         }
-    
-    # Top sellers
+
+    # Top 10 sellers (excluding UNKNOWN, including rescues)
+    known_counts = known_df.groupby('seller_key').size()
     top_sellers = []
-    for seller_key, count in seller_counts.sort_values(ascending=False).head(10).items():
+    for seller_key, count in known_counts.sort_values(ascending=False).head(10).items():
         name, loc = seller_key.split('|', 1)
-        s_df = seller_df[seller_df['seller_key'] == seller_key]
+        s_df = known_df[known_df['seller_key'] == seller_key]
         s_platforms = sorted(s_df['platform'].unique())
         has_license = bool(s_df['license_num'].notna().any())
+        is_rescue = bool(s_df['user_type'].str.contains('rescue', case=False, na=False).any() or 'rescue' in name.lower())
         top_sellers.append({
             'name': name,
             'location': loc,
             'listings': int(count),
             'platforms': list(s_platforms),
-            'has_license': has_license
+            'has_license': has_license,
+            'is_rescue': is_rescue
         })
     
     # Listing freshness (date columns already calculated earlier for stale removal)
@@ -550,6 +605,7 @@ def compute_metrics():
             'within_platform_dups': within_dups,
             'cross_platform_dups': cross_dups,
             'stale_removed': stale_removed_total,
+            'non_sale_removed': non_sale_removed,
             'annualized_puppies': annualized,
             'market_share_pct': round(market_share, 2)
         },
@@ -558,6 +614,8 @@ def compute_metrics():
         'platform_pair_overlap': platform_pair_overlap,
         'sellers': {
             'total': total_sellers,
+            'pct_one_listing': pct_one_listing,
+            'rescue_count': rescue_sellers,
             'high_volume': total_high_volume,
             'by_platform': seller_platforms,
             'top_10': top_sellers
