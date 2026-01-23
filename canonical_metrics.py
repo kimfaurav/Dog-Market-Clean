@@ -68,8 +68,33 @@ def parse_relative_date(text, reference_date):
     return None
 
 
+def parse_age_string(age_str):
+    """Parse age strings like '9 weeks', '3 months', '2 years', '12 days', '3½ months' into weeks."""
+    if pd.isna(age_str):
+        return None
+    text = str(age_str).lower().strip()
+
+    # Handle fractions like ½
+    text = text.replace('½', '.5')
+
+    # Match patterns like "9 weeks", "3 months", "2 years", "12 days"
+    match = re.match(r'([\d.]+)\s*(day|week|month|year)s?', text)
+    if match:
+        num = float(match.group(1))
+        unit = match.group(2)
+        if unit == 'day':
+            return num / 7  # Convert days to weeks
+        if unit == 'week':
+            return num
+        if unit == 'month':
+            return num * 4.33  # ~4.33 weeks per month
+        if unit == 'year':
+            return num * 52
+    return None
+
+
 def categorize_age(dob, ref_date='2026-01-22'):
-    """Categorize puppy age into buckets."""
+    """Categorize puppy age into buckets based on date_of_birth."""
     if pd.isna(dob):
         return None
     try:
@@ -79,13 +104,13 @@ def categorize_age(dob, ref_date='2026-01-22'):
         return None
     age_days = (ref - birth).days
     age_weeks = age_days / 7
-    """Categorize puppy age into buckets."""
-    if pd.isna(dob):
+    return categorize_age_weeks(age_weeks)
+
+
+def categorize_age_weeks(age_weeks):
+    """Categorize age in weeks into buckets."""
+    if pd.isna(age_weeks):
         return None
-    birth = pd.to_datetime(dob)
-    ref = pd.to_datetime(ref_date)
-    age_days = (ref - birth).days
-    age_weeks = age_days / 7
     if age_weeks < 8:
         return '<8'
     if age_weeks < 12:
@@ -98,27 +123,38 @@ def categorize_age(dob, ref_date='2026-01-22'):
 
 
 def compute_breed_stats(df):
-    '''Compute top breeds by count and price.'''
-    breed_counts = df[df['breed'] != 'Mixed Breed']['breed'].value_counts().head(10)
-    total_non_mixed = len(df[df['breed'] != 'Mixed Breed'])
+    '''Compute top breeds by puppy count and price.'''
+    # Count actual puppies (not listings) using total_available_num
+    # Fill NaN with 1 (assume at least 1 puppy per listing)
+    df_breeds = df[df['breed'] != 'Mixed Breed'].copy()
+    df_breeds['puppy_count'] = df_breeds['total_available_num'].fillna(1)
+
+    # Sum puppies by breed
+    breed_puppies = df_breeds.groupby('breed')['puppy_count'].sum().sort_values(ascending=False).head(10)
+    total_puppies = df_breeds['puppy_count'].sum()
+
     top_by_count = []
-    for breed, count in breed_counts.items():
-        pct = round((count / total_non_mixed) * 100, 1)
+    for breed, count in breed_puppies.items():
+        pct = round((count / total_puppies) * 100, 1)
         top_by_count.append({
             'breed': breed,
             'count': int(count),
             'share': pct
         })
     
-    # Top breeds by average price
-    breed_prices = df[df['price_num'].notna()].groupby('breed')['price_num'].agg(['mean', 'count'])
-    breed_prices = breed_prices[breed_prices['count'] >= 5].sort_values('mean', ascending=False).head(10)
+    # Top breeds by median price (more robust to outliers than mean)
+    # Require minimum 10 listings for statistical significance
+    breed_prices = df[df['price_num'].notna()].groupby('breed')['price_num'].agg(['median', 'mean', 'count'])
+    breed_prices = breed_prices[breed_prices['count'] >= 10].sort_values('median', ascending=False).head(10)
     top_by_price = []
     for breed, row in breed_prices.iterrows():
+        # Also get puppy count for this breed
+        breed_puppies_count = df_breeds[df_breeds['breed'] == breed]['puppy_count'].sum()
         top_by_price.append({
             'breed': breed,
-            'avg_price': round(row['mean']),
-            'count': int(row['count'])
+            'avg_price': round(row['median']),  # Using median
+            'count': int(row['count']),  # Number of listings with price
+            'puppies': int(breed_puppies_count)  # Number of puppies
         })
     
     return {
@@ -531,8 +567,25 @@ def compute_metrics():
             'over_90d_pct': round((over_90 / total) * 100) if total > 0 else 0
         }
     
-    # Puppy age distribution
-    df['age_bucket'] = df['date_of_birth'].apply(categorize_age)
+    # Puppy age distribution - use date_of_birth OR age string column
+    # First, compute age_weeks from date_of_birth where available
+    def calc_weeks_from_dob(x):
+        if pd.notna(x):
+            try:
+                return (pd.to_datetime('2026-01-22') - pd.to_datetime(x)).days / 7
+            except:
+                return None
+        return None
+
+    df['age_weeks_from_dob'] = df['date_of_birth'].apply(calc_weeks_from_dob)
+
+    # Parse age string column for platforms that use it
+    df['age_weeks_from_str'] = df['age'].apply(parse_age_string)
+
+    # Combine: prefer date_of_birth, fall back to age string
+    df['age_weeks'] = df['age_weeks_from_dob'].fillna(df['age_weeks_from_str'])
+    df['age_bucket'] = df['age_weeks'].apply(categorize_age_weeks)
+
     age_data = {}
     for platform in sorted(df['platform'].unique()):
         platform_df = df[df['platform'] == platform]
@@ -540,15 +593,9 @@ def compute_metrics():
         if len(with_age) == 0:
             continue
         dist = with_age['age_bucket'].value_counts(normalize=True).sort_index() * 100
-        
-        # Calculate median weeks
-        def calc_weeks(x):
-            if pd.notna(x):
-                return (pd.to_datetime('2026-01-22') - pd.to_datetime(x)).days / 7
-            return None
-        
-        median_weeks = with_age['date_of_birth'].apply(calc_weeks).median()
-        
+
+        median_weeks = with_age['age_weeks'].median()
+
         age_data[platform] = {
             'under_8w': round(dist.get('<8', 0)),
             '8-12w': round(dist.get('8-12', 0)),
@@ -579,6 +626,26 @@ def compute_metrics():
             'over_1yr_pct': 0
         }
     
+    # 8-week regulation compliance (ready-to-leave enforcement)
+    under_8w = df[df['age_bucket'] == '<8']
+    eight_week_regulation = {}
+    for platform in ['pets4homes', 'gumtree', 'freeads']:
+        pf = under_8w[under_8w['platform'] == platform]
+        total = len(pf)
+        if total == 0:
+            continue
+        has_ready = pf['ready_to_leave'].notna().sum()
+        has_future = (pf['days_until_ready'] > 0).sum()
+        no_ready = pf['ready_to_leave'].isna().sum()
+
+        eight_week_regulation[platform] = {
+            'total_under_8w': int(total),
+            'has_ready_to_leave': int(has_ready),
+            'has_future_date': int(has_future),
+            'pct_protected': round(100 * has_future / total) if total > 0 else 0,
+            'no_ready_date': int(no_ready)
+        }
+
     # Breed stats
     breed_stats = compute_breed_stats(df)
     
@@ -623,6 +690,7 @@ def compute_metrics():
         'freshness': freshness,
         'age_distribution': age_data,
         'puppies_vs_adults': puppies_vs_adults,
+        'eight_week_regulation': eight_week_regulation,
         'breeds': breed_stats,
         'qa': qa
     }

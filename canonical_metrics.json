@@ -479,6 +479,33 @@
       "median_weeks": 2,
       "total_with_age": 162
     },
+    "foreverpuppy": {
+      "under_8w": 22,
+      "8-12w": 23,
+      "12-26w": 52,
+      "6-12mo": 2,
+      "over_1yr": 1,
+      "median_weeks": 12,
+      "total_with_age": 567
+    },
+    "freeads": {
+      "under_8w": 23,
+      "8-12w": 25,
+      "12-26w": 15,
+      "6-12mo": 9,
+      "over_1yr": 28,
+      "median_weeks": 13,
+      "total_with_age": 2484
+    },
+    "gumtree": {
+      "under_8w": 29,
+      "8-12w": 36,
+      "12-26w": 16,
+      "6-12mo": 5,
+      "over_1yr": 14,
+      "median_weeks": 10,
+      "total_with_age": 1757
+    },
     "kennel_club": {
       "under_8w": 23,
       "8-12w": 29,
@@ -497,6 +524,15 @@
       "median_weeks": 11,
       "total_with_age": 7617
     },
+    "preloved": {
+      "under_8w": 9,
+      "8-12w": 17,
+      "12-26w": 27,
+      "6-12mo": 8,
+      "over_1yr": 40,
+      "median_weeks": 26,
+      "total_with_age": 602
+    },
     "puppies": {
       "under_8w": 8,
       "8-12w": 8,
@@ -508,115 +544,148 @@
     }
   },
   "puppies_vs_adults": {
-    "total_with_age": 8215,
-    "under_1yr": 7031,
-    "under_1yr_pct": 85.6,
-    "over_1yr": 1184,
-    "over_1yr_pct": 14.4
+    "total_with_age": 13625,
+    "under_1yr": 11245,
+    "under_1yr_pct": 82.5,
+    "over_1yr": 2380,
+    "over_1yr_pct": 17.5
+  },
+  "eight_week_regulation": {
+    "pets4homes": {
+      "total_under_8w": 2433,
+      "has_ready_to_leave": 2433,
+      "has_future_date": 2430,
+      "pct_protected": 100,
+      "no_ready_date": 0
+    },
+    "gumtree": {
+      "total_under_8w": 516,
+      "has_ready_to_leave": 516,
+      "has_future_date": 516,
+      "pct_protected": 100,
+      "no_ready_date": 0
+    },
+    "freeads": {
+      "total_under_8w": 559,
+      "has_ready_to_leave": 127,
+      "has_future_date": 22,
+      "pct_protected": 4,
+      "no_ready_date": 432
+    }
   },
   "breeds": {
     "top_by_count": [
       {
         "breed": "French Bulldog",
-        "count": 1408,
-        "share": 8.0
-      },
-      {
-        "breed": "Miniature Dachshund",
-        "count": 1058,
-        "share": 6.0
-      },
-      {
-        "breed": "Cocker Spaniel",
-        "count": 837,
-        "share": 4.8
-      },
-      {
-        "breed": "Cockapoo",
-        "count": 837,
-        "share": 4.8
+        "count": 3681,
+        "share": 6.6
       },
       {
         "breed": "Labrador Retriever",
-        "count": 780,
-        "share": 4.5
+        "count": 3641,
+        "share": 6.5
+      },
+      {
+        "breed": "Cockapoo",
+        "count": 3300,
+        "share": 5.9
+      },
+      {
+        "breed": "Miniature Dachshund",
+        "count": 3176,
+        "share": 5.7
+      },
+      {
+        "breed": "Cocker Spaniel",
+        "count": 3064,
+        "share": 5.5
       },
       {
         "breed": "German Shepherd",
-        "count": 661,
-        "share": 3.8
-      },
-      {
-        "breed": "Dachshund",
-        "count": 649,
+        "count": 2081,
         "share": 3.7
       },
       {
-        "breed": "Chihuahua",
-        "count": 514,
-        "share": 2.9
-      },
-      {
-        "breed": "Pomeranian",
-        "count": 487,
-        "share": 2.8
+        "breed": "Dachshund",
+        "count": 1818,
+        "share": 3.2
       },
       {
         "breed": "Cane Corso",
-        "count": 459,
+        "count": 1609,
+        "share": 2.9
+      },
+      {
+        "breed": "Staffordshire Bull Terrier",
+        "count": 1440,
         "share": 2.6
+      },
+      {
+        "breed": "Chihuahua",
+        "count": 1165,
+        "share": 2.1
       }
     ],
     "top_by_price": [
       {
         "breed": "Irish Wolfhound",
-        "avg_price": 2708,
-        "count": 12
-      },
-      {
-        "breed": "Pekingese",
-        "avg_price": 2552,
-        "count": 20
+        "avg_price": 3000,
+        "count": 12,
+        "puppies": 59
       },
       {
         "breed": "Bernedoodle",
-        "avg_price": 2411,
-        "count": 18
-      },
-      {
-        "breed": "Australian Labradoodle",
-        "avg_price": 2336,
-        "count": 21
-      },
-      {
-        "breed": "Poodle (Toy)",
-        "avg_price": 2320,
-        "count": 5
+        "avg_price": 2500,
+        "count": 18,
+        "puppies": 98
       },
       {
         "breed": "Italian Greyhound",
-        "avg_price": 2312,
-        "count": 33
+        "avg_price": 2400,
+        "count": 33,
+        "puppies": 120
       },
       {
-        "breed": "Dachshund (Miniature Long Haired)",
-        "avg_price": 2217,
-        "count": 15
+        "breed": "Pekingese",
+        "avg_price": 2350,
+        "count": 20,
+        "puppies": 59
+      },
+      {
+        "breed": "Australian Labradoodle",
+        "avg_price": 2250,
+        "count": 21,
+        "puppies": 128
+      },
+      {
+        "breed": "Old English Sheepdog",
+        "avg_price": 2225,
+        "count": 18,
+        "puppies": 68
+      },
+      {
+        "breed": "Australian Shepherd",
+        "avg_price": 2125,
+        "count": 18,
+        "puppies": 79
       },
       {
         "breed": "Miniature Goldendoodle",
-        "avg_price": 2128,
-        "count": 14
+        "avg_price": 2050,
+        "count": 14,
+        "puppies": 75
       },
       {
-        "breed": "Norfolk Terrier",
-        "avg_price": 2121,
-        "count": 7
+        "breed": "Boxer",
+        "avg_price": 2000,
+        "count": 68,
+        "puppies": 296
       },
       {
-        "breed": "Retriever (Golden)",
-        "avg_price": 2112,
-        "count": 13
+        "breed": "Dachshund (Miniature Long Haired)",
+        "avg_price": 2000,
+        "count": 15,
+        "puppies": 111
       }
     ]
   },

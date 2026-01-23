@@ -655,13 +655,116 @@ def replace_slide9_puppy_age(html: str, m: dict) -> str:
     age_dist = m["age_distribution"]
     pva = m["puppies_vs_adults"]
 
-    # Puppies vs adults stats
-    under_1yr_pct = pva.get("under_1yr_pct", 85)
-    over_1yr_pct = pva.get("over_1yr_pct", 15)
+    # Platform order as shown in slide
+    platform_order = [
+        ("Gumtree", "gumtree"),
+        ("Pets4Homes", "pets4homes"),
+        ("Kennel Club", "kennel_club"),
+        ("FreeAds", "freeads"),
+        ("ForeverPuppy", "foreverpuppy"),
+        ("Champdogs", "champdogs"),
+        ("Preloved", "preloved"),
+    ]
 
-    # The stacked bars use percentages from age_distribution
-    # These are complex to update - the width styles need recalculating
-    # For now, update the insight cards
+    for display_name, key in platform_order:
+        if key not in age_dist:
+            continue
+        a = age_dist[key]
+        u8 = a.get('under_8w', 0)
+        w8_12 = a.get('8-12w', 0)
+        w12_26 = a.get('12-26w', 0)
+        m6_12 = a.get('6-12mo', 0)
+        o1yr = a.get('over_1yr', 0)
+        median = a.get('median_weeks', 0)
+
+        # Update each segment width in the stacked bar
+        # Pattern: find the stacked-row for this platform and update segment widths
+        # Match the row by platform label and update all segments
+
+        # Update <8 weeks segment
+        pattern = rf'(<span class="stacked-label">{re.escape(display_name)}</span>\s*<div class="stacked-bar-container">\s*<div class="stack-segment stack-too-young" style="width: )\d+(%;" title="<8 weeks: )\d+(%"></div>)'
+        html = re.sub(pattern, rf'\g<1>{u8}\g<2>{u8}\3', html)
+
+        # Update 8-12 weeks segment
+        pattern = rf'(<span class="stacked-label">{re.escape(display_name)}</span>.*?stack-too-young.*?<div class="stack-segment stack-ideal" style="width: )\d+(%;" title="8-12 weeks: )\d+(%"></div>)'
+        html = re.sub(pattern, rf'\g<1>{w8_12}\g<2>{w8_12}\3', html, flags=re.DOTALL)
+
+        # Update 12-26 weeks segment
+        pattern = rf'(<span class="stacked-label">{re.escape(display_name)}</span>.*?stack-ideal.*?<div class="stack-segment stack-young" style="width: )\d+(%;" title="12-26 weeks: )\d+(%"></div>)'
+        html = re.sub(pattern, rf'\g<1>{w12_26}\g<2>{w12_26}\3', html, flags=re.DOTALL)
+
+        # Update 6mo-1yr segment
+        pattern = rf'(<span class="stacked-label">{re.escape(display_name)}</span>.*?stack-young.*?<div class="stack-segment stack-adolescent" style="width: )\d+(%;" title="6mo-1yr: )\d+(%"></div>)'
+        html = re.sub(pattern, rf'\g<1>{m6_12}\g<2>{m6_12}\3', html, flags=re.DOTALL)
+
+        # Update >1yr segment
+        pattern = rf'(<span class="stacked-label">{re.escape(display_name)}</span>.*?stack-adolescent.*?<div class="stack-segment stack-adult" style="width: )\d+(%;" title=">1yr: )\d+(%"></div>)'
+        html = re.sub(pattern, rf'\g<1>{o1yr}\g<2>{o1yr}\3', html, flags=re.DOTALL)
+
+        # Update median weeks
+        pattern = rf'(<span class="stacked-label">{re.escape(display_name)}</span>.*?<span class="stacked-median">)\d+wk(</span>)'
+        html = re.sub(pattern, rf'\g<1>{median}wk\2', html, flags=re.DOTALL)
+
+    # Update Preloved insight card (40% adult dogs)
+    preloved_adult = age_dist.get("preloved", {}).get("over_1yr", 40)
+    html = re.sub(
+        r'(<div class="age-insight-stat"[^>]*>)\d+%(</div>\s*<div class="age-insight-text">Preloved listings are adult dogs)',
+        rf'\g<1>{preloved_adult}%\2',
+        html
+    )
+
+    return html
+
+
+def replace_slide10_regulation(html: str, m: dict) -> str:
+    """Slide 10: 8-Week Regulation compliance."""
+    reg = m.get("eight_week_regulation", {})
+
+    # Update each platform row in the Ready-to-Leave Enforcement table
+    # This table is unique to slide 10 and follows the "Ready-to-Leave Enforcement" heading
+
+    def make_replacer(count, protected_label, pct):
+        def replacer(match):
+            return f'{match.group(1)}{count}{match.group(2)}{protected_label}{match.group(3)}{pct}%{match.group(4)}'
+        return replacer
+
+    # Pets4Homes: update count, change "Yes" to "Enforced", update percentage
+    if "pets4homes" in reg:
+        r = reg["pets4homes"]
+        pattern = r'(Ready-to-Leave Enforcement</div>.*?<span class="seller-name">Pets4Homes</span>\s*<span class="seller-listings">)[^<]+(</span>\s*<span class="seller-platforms"[^>]*>)[^<]+(</span>\s*<span class="seller-pct">)[^<]+(</span>)'
+        html = re.sub(pattern, make_replacer(fmt_comma(r["total_under_8w"]), "Enforced", r["pct_protected"]), html, flags=re.DOTALL)
+
+    # Gumtree: update count, set "Enforced", update percentage
+    if "gumtree" in reg:
+        r = reg["gumtree"]
+        pattern = r'(Ready-to-Leave Enforcement</div>.*?<span class="seller-name">Gumtree</span>\s*<span class="seller-listings">)[^<]+(</span>\s*<span class="seller-platforms"[^>]*>)[^<]+(</span>\s*<span class="seller-pct">)[^<]+(</span>)'
+        html = re.sub(pattern, make_replacer(fmt_comma(r["total_under_8w"]), "Enforced", r["pct_protected"]), html, flags=re.DOTALL)
+
+    # FreeAds: update count, change "None" to "Optional", update percentage
+    if "freeads" in reg:
+        r = reg["freeads"]
+        pattern = r'(Ready-to-Leave Enforcement</div>.*?<span class="seller-name">FreeAds</span>\s*<span class="seller-listings">)[^<]+(</span>\s*<span class="seller-platforms"[^>]*>)[^<]+(</span>\s*<span class="seller-pct">)[^<]+(</span>)'
+        html = re.sub(pattern, make_replacer(fmt_comma(r["total_under_8w"]), "Optional", r["pct_protected"]), html, flags=re.DOTALL)
+
+    # Update the FreeAds insight text
+    freeads_data = reg.get("freeads", {})
+    total_freeads = freeads_data.get("total_under_8w", 559)
+    no_ready = freeads_data.get("no_ready_date", 432)
+    pct_no_ready = round(100 * no_ready / total_freeads) if total_freeads > 0 else 77
+
+    # Update "559 puppies under 8 weeks — 77% have no ready date"
+    html = re.sub(
+        r'(\d+) puppies under 8 weeks — (\d+)% have no ready date',
+        f'{total_freeads} puppies under 8 weeks — {pct_no_ready}% have no ready date',
+        html
+    )
+
+    # Update "432 puppies" stat
+    html = re.sub(
+        r'(\d+) puppies(</div>\s*<div class="age-insight-text">under 8 weeks on FreeAds)',
+        rf'{no_ready} puppies\2',
+        html
+    )
 
     return html
 
@@ -679,7 +782,7 @@ def replace_slide11_breeds(html: str, m: dict) -> str:
         breed_count = fmt_comma(top_breed["count"])
         html = re.sub(
             r'(<span>)[^<]+(</span> is most popular with )[^—]+(—)',
-            lambda m: f'{m.group(1)}{breed_name}{m.group(2)}{breed_count} dogs for sale {m.group(3)}',
+            lambda match: f'{match.group(1)}{breed_name}{match.group(2)}{breed_count} dogs for sale {match.group(3)}',
             html
         )
 
@@ -688,15 +791,63 @@ def replace_slide11_breeds(html: str, m: dict) -> str:
         top_price_breed = top_price[0]
         price_breed = top_price_breed["breed"]
         price_val = fmt_price(top_price_breed["avg_price"])
+        # Match multi-word breed name before "commands highest prices"
         html = re.sub(
-            r'(\w+ commands highest prices at )£[\d,]+',
-            f'{price_breed} commands highest prices at {price_val}',
+            r'[A-Z][\w\s]+(?= commands highest prices at £)',
+            price_breed,
+            html
+        )
+        # Update the price value
+        html = re.sub(
+            r'(commands highest prices at )£[\d,]+',
+            rf'\1{price_val}',
             html
         )
 
-    # Update breed table - top 10 by count
-    # This requires matching each row which is complex
-    # Simplified: update just the values we can match safely
+    # Rebuild the Top 10 by Count table with ranking
+    if top_count:
+        rows_html = '''                <div class="seller-row seller-header">
+                    <span class="seller-rank">#</span>
+                    <span class="seller-name">Breed</span>
+                    <span class="seller-listings">Dogs</span>
+                    <span class="seller-pct">%</span>
+                </div>\n'''
+        for i, b in enumerate(top_count[:10]):
+            highlight = ' style="background: rgba(251, 191, 36, 0.1);"' if i == 0 else ''
+            pct_style = ' style="color: #fbbf24;"' if i == 0 else ''
+            rows_html += f'''                <div class="seller-row"{highlight}>
+                    <span class="seller-rank">{i+1}</span>
+                    <span class="seller-name">{b["breed"]}</span>
+                    <span class="seller-listings">{fmt_comma(b["count"])}</span>
+                    <span class="seller-pct"{pct_style}>{b["share"]}%</span>
+                </div>\n'''
+
+        # Replace the entire seller-table for breeds
+        pattern = r'(Top 10 Breeds by Dogs for Sale</div>\s*<div class="seller-table">).*?(</div>\s*</div>\s*\n\s*<div class="dual-table-right">)'
+        html = re.sub(pattern, rf'\1\n{rows_html}            \2', html, flags=re.DOTALL)
+
+    # Rebuild the Most Expensive Breeds table (no bars, with ranking)
+    if top_price:
+        rows_html = '''                <div class="seller-row seller-header">
+                    <span class="seller-rank">#</span>
+                    <span class="seller-name">Breed</span>
+                    <span class="seller-listings">Dogs</span>
+                    <span class="seller-pct">Price</span>
+                </div>\n'''
+        for i, b in enumerate(top_price[:10]):
+            highlight = ' style="background: rgba(251, 191, 36, 0.1);"' if i == 0 else ''
+            puppies = b.get("puppies", b.get("count", 0))
+            rows_html += f'''                <div class="seller-row"{highlight}>
+                    <span class="seller-rank">{i+1}</span>
+                    <span class="seller-name">{b["breed"]}</span>
+                    <span class="seller-listings">{fmt_comma(puppies)}</span>
+                    <span class="seller-pct">{fmt_price(b["avg_price"])}</span>
+                </div>\n'''
+
+        # Replace the price-bars section with a seller-table
+        pattern = r'(Most Expensive Breeds \(avg price\)</div>\s*)<div class="price-bars">.*?(</div>\s*</div>\s*</div>\s*<div class="slide-number">11)'
+        replacement = rf'\1<div class="seller-table">\n{rows_html}            </div>\n        </div>\n    </div>\n    \2'
+        html = re.sub(pattern, replacement, html, flags=re.DOTALL)
 
     return html
 
@@ -724,6 +875,7 @@ def generate_slides():
     html = replace_slide7_welfare(html, metrics)
     html = replace_slide8_freshness(html, metrics)
     html = replace_slide9_puppy_age(html, metrics)
+    html = replace_slide10_regulation(html, metrics)
     html = replace_slide11_breeds(html, metrics)
 
     print("Saving updated HTML to", HTML_PATH)
