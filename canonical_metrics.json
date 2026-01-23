@@ -1,0 +1,486 @@
+{
+  "summary": {
+    "raw_listings": 19021,
+    "raw_puppies": 47175,
+    "raw_avg_per_listing": 2.48,
+    "unique_listings": 17594,
+    "unique_puppies": 44087,
+    "duplicates_removed": 1427,
+    "annualized_puppies": 643671,
+    "market_share_pct": 68.04
+  },
+  "platforms": {
+    "champdogs": {
+      "listings": 162,
+      "puppies": 0,
+      "unique": 152,
+      "avg": 0.0,
+      "share": 0.0
+    },
+    "foreverpuppy": {
+      "listings": 636,
+      "puppies": 2497,
+      "unique": 497,
+      "avg": 3.9,
+      "share": 5.3
+    },
+    "freeads": {
+      "listings": 6561,
+      "puppies": 4467,
+      "unique": 6132,
+      "avg": 0.7,
+      "share": 9.5
+    },
+    "gumtree": {
+      "listings": 1775,
+      "puppies": 2195,
+      "unique": 1687,
+      "avg": 1.2,
+      "share": 4.7
+    },
+    "kennel_club": {
+      "listings": 411,
+      "puppies": 2453,
+      "unique": 404,
+      "avg": 6.0,
+      "share": 5.2
+    },
+    "petify": {
+      "listings": 602,
+      "puppies": 2926,
+      "unique": 595,
+      "avg": 4.9,
+      "share": 6.2
+    },
+    "pets4homes": {
+      "listings": 7621,
+      "puppies": 31317,
+      "unique": 7259,
+      "avg": 4.1,
+      "share": 66.4
+    },
+    "preloved": {
+      "listings": 678,
+      "puppies": 17,
+      "unique": 587,
+      "avg": 0.0,
+      "share": 0.0
+    },
+    "puppies": {
+      "listings": 575,
+      "puppies": 1303,
+      "unique": 566,
+      "avg": 2.3,
+      "share": 2.8
+    }
+  },
+  "cross_platform_duplicates": {
+    "2": 950,
+    "3": 89,
+    "4": 16,
+    "5": 3,
+    "7": 2,
+    "8": 1,
+    "55": 1,
+    "19": 1
+  },
+  "sellers": {
+    "total": 16578,
+    "high_volume": 191,
+    "by_platform": {
+      "champdogs": {
+        "sellers": 0,
+        "pct": 0.0,
+        "license_sellers": 0,
+        "license_pct": 0
+      },
+      "foreverpuppy": {
+        "sellers": 5,
+        "pct": 2.6,
+        "license_sellers": 0,
+        "license_pct": 0.0
+      },
+      "freeads": {
+        "sellers": 75,
+        "pct": 39.3,
+        "license_sellers": 0,
+        "license_pct": 0.0
+      },
+      "gumtree": {
+        "sellers": 1,
+        "pct": 0.5,
+        "license_sellers": 0,
+        "license_pct": 0.0
+      },
+      "kennel_club": {
+        "sellers": 1,
+        "pct": 0.5,
+        "license_sellers": 0,
+        "license_pct": 0.0
+      },
+      "petify": {
+        "sellers": 40,
+        "pct": 20.9,
+        "license_sellers": 0,
+        "license_pct": 0.0
+      },
+      "pets4homes": {
+        "sellers": 52,
+        "pct": 27.2,
+        "license_sellers": 43,
+        "license_pct": 82.7
+      },
+      "preloved": {
+        "sellers": 13,
+        "pct": 6.8,
+        "license_sellers": 0,
+        "license_pct": 0.0
+      },
+      "puppies": {
+        "sellers": 0,
+        "pct": 0.0,
+        "license_sellers": 0,
+        "license_pct": 0
+      }
+    },
+    "top_10": [
+      {
+        "name": "UNKNOWN",
+        "location": "London",
+        "listings": 16,
+        "platforms": [
+          "petify"
+        ],
+        "has_license": false
+      },
+      {
+        "name": "UNKNOWN",
+        "location": "Birmingham",
+        "listings": 16,
+        "platforms": [
+          "freeads",
+          "petify"
+        ],
+        "has_license": false
+      },
+      {
+        "name": "UNKNOWN",
+        "location": "Doncaster South Yorkshire",
+        "listings": 15,
+        "platforms": [
+          "petify"
+        ],
+        "has_license": false
+      },
+      {
+        "name": "Val",
+        "location": "Eastry, Kent",
+        "listings": 11,
+        "platforms": [
+          "preloved"
+        ],
+        "has_license": false
+      },
+      {
+        "name": "justdogz",
+        "location": "Wisbech",
+        "listings": 9,
+        "platforms": [
+          "freeads"
+        ],
+        "has_license": false
+      },
+      {
+        "name": "Pawprints2freedom",
+        "location": "Leeds, England",
+        "listings": 9,
+        "platforms": [
+          "preloved"
+        ],
+        "has_license": false
+      },
+      {
+        "name": "The Canine Club",
+        "location": "Godstone, Surrey",
+        "listings": 8,
+        "platforms": [
+          "pets4homes"
+        ],
+        "has_license": true
+      },
+      {
+        "name": "Ritchie",
+        "location": "Wisbech, Cambridgeshire",
+        "listings": 8,
+        "platforms": [
+          "pets4homes"
+        ],
+        "has_license": true
+      },
+      {
+        "name": "UNKNOWN",
+        "location": "Liverpool",
+        "listings": 8,
+        "platforms": [
+          "petify"
+        ],
+        "has_license": false
+      },
+      {
+        "name": "Wiggle Waggle",
+        "location": "Prudhoe, Northumberland",
+        "listings": 7,
+        "platforms": [
+          "pets4homes"
+        ],
+        "has_license": true
+      }
+    ]
+  },
+  "freshness": {
+    "gumtree": {
+      "median_days": 6,
+      "total": 1775,
+      "under_7d": 1078,
+      "under_7d_pct": 61,
+      "7_30d": 657,
+      "7_30d_pct": 37,
+      "30_90d": 6,
+      "30_90d_pct": 0,
+      "over_90d": 3,
+      "over_90d_pct": 0
+    },
+    "pets4homes": {
+      "median_days": 21,
+      "total": 7621,
+      "under_7d": 1569,
+      "under_7d_pct": 21,
+      "7_30d": 3145,
+      "7_30d_pct": 41,
+      "30_90d": 2765,
+      "30_90d_pct": 36,
+      "over_90d": 141,
+      "over_90d_pct": 2
+    },
+    "freeads": {
+      "median_days": 27,
+      "total": 6561,
+      "under_7d": 1781,
+      "under_7d_pct": 27,
+      "7_30d": 1282,
+      "7_30d_pct": 20,
+      "30_90d": 2550,
+      "30_90d_pct": 39,
+      "over_90d": 483,
+      "over_90d_pct": 7
+    },
+    "foreverpuppy": {
+      "median_days": 45,
+      "total": 636,
+      "under_7d": 38,
+      "under_7d_pct": 6,
+      "7_30d": 153,
+      "7_30d_pct": 24,
+      "30_90d": 377,
+      "30_90d_pct": 59,
+      "over_90d": 15,
+      "over_90d_pct": 2
+    },
+    "preloved": {
+      "median_days": 57,
+      "total": 678,
+      "under_7d": 28,
+      "under_7d_pct": 4,
+      "7_30d": 144,
+      "7_30d_pct": 21,
+      "30_90d": 279,
+      "30_90d_pct": 41,
+      "over_90d": 222,
+      "over_90d_pct": 33
+    },
+    "puppies": {
+      "median_days": 71,
+      "total": 575,
+      "under_7d": 17,
+      "under_7d_pct": 3,
+      "7_30d": 119,
+      "7_30d_pct": 21,
+      "30_90d": 222,
+      "30_90d_pct": 39,
+      "over_90d": 217,
+      "over_90d_pct": 38
+    },
+    "petify": {
+      "median_days": null,
+      "total": 602,
+      "under_7d": 0,
+      "under_7d_pct": 0,
+      "7_30d": 0,
+      "7_30d_pct": 0,
+      "30_90d": 0,
+      "30_90d_pct": 0,
+      "over_90d": 0,
+      "over_90d_pct": 0
+    }
+  },
+  "age_distribution": {
+    "champdogs": {
+      "under_8w": 89,
+      "8-12w": 10,
+      "12-26w": 1,
+      "6-12mo": 0,
+      "over_1yr": 0,
+      "median_weeks": 2,
+      "total_with_age": 162
+    },
+    "kennel_club": {
+      "under_8w": 23,
+      "8-12w": 29,
+      "12-26w": 45,
+      "6-12mo": 2,
+      "over_1yr": 0,
+      "median_weeks": 11,
+      "total_with_age": 410
+    },
+    "pets4homes": {
+      "under_8w": 32,
+      "8-12w": 23,
+      "12-26w": 23,
+      "6-12mo": 7,
+      "over_1yr": 16,
+      "median_weeks": 11,
+      "total_with_age": 7621
+    },
+    "puppies": {
+      "under_8w": 8,
+      "8-12w": 8,
+      "12-26w": 62,
+      "6-12mo": 15,
+      "over_1yr": 8,
+      "median_weeks": 21,
+      "total_with_age": 26
+    }
+  },
+  "puppies_vs_adults": {
+    "total_with_age": 8219,
+    "under_1yr": 7031,
+    "under_1yr_pct": 85.5,
+    "over_1yr": 1188,
+    "over_1yr_pct": 14.5
+  },
+  "breeds": {
+    "top_by_count": [
+      {
+        "breed": "French Bulldog",
+        "count": 1413,
+        "share": 8.0
+      },
+      {
+        "breed": "Miniature Dachshund",
+        "count": 1061,
+        "share": 6.0
+      },
+      {
+        "breed": "Cocker Spaniel",
+        "count": 841,
+        "share": 4.8
+      },
+      {
+        "breed": "Cockapoo",
+        "count": 839,
+        "share": 4.8
+      },
+      {
+        "breed": "Labrador Retriever",
+        "count": 785,
+        "share": 4.5
+      },
+      {
+        "breed": "German Shepherd",
+        "count": 665,
+        "share": 3.8
+      },
+      {
+        "breed": "Dachshund",
+        "count": 651,
+        "share": 3.7
+      },
+      {
+        "breed": "Chihuahua",
+        "count": 516,
+        "share": 2.9
+      },
+      {
+        "breed": "Pomeranian",
+        "count": 488,
+        "share": 2.8
+      },
+      {
+        "breed": "Cane Corso",
+        "count": 459,
+        "share": 2.6
+      }
+    ],
+    "top_by_price": [
+      {
+        "breed": "Irish Wolfhound",
+        "avg_price": 2708,
+        "count": 12
+      },
+      {
+        "breed": "Pekingese",
+        "avg_price": 2552,
+        "count": 20
+      },
+      {
+        "breed": "Bernedoodle",
+        "avg_price": 2411,
+        "count": 18
+      },
+      {
+        "breed": "Australian Labradoodle",
+        "avg_price": 2336,
+        "count": 21
+      },
+      {
+        "breed": "Poodle (Toy)",
+        "avg_price": 2320,
+        "count": 5
+      },
+      {
+        "breed": "Italian Greyhound",
+        "avg_price": 2312,
+        "count": 33
+      },
+      {
+        "breed": "Dachshund (Miniature Long Haired)",
+        "avg_price": 2217,
+        "count": 15
+      },
+      {
+        "breed": "Miniature Goldendoodle",
+        "avg_price": 2128,
+        "count": 14
+      },
+      {
+        "breed": "Norfolk Terrier",
+        "avg_price": 2121,
+        "count": 7
+      },
+      {
+        "breed": "Retriever (Golden)",
+        "avg_price": 2112,
+        "count": 13
+      }
+    ]
+  },
+  "qa": {
+    "total_rows": 19021,
+    "unique_after_dedupe": 17594,
+    "duplicates_removed": 1427,
+    "duplicate_groups": 1063,
+    "sellers_total": 16578,
+    "sellers_high_volume": 191,
+    "platforms_count": 9
+  }
+}
