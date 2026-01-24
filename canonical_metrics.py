@@ -658,6 +658,78 @@ def compute_metrics():
     # Breed stats
     breed_stats = compute_breed_stats(df)
     
+    # Geography metrics
+    def extract_city(loc):
+        if pd.isna(loc) or loc == '':
+            return None
+        loc = str(loc).strip()
+        if ',' in loc:
+            return loc.split(',')[0].strip()
+        return loc
+
+    def extract_region(loc):
+        if pd.isna(loc) or loc == '':
+            return None
+        loc = str(loc).strip()
+        if ',' in loc:
+            return loc.split(',', 1)[1].strip()
+        return None
+
+    df['city'] = df['location'].apply(extract_city)
+    df['region'] = df['location'].apply(extract_region)
+
+    # Top cities by dog count
+    city_stats = df[df['city'].notna()].groupby('city').agg({
+        'total_available_num': 'sum',
+        'url': 'count'
+    }).rename(columns={'total_available_num': 'dogs', 'url': 'listings'})
+    city_stats['dogs'] = city_stats['dogs'].astype(int)
+    city_stats = city_stats.sort_values('dogs', ascending=False)
+
+    top_cities = []
+    for city, row in city_stats.head(10).iterrows():
+        top_cities.append({
+            'city': city,
+            'dogs': int(row['dogs']),
+            'listings': int(row['listings'])
+        })
+
+    # Regional breakdown (UK regions)
+    region_stats = df[df['region'].notna()].groupby('region').agg({
+        'total_available_num': 'sum',
+        'url': 'count'
+    }).rename(columns={'total_available_num': 'dogs', 'url': 'listings'})
+    region_stats['dogs'] = region_stats['dogs'].astype(int)
+    region_stats = region_stats.sort_values('dogs', ascending=False)
+
+    top_regions = []
+    for region, row in region_stats.head(12).iterrows():
+        top_regions.append({
+            'region': region,
+            'dogs': int(row['dogs']),
+            'listings': int(row['listings'])
+        })
+
+    # Wisbech hotspot analysis
+    wisbech_df = df[df['city'] == 'Wisbech']
+    wisbech_dogs = int(wisbech_df['total_available_num'].sum())
+    wisbech_listings = len(wisbech_df)
+    wisbech_sellers = wisbech_df['seller_key'].nunique()
+    wisbech_avg = round(wisbech_dogs / wisbech_listings, 1) if wisbech_listings > 0 else 0
+
+    geography = {
+        'top_cities': top_cities,
+        'top_regions': top_regions,
+        'hotspot': {
+            'city': 'Wisbech',
+            'region': 'Cambridgeshire',
+            'dogs': wisbech_dogs,
+            'listings': wisbech_listings,
+            'sellers': wisbech_sellers,
+            'avg_per_listing': wisbech_avg
+        }
+    }
+
     # QA metrics
     qa = {
         'total_rows': raw_listings,
@@ -701,6 +773,7 @@ def compute_metrics():
         'puppies_vs_adults': puppies_vs_adults,
         'eight_week_regulation': eight_week_regulation,
         'breeds': breed_stats,
+        'geography': geography,
         'qa': qa
     }
     

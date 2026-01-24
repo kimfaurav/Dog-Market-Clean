@@ -638,8 +638,7 @@
 
         .table-footer {
             display: flex;
-            background: rgba(251, 191, 36, 0.1);
-            border-top: 2px solid rgba(251, 191, 36, 0.2);
+            background: transparent;
             margin-top: 4px;
         }
 
@@ -1657,8 +1656,8 @@
             </div>
             <div class="hero-box">
                 <div class="hero-number">18k</div>
-                <div class="hero-label">Unique listings</div>
-                <div class="hero-sub">after deduplication</div>
+                <div class="hero-label">Unique & fresh listings</div>
+                <div class="hero-sub">after dedup & stale removed</div>
             </div>
             <div class="hero-arrow">
                 <svg width="80" height="32" viewBox="0 0 80 32">
@@ -1734,16 +1733,16 @@
                 <div class="th th-platform">Platform</div>
                 <div class="th th-num">Raw Listings</div>
                 <div class="th th-num">Raw Dogs</div>
-                <div class="th th-highlight">Dogs/Listing</div>
+                <div class="th th-num">Dogs/Listing</div>
             </div>
             <div class="table-body">
-                <div class="table-row row-top">
+                <div class="table-row">
                     <div class="td td-platform">
                         <span class="platform-dot dot-1"></span>Pets4Homes
                     </div>
                     <div class="td td-num">7,617</div>
                     <div class="td td-num">31,312</div>
-                    <div class="td td-highlight">4.1</div>
+                    <div class="td td-num">4.1</div>
                 </div>
                 <div class="table-row">
                     <div class="td td-platform">
@@ -1751,7 +1750,7 @@
                     </div>
                     <div class="td td-num">6,551</div>
                     <div class="td td-num">14,258</div>
-                    <div class="td td-highlight">2.2</div>
+                    <div class="td td-num">2.2</div>
                 </div>
                 <div class="table-row">
                     <div class="td td-platform">
@@ -1759,7 +1758,7 @@
                     </div>
                     <div class="td td-num">1,758</div>
                     <div class="td td-num">4,450</div>
-                    <div class="td td-highlight">2.5</div>
+                    <div class="td td-num">2.5</div>
                 </div>
                 <div class="table-row">
                     <div class="td td-platform">
@@ -1767,7 +1766,7 @@
                     </div>
                     <div class="td td-num">602</div>
                     <div class="td td-num">2,947</div>
-                    <div class="td td-highlight">4.9</div>
+                    <div class="td td-num">4.9</div>
                 </div>
                 <div class="table-row">
                     <div class="td td-platform">
@@ -1775,7 +1774,7 @@
                     </div>
                     <div class="td td-num">630</div>
                     <div class="td td-num">2,529</div>
-                    <div class="td td-highlight">4.0</div>
+                    <div class="td td-num">4.0</div>
                 </div>
                 <div class="table-row">
                     <div class="td td-platform">
@@ -1783,7 +1782,7 @@
                     </div>
                     <div class="td td-num">411</div>
                     <div class="td td-num">2,453</div>
-                    <div class="td td-highlight">6.0</div>
+                    <div class="td td-num">6.0</div>
                 </div>
                 <div class="table-row">
                     <div class="td td-platform">
@@ -1791,7 +1790,7 @@
                     </div>
                     <div class="td td-num">575</div>
                     <div class="td td-num">1,750</div>
-                    <div class="td td-highlight">3.0</div>
+                    <div class="td td-num">3.0</div>
                 </div>
                 <div class="table-row">
                     <div class="td td-platform">
@@ -1799,7 +1798,7 @@
                     </div>
                     <div class="td td-num">654</div>
                     <div class="td td-num">893</div>
-                    <div class="td td-highlight">1.4</div>
+                    <div class="td td-num">1.4</div>
                 </div>
                 <div class="table-row">
                     <div class="td td-platform">
@@ -1807,14 +1806,14 @@
                     </div>
                     <div class="td td-num">162</div>
                     <div class="td td-num">972</div>
-                    <div class="td td-highlight">6.0</div>
+                    <div class="td td-num">6.0</div>
                 </div>
             </div>
             <div class="table-footer">
                 <div class="tf tf-platform">Total</div>
                 <div class="tf tf-num">18,960</div>
                 <div class="tf tf-num">61,564</div>
-                <div class="tf tf-highlight">3.2</div>
+                <div class="tf tf-num">3.2</div>
             </div>
         </div>
 
@@ -1839,137 +1838,7 @@
     <div class="slide-number">4</div>
 </div>
 
-<!-- SLIDE 5: Cross-Platform Duplication -->
-<div class="slide content-slide">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-
-    <div class="deck-title">UK Dog Marketplace Analysis</div>
-
-    <div class="header">
-        <h1>Only <span>90%</span> of Champdogs inventory is unique —<br>smaller platforms overlap most with the leader</h1>
-    </div>
-
-    <div class="dual-table-content">
-        <div class="dual-table-left">
-            <div class="table-section-label">Unique Inventory by Platform</div>
-            <div class="seller-table">
-                <div class="seller-row seller-header">
-                    <span class="seller-name">Platform</span>
-                    <span class="seller-listings">Total</span>
-                    <span class="seller-listings">Unique</span>
-                    <span class="seller-pct">4%</span>
-                </div>
-                <div class="seller-row seller-row-top">
-                    <span class="seller-name">ForeverPuppy</span>
-                    <span class="seller-listings">630</span>
-                    <span class="seller-listings">628</span>
-                    <span class="seller-pct">100%</span>
-                </div>
-                <div class="seller-row">
-                    <span class="seller-name">Kennel Club</span>
-                    <span class="seller-listings">411</span>
-                    <span class="seller-listings">404</span>
-                    <span class="seller-pct">98%</span>
-                </div>
-                <div class="seller-row">
-                    <span class="seller-name">Champdogs</span>
-                    <span class="seller-listings">162</span>
-                    <span class="seller-listings">145</span>
-                    <span class="seller-pct">90%</span>
-                </div>
-                <div class="seller-row">
-                    <span class="seller-name">Preloved</span>
-                    <span class="seller-listings">654</span>
-                    <span class="seller-listings">651</span>
-                    <span class="seller-pct">100%</span>
-                </div>
-                <div class="seller-row">
-                    <span class="seller-name">Pets4Homes</span>
-                    <span class="seller-listings">7,617</span>
-                    <span class="seller-listings">7,591</span>
-                    <span class="seller-pct">100%</span>
-                </div>
-                <div class="seller-row">
-                    <span class="seller-name">Puppies.co.uk</span>
-                    <span class="seller-listings">575</span>
-                    <span class="seller-listings">573</span>
-                    <span class="seller-pct">100%</span>
-                </div>
-                <div class="seller-row">
-                    <span class="seller-name">FreeAds</span>
-                    <span class="seller-listings">6,551</span>
-                    <span class="seller-listings">6,235</span>
-                    <span class="seller-pct">95%</span>
-                </div>
-                <div class="seller-row">
-                    <span class="seller-name">Gumtree</span>
-                    <span class="seller-listings">1,758</span>
-                    <span class="seller-listings">1,693</span>
-                    <span class="seller-pct">96%</span>
-                </div>
-                <div class="seller-row" style="background: rgba(251, 191, 36, 0.08);">
-                    <span class="seller-name">Petify</span>
-                    <span class="seller-listings">602</span>
-                    <span class="seller-listings">600</span>
-                    <span class="seller-pct">100%</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="dual-table-right">
-            <div class="table-section-label">Cross-Platform Duplicates</div>
-            <div class="mini-table">
-                <div class="mini-row mini-footer">
-                    <span class="mini-label">Duplicates removed</span>
-                    <span class="mini-val">303</span>
-                </div>
-            </div>
-            <div class="table-section-label spaced">Platform Pair Overlap</div>
-            <div class="mini-table">
-                <div class="mini-row mini-header">
-                    <span class="mini-label">Platform Pair</span>
-                    <span class="mini-count">Shared</span>
-                    <span class="mini-pct">% Overlap</span>
-                </div>
-                <div class="mini-row mini-row-top">
-                    <span class="mini-label">Gumtree ↔ P4H</span>
-                    <span class="mini-count">187</span>
-                    <span class="mini-pct">11%</span>
-                </div>
-                <div class="mini-row">
-                    <span class="mini-label">FreeAds ↔ Puppies</span>
-                    <span class="mini-count">30</span>
-                    <span class="mini-pct">5%</span>
-                </div>
-                <div class="mini-row">
-                    <span class="mini-label">FreeAds ↔ Petify</span>
-                    <span class="mini-count">20</span>
-                    <span class="mini-pct">3%</span>
-                </div>
-                <div class="mini-row">
-                    <span class="mini-label">P4H ↔ Preloved</span>
-                    <span class="mini-count">15</span>
-                    <span class="mini-pct">2%</span>
-                </div>
-                <div class="mini-row">
-                    <span class="mini-label">FreeAds ↔ KC</span>
-                    <span class="mini-count">8</span>
-                    <span class="mini-pct">2%</span>
-                </div>
-                <div class="mini-row">
-                    <span class="mini-label">FreeAds ↔ Gumtree</span>
-                    <span class="mini-count">8</span>
-                    <span class="mini-pct">0%</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="slide-number">5</div>
-</div>
-
-<!-- SLIDE 6: Seller Analysis -->
+<!-- SLIDE 5: Seller Analysis -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -2121,10 +1990,10 @@
             </div>
         </div>
     </div>
-    <div class="slide-number">6</div>
+    <div class="slide-number">5</div>
 </div>
 
-<!-- SLIDE 7: Welfare & Regulation -->
+<!-- SLIDE 6: Welfare & Regulation -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -2228,10 +2097,10 @@
             </div>
         </div>
     </div>
-    <div class="slide-number">7</div>
+    <div class="slide-number">6</div>
 </div>
 
-<!-- SLIDE 8: Listing Freshness -->
+<!-- SLIDE 7: Listing Freshness -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -2374,10 +2243,10 @@
             </div>
         </div>
     </div>
-    <div class="slide-number">8</div>
+    <div class="slide-number">7</div>
 </div>
 
-<!-- SLIDE 9: Puppy Age Profile -->
+<!-- SLIDE 8: Puppy Age Profile -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -2504,10 +2373,10 @@
             </div>
         </div>
     </div>
-    <div class="slide-number">9</div>
+    <div class="slide-number">8</div>
 </div>
 
-<!-- SLIDE 10: 8-Week Regulation -->
+<!-- SLIDE 9: 8-Week Regulation -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -2578,10 +2447,10 @@
 
         </div>
     </div>
-    <div class="slide-number">10</div>
+    <div class="slide-number">9</div>
 </div>
 
-<!-- SLIDE 11: Top Breeds -->
+<!-- SLIDE 10: Top Breeds -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -2675,7 +2544,7 @@
                     <span class="seller-listings">Dogs</span>
                     <span class="seller-pct">Price</span>
                 </div>
-                <div class="seller-row" style="background: rgba(251, 191, 36, 0.1);">
+                <div class="seller-row">
                     <span class="seller-rank">1</span>
                     <span class="seller-name">Irish Wolfhound</span>
                     <span class="seller-listings">59</span>
@@ -2738,6 +2607,147 @@
             </div>
         </div>
     </div>
+    <div class="slide-number">10</div>
+</div>
+
+<!-- SLIDE 11: Geography -->
+<div class="slide content-slide">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="deck-title">UK Dog Marketplace Analysis</div>
+
+    <div class="header">
+        <h1><span>Wisbech</span> emerges as a breeder hotspot —<br>a small town ranking #7 nationwide for dogs listed</h1>
+    </div>
+
+    <div class="dual-table-content">
+        <div class="dual-table-left">
+            <div class="table-section-label">Top 10 Cities by Dogs Listed</div>
+            <div class="seller-table">
+                <div class="seller-row seller-header">
+                    <span class="seller-rank">#</span>
+                    <span class="seller-name">City</span>
+                    <span class="seller-listings">Dogs</span>
+                    <span class="seller-pct">Listings</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-rank">1</span>
+                    <span class="seller-name">London</span>
+                    <span class="seller-listings">849</span>
+                    <span class="seller-pct">266</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-rank">2</span>
+                    <span class="seller-name">Doncaster</span>
+                    <span class="seller-listings">807</span>
+                    <span class="seller-pct">236</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-rank">3</span>
+                    <span class="seller-name">Manchester</span>
+                    <span class="seller-listings">761</span>
+                    <span class="seller-pct">240</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-rank">4</span>
+                    <span class="seller-name">Birmingham</span>
+                    <span class="seller-listings">680</span>
+                    <span class="seller-pct">251</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-rank">5</span>
+                    <span class="seller-name">Liverpool</span>
+                    <span class="seller-listings">647</span>
+                    <span class="seller-pct">204</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-rank">6</span>
+                    <span class="seller-name">Nottingham</span>
+                    <span class="seller-listings">590</span>
+                    <span class="seller-pct">172</span>
+                </div>
+                <div class="seller-row" style="background: rgba(251, 191, 36, 0.15);">
+                    <span class="seller-rank" style="color: #fbbf24;">7</span>
+                    <span class="seller-name" style="color: #fbbf24;">Wisbech</span>
+                    <span class="seller-listings" style="color: #fbbf24;">561</span>
+                    <span class="seller-pct" style="color: #fbbf24;">149</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-rank">8</span>
+                    <span class="seller-name">Leeds</span>
+                    <span class="seller-listings">556</span>
+                    <span class="seller-pct">257</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-rank">9</span>
+                    <span class="seller-name">Sheffield</span>
+                    <span class="seller-listings">445</span>
+                    <span class="seller-pct">143</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-rank">10</span>
+                    <span class="seller-name">Hull</span>
+                    <span class="seller-listings">424</span>
+                    <span class="seller-pct">141</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dual-table-right">
+            <div class="table-section-label">Top 5 Regions by Dogs Listed</div>
+            <div class="seller-table">
+                <div class="seller-row seller-header">
+                    <span class="seller-rank">#</span>
+                    <span class="seller-name">Region</span>
+                    <span class="seller-listings">Dogs</span>
+                    <span class="seller-pct">Listings</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-rank">1</span>
+                    <span class="seller-name">West Midlands</span>
+                    <span class="seller-listings">1,685</span>
+                    <span class="seller-pct">482</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-rank">2</span>
+                    <span class="seller-name">Greater London</span>
+                    <span class="seller-listings">1,641</span>
+                    <span class="seller-pct">456</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-rank">3</span>
+                    <span class="seller-name">South Yorkshire</span>
+                    <span class="seller-listings">1,336</span>
+                    <span class="seller-pct">352</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-rank">4</span>
+                    <span class="seller-name">West Yorkshire</span>
+                    <span class="seller-listings">1,317</span>
+                    <span class="seller-pct">381</span>
+                </div>
+                <div class="seller-row">
+                    <span class="seller-rank">5</span>
+                    <span class="seller-name">Kent</span>
+                    <span class="seller-listings">1,095</span>
+                    <span class="seller-pct">301</span>
+                </div>
+            </div>
+
+            <div style="background: rgba(251, 191, 36, 0.08); border: 1px solid rgba(251, 191, 36, 0.2); border-radius: 8px; padding: 12px; margin-top: 14px;">
+                <div style="font-size: 11px; font-weight: 700; color: #fbbf24; margin-bottom: 6px;">🔥 Wisbech Breeder Hotspot</div>
+                <div style="font-size: 10px; color: #a8998a; margin-bottom: 8px;">Small town (pop. 35k) with 3 of UK's top sellers</div>
+                <div style="font-size: 10px; color: #d4c4b0; line-height: 1.6;">
+                    <strong>Ritchie</strong> — 11 listings, Bulldogs, P4H (licensed)<br>
+                    <strong>justdogz</strong> — 9 listings, Cockapoos, FreeAds<br>
+                    <strong>Zoe</strong> — 5 listings, Mixed, P4H (licensed)
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="slide-number">11</div>
 </div>
 

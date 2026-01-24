@@ -870,13 +870,19 @@ def generate_slides():
     html = replace_slide2_market_overview(html, metrics)
     html = replace_slide3_journey(html, metrics)
     html = replace_slide4_platform_breakdown(html, metrics)
-    html = replace_slide5_duplication(html, metrics)
+    # Slide 5 (was 6): Seller Analysis
     html = replace_slide6_sellers(html, metrics)
+    # Slide 6 (was 7): Welfare & Regulation
     html = replace_slide7_welfare(html, metrics)
+    # Slide 7 (was 8): Listing Freshness
     html = replace_slide8_freshness(html, metrics)
+    # Slide 8 (was 9): Puppy Age Profile
     html = replace_slide9_puppy_age(html, metrics)
+    # Slide 9 (was 10): 8-Week Regulation
     html = replace_slide10_regulation(html, metrics)
+    # Slide 10 (was 11): Top Breeds
     html = replace_slide11_breeds(html, metrics)
+    # Slide 11: Geography (new, static data in HTML)
 
     print("Saving updated HTML to", HTML_PATH)
     save_html(HTML_PATH, html)

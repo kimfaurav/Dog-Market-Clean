@@ -689,6 +689,130 @@
       }
     ]
   },
+  "geography": {
+    "top_cities": [
+      {
+        "city": "London",
+        "dogs": 849,
+        "listings": 266
+      },
+      {
+        "city": "Doncaster",
+        "dogs": 807,
+        "listings": 236
+      },
+      {
+        "city": "Manchester",
+        "dogs": 761,
+        "listings": 240
+      },
+      {
+        "city": "Birmingham",
+        "dogs": 680,
+        "listings": 251
+      },
+      {
+        "city": "Liverpool",
+        "dogs": 647,
+        "listings": 204
+      },
+      {
+        "city": "Nottingham",
+        "dogs": 590,
+        "listings": 172
+      },
+      {
+        "city": "Wisbech",
+        "dogs": 561,
+        "listings": 149
+      },
+      {
+        "city": "Leeds",
+        "dogs": 556,
+        "listings": 257
+      },
+      {
+        "city": "Sheffield",
+        "dogs": 445,
+        "listings": 143
+      },
+      {
+        "city": "Hull",
+        "dogs": 424,
+        "listings": 141
+      }
+    ],
+    "top_regions": [
+      {
+        "region": "West Midlands",
+        "dogs": 1685,
+        "listings": 482
+      },
+      {
+        "region": "Greater London",
+        "dogs": 1641,
+        "listings": 456
+      },
+      {
+        "region": "South Yorkshire",
+        "dogs": 1336,
+        "listings": 352
+      },
+      {
+        "region": "West Yorkshire",
+        "dogs": 1317,
+        "listings": 381
+      },
+      {
+        "region": "Kent",
+        "dogs": 1095,
+        "listings": 301
+      },
+      {
+        "region": "Essex",
+        "dogs": 1045,
+        "listings": 289
+      },
+      {
+        "region": "Greater Manchester",
+        "dogs": 1034,
+        "listings": 283
+      },
+      {
+        "region": "Lincolnshire",
+        "dogs": 985,
+        "listings": 225
+      },
+      {
+        "region": "Lancashire",
+        "dogs": 932,
+        "listings": 231
+      },
+      {
+        "region": "Cambridgeshire",
+        "dogs": 791,
+        "listings": 183
+      },
+      {
+        "region": "Tyne and Wear",
+        "dogs": 766,
+        "listings": 184
+      },
+      {
+        "region": "Merseyside",
+        "dogs": 757,
+        "listings": 203
+      }
+    ],
+    "hotspot": {
+      "city": "Wisbech",
+      "region": "Cambridgeshire",
+      "dogs": 561,
+      "listings": 149,
+      "sellers": 112,
+      "avg_per_listing": 3.8
+    }
+  },
   "qa": {
     "total_rows": 18960,
     "unique_after_dedupe": 18134,
