@@ -554,7 +554,7 @@ def compute_metrics():
     
     # Listing freshness (date columns already calculated earlier for stale removal)
     freshness = {}
-    for p in ('gumtree', 'pets4homes', 'freeads', 'foreverpuppy', 'preloved', 'puppies', 'petify'):
+    for p in ('gumtree', 'pets4homes', 'freeads', 'foreverpuppy', 'preloved', 'puppies', 'petify', 'gundogs_direct'):
         pdf = df[df['platform'] == p].copy()
         if len(pdf) == 0:
             continue

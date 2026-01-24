@@ -576,6 +576,7 @@ def replace_slide8_freshness(html: str, m: dict) -> str:
         ("Preloved", "preloved"),
         ("Puppies.co.uk", "puppies"),
         ("Petify", "petify"),
+        ("Gundogs Direct", "gundogs_direct"),
     ]
 
     for display_name, key in platform_freshness:
@@ -664,6 +665,7 @@ def replace_slide9_puppy_age(html: str, m: dict) -> str:
         ("ForeverPuppy", "foreverpuppy"),
         ("Champdogs", "champdogs"),
         ("Preloved", "preloved"),
+        ("Gundogs Direct", "gundogs_direct"),
     ]
 
     for display_name, key in platform_order:

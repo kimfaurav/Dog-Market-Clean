@@ -88,37 +88,57 @@ async def scrape_listing(page, url):
         if id_match:
             listing['ad_id'] = id_match.group(1)
 
-        # Posted Date
-        posted_match = re.search(r'Posted Date[:\s]*(\d{2}-\d{2}-\d{4})', body_text)
-        if posted_match:
-            listing['posted_date'] = posted_match.group(1)
-            # Convert to ISO format
-            try:
-                dt = datetime.strptime(posted_match.group(1), '%d-%m-%Y')
-                listing['posted_date_iso'] = dt.strftime('%Y-%m-%d')
-            except:
-                pass
+        # Posted Date - format: "01-01-2026" with label "Date Posted:"
+        posted_patterns = [
+            r'Date\s*Posted\s*[:\s]*(\d{2}-\d{2}-\d{4})',
+            r'Posted\s*Date\s*[:\s]*(\d{2}-\d{2}-\d{4})',
+            r'Posted\s*[:\s]*(\d{2}-\d{2}-\d{4})',
+            r'Listed\s*[:\s]*(\d{2}-\d{2}-\d{4})',
+        ]
+        for pattern in posted_patterns:
+            posted_match = re.search(pattern, body_text, re.I)
+            if posted_match:
+                listing['posted_date'] = posted_match.group(1)
+                try:
+                    dt = datetime.strptime(posted_match.group(1), '%d-%m-%Y')
+                    listing['posted_date_iso'] = dt.strftime('%Y-%m-%d')
+                except:
+                    pass
+                break
 
-        # Last Updated
-        updated_match = re.search(r'Last Updated[:\s]*(\d{2}-\d{2}-\d{4})', body_text)
+        # Last Updated - format: "24-01-2026"
+        updated_match = re.search(r'Last\s*Updated\s*[:\s]*(\d{2}-\d{2}-\d{4})', body_text, re.I)
         if updated_match:
             listing['last_updated'] = updated_match.group(1)
 
-        # Litter Size
-        litter_match = re.search(r'Litter Size[:\s]*(\d+)', body_text)
-        if litter_match:
-            listing['litter_size'] = int(litter_match.group(1))
+        # Litter Size - format: "7 pups in the litter" or "Litter Size: 7"
+        litter_patterns = [
+            r'(\d+)\s*pups?\s*in\s*the\s*litter',
+            r'Litter\s*Size\s*[:\s]*(\d+)',
+        ]
+        for pattern in litter_patterns:
+            litter_match = re.search(pattern, body_text, re.I)
+            if litter_match:
+                listing['litter_size'] = int(litter_match.group(1))
+                break
 
-        # Available puppies
-        available_match = re.search(r'Available Puppies[:\s]*(\d+)', body_text)
-        if available_match:
-            listing['available_puppies'] = int(available_match.group(1))
+        # Available puppies - format: "2 dogs Available" or "Available: 2"
+        available_patterns = [
+            r'(\d+)\s*(?:dogs?|puppies?|pups?)\s*[Aa]vailable',
+            r'[Aa]vailable\s*[:\s]*(\d+)',
+        ]
+        for pattern in available_patterns:
+            available_match = re.search(pattern, body_text, re.I)
+            if available_match:
+                listing['available_puppies'] = int(available_match.group(1))
+                break
 
-        # Date of Birth
+        # Date of Birth - format: "15 Dec 2025" or "15th December 2025"
         dob_patterns = [
-            r'Date of Birth[:\s]*["\']?(\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+\s+\d{4})',
-            r'Date of Birth[:\s]*["\']?(\d{1,2}\s+[A-Za-z]+\s+\d{4})',
-            r'Date of Birth[:\s]*(\d{2}-\d{2}-\d{4})',
+            r'Date\s*of\s*Birth\s*[:\s"\']*(\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+\s+\d{4})',
+            r'Date\s*of\s*Birth\s*[:\s"\']*(\d{1,2}\s+[A-Za-z]+\s+\d{4})',
+            r'Date\s*of\s*Birth\s*[:\s]*(\d{2}-\d{2}-\d{4})',
+            r'DOB\s*[:\s]*(\d{1,2}\s+[A-Za-z]+\s+\d{4})',
         ]
         for pattern in dob_patterns:
             dob_match = re.search(pattern, body_text, re.I)
@@ -126,11 +146,15 @@ async def scrape_listing(page, url):
                 listing['date_of_birth'] = dob_match.group(1).strip()
                 break
 
-        # Ready to Leave
+        # Ready to Leave - format: "16th February 2026" or "Now" or in description
         rtl_patterns = [
-            r'Ready to Leave[:\s]*["\']?(\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+\s+\d{4})',
-            r'Ready to Leave[:\s]*["\']?(\d{1,2}\s+[A-Za-z]+\s+\d{4})',
-            r'Ready to Leave[:\s]*["\']?(Now)',
+            r'Ready\s*to\s*Leave\s*[:\s"\']*(\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+\s+\d{4})',
+            r'Ready\s*to\s*Leave\s*[:\s"\']*(\d{1,2}\s+[A-Za-z]+\s+\d{4})',
+            r'Ready\s*to\s*Leave\s*[:\s"\']*(Now|Immediately)',
+            r'ready\s+to\s+leave\s+(?:on\s+)?(\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+)',  # in description
+            r'ready\s+to\s+go\s+(?:on\s+)?(\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+)',
+            r'available\s+(?:from\s+)?(\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+)',
+            r'can\s+leave\s+(?:on\s+)?(\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+)',
         ]
         for pattern in rtl_patterns:
             rtl_match = re.search(pattern, body_text, re.I)
@@ -138,22 +162,51 @@ async def scrape_listing(page, url):
                 listing['ready_to_leave'] = rtl_match.group(1).strip()
                 break
 
-        # Current Age
-        age_match = re.search(r'Current Age[:\s]*(\d+\s*years?,?\s*\d+\s*months?,?\s*\d+\s*days?)', body_text, re.I)
-        if age_match:
-            listing['age'] = age_match.group(1)
+        # Current Age - various formats
+        age_patterns = [
+            r'Current\s*Age\s*[:\s]*(\d+\s*years?,?\s*\d+\s*months?,?\s*\d+\s*days?)',
+            r'Age\s*[:\s]*(\d+\s*weeks?)',
+            r'(\d+)\s*weeks?\s*old',
+        ]
+        for pattern in age_patterns:
+            age_match = re.search(pattern, body_text, re.I)
+            if age_match:
+                listing['age'] = age_match.group(1).strip()
+                break
 
-        # Location
-        location_match = re.search(r'Location[:\s]*["\']?([A-Za-z\s]+),?\s*UK', body_text)
-        if location_match:
-            listing['location'] = location_match.group(1).strip()
+        # Location - format: "Battle, UK" or with county
+        location_patterns = [
+            r'Location\s*[:\s"\']*([A-Za-z][A-Za-z\s\-\']+),?\s*UK',
+            r'County\s*[:\s"\']*([A-Za-z][A-Za-z\s\-\']+)',
+            r'([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?),\s*UK',
+        ]
+        for pattern in location_patterns:
+            location_match = re.search(pattern, body_text)
+            if location_match:
+                listing['location'] = location_match.group(1).strip()
+                break
 
-        # Seller info
-        seller_match = re.search(r'Seller Name[:\s]*([^\n]+)', body_text)
-        if seller_match:
-            listing['seller_name'] = seller_match.group(1).strip()
+        # Also try to get county separately
+        county_match = re.search(r'County\s*[:\s"\']*([A-Za-z][A-Za-z\s\-\']+)', body_text)
+        if county_match:
+            listing['county'] = county_match.group(1).strip()
 
-        member_match = re.search(r'Member Since[:\s]*(\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+\s+\d{4})', body_text)
+        # Seller info - look for seller name in "Seller Details" section
+        # The format is: "Name: C&S Tompsett" followed by "Verified Breeder:"
+        seller_patterns = [
+            r'Name\s*[:\s]*([A-Za-z0-9][A-Za-z0-9\s&\-\'\.]+?)\s*(?:Verified\s*Breeder|Member\s*Since|Posted\s*Adverts)',
+            r'Seller\s*Details.*?Name\s*[:\s]*([A-Za-z0-9][A-Za-z0-9\s&\-\'\.]+)',
+        ]
+        for pattern in seller_patterns:
+            seller_match = re.search(pattern, body_text, re.I | re.DOTALL)
+            if seller_match:
+                name = seller_match.group(1).strip()
+                # Filter out common false positives
+                if name.lower() not in ['yes', 'no', 'the', 'this', 'name', 'seller', 'details']:
+                    listing['seller_name'] = name
+                    break
+
+        member_match = re.search(r'Member\s*Since\s*[:\s]*(\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+\s+\d{4})', body_text, re.I)
         if member_match:
             listing['member_since'] = member_match.group(1)
 
@@ -237,7 +290,7 @@ async def main():
 
     # Save CSV
     cols = [
-        'id', 'ad_id', 'title', 'breed', 'price', 'location',
+        'id', 'ad_id', 'title', 'breed', 'price', 'location', 'county',
         'date_of_birth', 'age', 'ready_to_leave',
         'litter_size', 'available_puppies',
         'posted_date', 'posted_date_iso', 'last_updated',

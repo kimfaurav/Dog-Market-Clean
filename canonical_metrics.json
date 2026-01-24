@@ -1,17 +1,17 @@
 {
   "summary": {
-    "raw_listings": 19315,
-    "raw_puppies": 62286,
-    "raw_avg_per_listing": 3.22,
-    "unique_listings": 18489,
-    "unique_puppies": 59233,
-    "duplicates_removed": 826,
+    "raw_listings": 19317,
+    "raw_puppies": 62310,
+    "raw_avg_per_listing": 3.23,
+    "unique_listings": 18380,
+    "unique_puppies": 59146,
+    "duplicates_removed": 937,
     "within_platform_dups": 65,
     "cross_platform_dups": 303,
-    "stale_removed": 458,
+    "stale_removed": 569,
     "non_sale_removed": 61,
-    "annualized_puppies": 894622,
-    "market_share_pct": 94.57
+    "annualized_puppies": 893308,
+    "market_share_pct": 94.43
   },
   "platforms": {
     "champdogs": {
@@ -43,10 +43,10 @@
       "share": 7.1
     },
     "gundogs_direct": {
-      "listings": 354,
-      "puppies": 354,
-      "unique": 2,
-      "avg": 1.0,
+      "listings": 356,
+      "puppies": 378,
+      "unique": 303,
+      "avg": 1.1,
       "share": 0.6
     },
     "kennel_club": {
@@ -200,10 +200,10 @@
     }
   ],
   "sellers": {
-    "total": 17304,
+    "total": 17603,
     "pct_one_listing": 94,
     "rescue_count": 21,
-    "high_volume": 162,
+    "high_volume": 175,
     "by_platform": {
       "champdogs": {
         "total_sellers": 145,
@@ -219,7 +219,7 @@
         "pct_one_listing": 94,
         "max_listings": 3,
         "high_volume": 5,
-        "hv_pct": 3.1,
+        "hv_pct": 2.9,
         "license_sellers": 0,
         "license_pct": 0.0
       },
@@ -228,7 +228,7 @@
         "pct_one_listing": 93,
         "max_listings": 9,
         "high_volume": 74,
-        "hv_pct": 45.7,
+        "hv_pct": 42.3,
         "license_sellers": 0,
         "license_pct": 0.0
       },
@@ -242,13 +242,13 @@
         "license_pct": 0.0
       },
       "gundogs_direct": {
-        "total_sellers": 1,
-        "pct_one_listing": 0,
-        "max_listings": 0,
-        "high_volume": 0,
-        "hv_pct": 0.0,
+        "total_sellers": 303,
+        "pct_one_listing": 89,
+        "max_listings": 5,
+        "high_volume": 12,
+        "hv_pct": 6.9,
         "license_sellers": 0,
-        "license_pct": 0
+        "license_pct": 0.0
       },
       "kennel_club": {
         "total_sellers": 398,
@@ -264,7 +264,7 @@
         "pct_one_listing": 90,
         "max_listings": 7,
         "high_volume": 16,
-        "hv_pct": 9.9,
+        "hv_pct": 9.1,
         "license_sellers": 0,
         "license_pct": 0.0
       },
@@ -273,7 +273,7 @@
         "pct_one_listing": 95,
         "max_listings": 8,
         "high_volume": 54,
-        "hv_pct": 33.3,
+        "hv_pct": 30.9,
         "license_sellers": 44,
         "license_pct": 81.5
       },
@@ -282,7 +282,7 @@
         "pct_one_listing": 95,
         "max_listings": 81,
         "high_volume": 8,
-        "hv_pct": 4.9,
+        "hv_pct": 4.6,
         "license_sellers": 0,
         "license_pct": 0.0
       },
@@ -328,6 +328,16 @@
         "is_rescue": false
       },
       {
+        "name": "The Canine Club",
+        "location": "Godstone, Surrey",
+        "listings": 8,
+        "platforms": [
+          "pets4homes"
+        ],
+        "has_license": true,
+        "is_rescue": false
+      },
+      {
         "name": "Ritchie",
         "location": "Wisbech, Cambridgeshire",
         "listings": 8,
@@ -338,9 +348,9 @@
         "is_rescue": false
       },
       {
-        "name": "The Canine Club",
-        "location": "Godstone, Surrey",
-        "listings": 8,
+        "name": "Wiggle Waggle",
+        "location": "Prudhoe, Northumberland",
+        "listings": 7,
         "platforms": [
           "pets4homes"
         ],
@@ -355,16 +365,6 @@
           "freeads"
         ],
         "has_license": false,
-        "is_rescue": false
-      },
-      {
-        "name": "Wiggle Waggle",
-        "location": "Prudhoe, Northumberland",
-        "listings": 7,
-        "platforms": [
-          "pets4homes"
-        ],
-        "has_license": true,
         "is_rescue": false
       },
       {
@@ -388,14 +388,14 @@
         "is_rescue": false
       },
       {
-        "name": "La'al Marras Rescue Group",
-        "location": "Cumbria",
+        "name": "Since J",
+        "location": "London",
         "listings": 6,
         "platforms": [
-          "freeads"
+          "petify"
         ],
         "has_license": false,
-        "is_rescue": true
+        "is_rescue": false
       }
     ]
   },
@@ -483,6 +483,18 @@
       "30_90d_pct": 17,
       "over_90d": 430,
       "over_90d_pct": 71
+    },
+    "gundogs_direct": {
+      "median_days": 74,
+      "total": 356,
+      "under_7d": 30,
+      "under_7d_pct": 8,
+      "7_30d": 60,
+      "7_30d_pct": 17,
+      "30_90d": 112,
+      "30_90d_pct": 31,
+      "over_90d": 153,
+      "over_90d_pct": 43
     }
   },
   "age_distribution": {
@@ -521,6 +533,15 @@
       "over_1yr": 14,
       "median_weeks": 10,
       "total_with_age": 1757
+    },
+    "gundogs_direct": {
+      "under_8w": 13,
+      "8-12w": 9,
+      "12-26w": 14,
+      "6-12mo": 3,
+      "over_1yr": 62,
+      "median_weeks": 129,
+      "total_with_age": 281
     },
     "kennel_club": {
       "under_8w": 23,
@@ -569,11 +590,11 @@
     }
   },
   "puppies_vs_adults": {
-    "total_with_age": 14215,
-    "under_1yr": 11835,
-    "under_1yr_pct": 83.3,
-    "over_1yr": 2380,
-    "over_1yr_pct": 16.7
+    "total_with_age": 14496,
+    "under_1yr": 11942,
+    "under_1yr_pct": 82.4,
+    "over_1yr": 2554,
+    "over_1yr_pct": 17.6
   },
   "eight_week_regulation": {
     "pets4homes": {
@@ -718,13 +739,13 @@
     "top_cities": [
       {
         "city": "London",
-        "dogs": 868,
-        "listings": 266
+        "dogs": 869,
+        "listings": 267
       },
       {
         "city": "Doncaster",
-        "dogs": 807,
-        "listings": 236
+        "dogs": 809,
+        "listings": 238
       },
       {
         "city": "Manchester",
@@ -733,13 +754,13 @@
       },
       {
         "city": "Birmingham",
-        "dogs": 690,
-        "listings": 251
+        "dogs": 691,
+        "listings": 252
       },
       {
         "city": "Liverpool",
-        "dogs": 656,
-        "listings": 204
+        "dogs": 657,
+        "listings": 205
       },
       {
         "city": "Nottingham",
@@ -748,18 +769,18 @@
       },
       {
         "city": "Leeds",
-        "dogs": 564,
-        "listings": 257
+        "dogs": 566,
+        "listings": 259
       },
       {
         "city": "Wisbech",
-        "dogs": 561,
-        "listings": 149
+        "dogs": 562,
+        "listings": 150
       },
       {
         "city": "Sheffield",
-        "dogs": 445,
-        "listings": 143
+        "dogs": 447,
+        "listings": 145
       },
       {
         "city": "Hull",
@@ -832,19 +853,19 @@
     "hotspot": {
       "city": "Wisbech",
       "region": "Cambridgeshire",
-      "dogs": 561,
-      "listings": 149,
-      "sellers": 112,
-      "avg_per_listing": 3.8
+      "dogs": 562,
+      "listings": 150,
+      "sellers": 113,
+      "avg_per_listing": 3.7
     }
   },
   "qa": {
-    "total_rows": 19315,
-    "unique_after_dedupe": 18489,
-    "duplicates_removed": 826,
+    "total_rows": 19317,
+    "unique_after_dedupe": 18380,
+    "duplicates_removed": 937,
     "duplicate_groups": 343,
-    "sellers_total": 17304,
-    "sellers_high_volume": 162,
+    "sellers_total": 17603,
+    "sellers_high_volume": 175,
     "platforms_count": 10
   }
 }
