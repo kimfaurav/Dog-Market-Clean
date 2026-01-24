@@ -93,10 +93,10 @@ def replace_slide2_market_overview(html: str, m: dict) -> str:
         html
     )
 
-    # Header: "Nearly X%" - round to nearest 10 for headline
-    headline_pct = round(s["market_share_pct"] / 10) * 10
+    # Header: "X% of all dogs" - use rounded percentage
+    headline_pct = round(s["market_share_pct"])
     html = re.sub(
-        r'(Nearly <span>)[^<]+(</span> of all dogs)',
+        r'(<span>)[^<]+(</span> of all dogs sold)',
         rf'\g<1>{headline_pct}%\2',
         html
     )

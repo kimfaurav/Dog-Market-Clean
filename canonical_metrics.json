@@ -1,17 +1,17 @@
 {
   "summary": {
-    "raw_listings": 18960,
-    "raw_puppies": 61564,
-    "raw_avg_per_listing": 3.25,
-    "unique_listings": 18134,
-    "unique_puppies": 58703,
+    "raw_listings": 18961,
+    "raw_puppies": 61932,
+    "raw_avg_per_listing": 3.27,
+    "unique_listings": 18135,
+    "unique_puppies": 58879,
     "duplicates_removed": 826,
     "within_platform_dups": 65,
     "cross_platform_dups": 303,
     "stale_removed": 458,
     "non_sale_removed": 61,
-    "annualized_puppies": 857066,
-    "market_share_pct": 90.6
+    "annualized_puppies": 889275,
+    "market_share_pct": 94.0
   },
   "platforms": {
     "champdogs": {
@@ -33,7 +33,7 @@
       "puppies": 14258,
       "unique": 6235,
       "avg": 2.2,
-      "share": 23.2
+      "share": 23.0
     },
     "gumtree": {
       "listings": 1758,
@@ -50,25 +50,25 @@
       "share": 4.0
     },
     "petify": {
-      "listings": 602,
-      "puppies": 2947,
-      "unique": 600,
-      "avg": 4.9,
-      "share": 4.8
+      "listings": 603,
+      "puppies": 3315,
+      "unique": 602,
+      "avg": 5.5,
+      "share": 5.4
     },
     "pets4homes": {
       "listings": 7617,
       "puppies": 31312,
       "unique": 7591,
       "avg": 4.1,
-      "share": 50.9
+      "share": 50.6
     },
     "preloved": {
       "listings": 654,
       "puppies": 893,
       "unique": 651,
       "avg": 1.4,
-      "share": 1.5
+      "share": 1.4
     },
     "puppies": {
       "listings": 575,
@@ -79,7 +79,7 @@
     }
   },
   "cross_platform_duplicates": {
-    "2": 274,
+    "2": 275,
     "3": 3
   },
   "platform_pair_overlap": [
@@ -107,7 +107,7 @@
         "freeads",
         "petify"
       ],
-      "count": 20,
+      "count": 21,
       "pct": 3
     },
     {
@@ -193,10 +193,10 @@
     }
   ],
   "sellers": {
-    "total": 17156,
+    "total": 17304,
     "pct_one_listing": 94,
     "rescue_count": 21,
-    "high_volume": 187,
+    "high_volume": 162,
     "by_platform": {
       "champdogs": {
         "total_sellers": 145,
@@ -212,7 +212,7 @@
         "pct_one_listing": 94,
         "max_listings": 3,
         "high_volume": 5,
-        "hv_pct": 2.7,
+        "hv_pct": 3.1,
         "license_sellers": 0,
         "license_pct": 0.0
       },
@@ -221,7 +221,7 @@
         "pct_one_listing": 93,
         "max_listings": 9,
         "high_volume": 74,
-        "hv_pct": 39.6,
+        "hv_pct": 45.7,
         "license_sellers": 0,
         "license_pct": 0.0
       },
@@ -230,7 +230,7 @@
         "pct_one_listing": 94,
         "max_listings": 3,
         "high_volume": 1,
-        "hv_pct": 0.5,
+        "hv_pct": 0.6,
         "license_sellers": 0,
         "license_pct": 0.0
       },
@@ -239,16 +239,16 @@
         "pct_one_listing": 97,
         "max_listings": 4,
         "high_volume": 1,
-        "hv_pct": 0.5,
+        "hv_pct": 0.6,
         "license_sellers": 0,
         "license_pct": 0.0
       },
       "petify": {
-        "total_sellers": 375,
-        "pct_one_listing": 73,
-        "max_listings": 0,
-        "high_volume": 40,
-        "hv_pct": 21.4,
+        "total_sellers": 520,
+        "pct_one_listing": 90,
+        "max_listings": 7,
+        "high_volume": 16,
+        "hv_pct": 9.9,
         "license_sellers": 0,
         "license_pct": 0.0
       },
@@ -257,7 +257,7 @@
         "pct_one_listing": 95,
         "max_listings": 8,
         "high_volume": 54,
-        "hv_pct": 28.9,
+        "hv_pct": 33.3,
         "license_sellers": 44,
         "license_pct": 81.5
       },
@@ -266,7 +266,7 @@
         "pct_one_listing": 95,
         "max_listings": 81,
         "high_volume": 8,
-        "hv_pct": 4.3,
+        "hv_pct": 4.9,
         "license_sellers": 0,
         "license_pct": 0.0
       },
@@ -332,16 +332,6 @@
         "is_rescue": false
       },
       {
-        "name": "Wiggle Waggle",
-        "location": "Prudhoe, Northumberland",
-        "listings": 7,
-        "platforms": [
-          "pets4homes"
-        ],
-        "has_license": true,
-        "is_rescue": false
-      },
-      {
         "name": "marta.sobkowiak9911",
         "location": "Hull",
         "listings": 7,
@@ -352,14 +342,24 @@
         "is_rescue": false
       },
       {
-        "name": "La'al Marras Rescue Group",
-        "location": "Cumbria",
-        "listings": 6,
+        "name": "Wiggle Waggle",
+        "location": "Prudhoe, Northumberland",
+        "listings": 7,
         "platforms": [
-          "freeads"
+          "pets4homes"
+        ],
+        "has_license": true,
+        "is_rescue": false
+      },
+      {
+        "name": "Since J",
+        "location": "Birmingham",
+        "listings": 7,
+        "platforms": [
+          "petify"
         ],
         "has_license": false,
-        "is_rescue": true
+        "is_rescue": false
       },
       {
         "name": "5 Star Licensed Breeder",
@@ -372,14 +372,14 @@
         "is_rescue": false
       },
       {
-        "name": "Chi-Chi's Premier Pooches",
-        "location": "Blackpool, Blackpool",
-        "listings": 5,
+        "name": "La'al Marras Rescue Group",
+        "location": "Cumbria",
+        "listings": 6,
         "platforms": [
-          "pets4homes"
+          "freeads"
         ],
-        "has_license": true,
-        "is_rescue": false
+        "has_license": false,
+        "is_rescue": true
       }
     ]
   },
@@ -397,15 +397,15 @@
       "over_90d_pct": 0
     },
     "pets4homes": {
-      "median_days": 22,
+      "median_days": 23,
       "total": 7617,
-      "under_7d": 1362,
-      "under_7d_pct": 18,
-      "7_30d": 3277,
-      "7_30d_pct": 43,
-      "30_90d": 2831,
-      "30_90d_pct": 37,
-      "over_90d": 146,
+      "under_7d": 1117,
+      "under_7d_pct": 15,
+      "7_30d": 3463,
+      "7_30d_pct": 45,
+      "30_90d": 2886,
+      "30_90d_pct": 38,
+      "over_90d": 150,
       "over_90d_pct": 2
     },
     "freeads": {
@@ -421,14 +421,14 @@
       "over_90d_pct": 7
     },
     "foreverpuppy": {
-      "median_days": 46,
+      "median_days": 47,
       "total": 630,
-      "under_7d": 31,
-      "under_7d_pct": 5,
-      "7_30d": 156,
-      "7_30d_pct": 25,
-      "30_90d": 377,
-      "30_90d_pct": 60,
+      "under_7d": 28,
+      "under_7d_pct": 4,
+      "7_30d": 151,
+      "7_30d_pct": 24,
+      "30_90d": 385,
+      "30_90d_pct": 61,
       "over_90d": 13,
       "over_90d_pct": 2
     },
@@ -445,27 +445,27 @@
       "over_90d_pct": 31
     },
     "puppies": {
-      "median_days": 72,
+      "median_days": 73,
       "total": 575,
-      "under_7d": 10,
-      "under_7d_pct": 2,
-      "7_30d": 125,
+      "under_7d": 7,
+      "under_7d_pct": 1,
+      "7_30d": 127,
       "7_30d_pct": 22,
-      "30_90d": 221,
+      "30_90d": 217,
       "30_90d_pct": 38,
-      "over_90d": 219,
-      "over_90d_pct": 38
+      "over_90d": 224,
+      "over_90d_pct": 39
     },
     "petify": {
-      "median_days": 209,
-      "total": 602,
-      "under_7d": 28,
-      "under_7d_pct": 5,
-      "7_30d": 21,
-      "7_30d_pct": 3,
-      "30_90d": 123,
-      "30_90d_pct": 20,
-      "over_90d": 429,
+      "median_days": 210,
+      "total": 603,
+      "under_7d": 13,
+      "under_7d_pct": 2,
+      "7_30d": 27,
+      "7_30d_pct": 4,
+      "30_90d": 104,
+      "30_90d_pct": 17,
+      "over_90d": 430,
       "over_90d_pct": 71
     }
   },
@@ -515,6 +515,15 @@
       "median_weeks": 11,
       "total_with_age": 410
     },
+    "petify": {
+      "under_8w": 16,
+      "8-12w": 30,
+      "12-26w": 22,
+      "6-12mo": 32,
+      "over_1yr": 0,
+      "median_weeks": 13,
+      "total_with_age": 590
+    },
     "pets4homes": {
       "under_8w": 32,
       "8-12w": 23,
@@ -544,18 +553,18 @@
     }
   },
   "puppies_vs_adults": {
-    "total_with_age": 13625,
-    "under_1yr": 11245,
-    "under_1yr_pct": 82.5,
+    "total_with_age": 14215,
+    "under_1yr": 11835,
+    "under_1yr_pct": 83.3,
     "over_1yr": 2380,
-    "over_1yr_pct": 17.5
+    "over_1yr_pct": 16.7
   },
   "eight_week_regulation": {
     "pets4homes": {
       "total_under_8w": 2433,
       "has_ready_to_leave": 2433,
-      "has_future_date": 2430,
-      "pct_protected": 100,
+      "has_future_date": 2358,
+      "pct_protected": 97,
       "no_ready_date": 0
     },
     "gumtree": {
@@ -577,12 +586,12 @@
     "top_by_count": [
       {
         "breed": "French Bulldog",
-        "count": 3681,
+        "count": 3675,
         "share": 6.6
       },
       {
         "breed": "Labrador Retriever",
-        "count": 3641,
+        "count": 3639,
         "share": 6.5
       },
       {
@@ -592,37 +601,37 @@
       },
       {
         "breed": "Miniature Dachshund",
-        "count": 3176,
+        "count": 3177,
         "share": 5.7
       },
       {
         "breed": "Cocker Spaniel",
-        "count": 3064,
+        "count": 3065,
         "share": 5.5
       },
       {
         "breed": "German Shepherd",
-        "count": 2081,
+        "count": 2084,
         "share": 3.7
       },
       {
         "breed": "Dachshund",
-        "count": 1818,
+        "count": 1812,
         "share": 3.2
       },
       {
         "breed": "Cane Corso",
-        "count": 1609,
+        "count": 1601,
         "share": 2.9
       },
       {
         "breed": "Staffordshire Bull Terrier",
-        "count": 1440,
+        "count": 1429,
         "share": 2.6
       },
       {
         "breed": "Chihuahua",
-        "count": 1165,
+        "count": 1162,
         "share": 2.1
       }
     ],
@@ -693,7 +702,7 @@
     "top_cities": [
       {
         "city": "London",
-        "dogs": 849,
+        "dogs": 868,
         "listings": 266
       },
       {
@@ -703,33 +712,33 @@
       },
       {
         "city": "Manchester",
-        "dogs": 761,
+        "dogs": 766,
         "listings": 240
       },
       {
         "city": "Birmingham",
-        "dogs": 680,
+        "dogs": 690,
         "listings": 251
       },
       {
         "city": "Liverpool",
-        "dogs": 647,
+        "dogs": 656,
         "listings": 204
       },
       {
         "city": "Nottingham",
-        "dogs": 590,
+        "dogs": 591,
         "listings": 172
+      },
+      {
+        "city": "Leeds",
+        "dogs": 564,
+        "listings": 257
       },
       {
         "city": "Wisbech",
         "dogs": 561,
         "listings": 149
-      },
-      {
-        "city": "Leeds",
-        "dogs": 556,
-        "listings": 257
       },
       {
         "city": "Sheffield",
@@ -814,12 +823,12 @@
     }
   },
   "qa": {
-    "total_rows": 18960,
-    "unique_after_dedupe": 18134,
+    "total_rows": 18961,
+    "unique_after_dedupe": 18135,
     "duplicates_removed": 826,
-    "duplicate_groups": 342,
-    "sellers_total": 17156,
-    "sellers_high_volume": 187,
+    "duplicate_groups": 343,
+    "sellers_total": 17304,
+    "sellers_high_volume": 162,
     "platforms_count": 9
   }
 }

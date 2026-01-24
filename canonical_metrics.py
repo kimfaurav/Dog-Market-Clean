@@ -413,8 +413,9 @@ def compute_metrics():
     unique_listings = len(unique_df) + len(unique_no_price)
     total_removed = within_dups + cross_dups + stale_removed_total
     
-    # Annualization
-    annualized = int(unique_pups * 12.1667 * 1.2)
+    # Annualization based on 29-day average listing age
+    # 365/29 = 12.586 turnovers per year, × 1.2 seasonality adjustment
+    annualized = int(unique_pups * (365/29) * 1.2)
     market_share = (annualized / 946000) * 100
     
     # Platform breakdown - use same dedup logic as within-platform (seller_key + title)

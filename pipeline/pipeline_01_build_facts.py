@@ -284,15 +284,18 @@ PLATFORM_CONFIG = {
         }
     },
     "petify": {
-        "file_pattern": "petify_data_clean*.csv",
+        "file_pattern": "petify_data*.csv",
         "mapping": {
             "url": "url",
             "id": "ad_id",
             "title": "title",
             "breed": "breed",
             "ready_to_leave": "ready_to_leave",
+            "posted_date": "published_at",
+            "age": "age",
             "price": "price",
             "location": "location",
+            "seller_name": "seller_name",
             "seller_type": "user_type",
             "member_since": "member_since",
             "males_available": "males_available",
@@ -301,6 +304,8 @@ PLATFORM_CONFIG = {
             "kc_registered": "kc_registered",
             "microchipped": "microchipped",
             "vaccinated": "vaccinated",
+            "wormed": "wormed",
+            "health_checked": "health_checked",
             "id_verified": "breeder_verified",
         }
     },
