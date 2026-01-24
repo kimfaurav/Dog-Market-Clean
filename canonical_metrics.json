@@ -1,17 +1,17 @@
 {
   "summary": {
-    "raw_listings": 18961,
-    "raw_puppies": 61932,
-    "raw_avg_per_listing": 3.27,
-    "unique_listings": 18135,
-    "unique_puppies": 58879,
+    "raw_listings": 19315,
+    "raw_puppies": 62286,
+    "raw_avg_per_listing": 3.22,
+    "unique_listings": 18489,
+    "unique_puppies": 59233,
     "duplicates_removed": 826,
     "within_platform_dups": 65,
     "cross_platform_dups": 303,
     "stale_removed": 458,
     "non_sale_removed": 61,
-    "annualized_puppies": 889275,
-    "market_share_pct": 94.0
+    "annualized_puppies": 894622,
+    "market_share_pct": 94.57
   },
   "platforms": {
     "champdogs": {
@@ -33,35 +33,42 @@
       "puppies": 14258,
       "unique": 6235,
       "avg": 2.2,
-      "share": 23.0
+      "share": 22.9
     },
     "gumtree": {
       "listings": 1758,
       "puppies": 4450,
       "unique": 1693,
       "avg": 2.5,
-      "share": 7.2
+      "share": 7.1
+    },
+    "gundogs_direct": {
+      "listings": 354,
+      "puppies": 354,
+      "unique": 2,
+      "avg": 1.0,
+      "share": 0.6
     },
     "kennel_club": {
       "listings": 411,
       "puppies": 2453,
       "unique": 404,
       "avg": 6.0,
-      "share": 4.0
+      "share": 3.9
     },
     "petify": {
       "listings": 603,
       "puppies": 3315,
       "unique": 602,
       "avg": 5.5,
-      "share": 5.4
+      "share": 5.3
     },
     "pets4homes": {
       "listings": 7617,
       "puppies": 31312,
       "unique": 7591,
       "avg": 4.1,
-      "share": 50.6
+      "share": 50.3
     },
     "preloved": {
       "listings": 654,
@@ -233,6 +240,15 @@
         "hv_pct": 0.6,
         "license_sellers": 0,
         "license_pct": 0.0
+      },
+      "gundogs_direct": {
+        "total_sellers": 1,
+        "pct_one_listing": 0,
+        "max_listings": 0,
+        "high_volume": 0,
+        "hv_pct": 0.0,
+        "license_sellers": 0,
+        "license_pct": 0
       },
       "kennel_club": {
         "total_sellers": 398,
@@ -587,7 +603,7 @@
       {
         "breed": "French Bulldog",
         "count": 3675,
-        "share": 6.6
+        "share": 6.5
       },
       {
         "breed": "Labrador Retriever",
@@ -602,12 +618,12 @@
       {
         "breed": "Miniature Dachshund",
         "count": 3177,
-        "share": 5.7
+        "share": 5.6
       },
       {
         "breed": "Cocker Spaniel",
         "count": 3065,
-        "share": 5.5
+        "share": 5.4
       },
       {
         "breed": "German Shepherd",
@@ -622,12 +638,12 @@
       {
         "breed": "Cane Corso",
         "count": 1601,
-        "share": 2.9
+        "share": 2.8
       },
       {
         "breed": "Staffordshire Bull Terrier",
         "count": 1429,
-        "share": 2.6
+        "share": 2.5
       },
       {
         "breed": "Chihuahua",
@@ -823,12 +839,12 @@
     }
   },
   "qa": {
-    "total_rows": 18961,
-    "unique_after_dedupe": 18135,
+    "total_rows": 19315,
+    "unique_after_dedupe": 18489,
     "duplicates_removed": 826,
     "duplicate_groups": 343,
     "sellers_total": 17304,
     "sellers_high_volume": 162,
-    "platforms_count": 9
+    "platforms_count": 10
   }
 }

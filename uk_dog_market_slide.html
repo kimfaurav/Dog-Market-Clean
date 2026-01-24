@@ -635,6 +635,7 @@
         .dot-7 { background: #fb7185; }
         .dot-8 { background: #2dd4bf; }
         .dot-9 { background: #94a3b8; }
+        .dot-10 { background: #78716c; }
 
         .table-footer {
             display: flex;
@@ -1550,7 +1551,80 @@
     <div class="slide-number">1</div>
 </div>
 
-<!-- SLIDE 2: Market Overview -->
+<!-- SLIDE 2: Executive Summary -->
+<div class="slide content-slide">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="deck-title">UK Dog Marketplace Analysis</div>
+
+    <div class="header" style="margin-bottom: 20px;">
+        <h1>Executive <span>Summary</span></h1>
+    </div>
+
+    <div style="display: flex; gap: 30px; flex: 1;">
+        <!-- Key Insights Column -->
+        <div style="flex: 1.2;">
+            <div style="font-size: 11px; color: #fbbf24; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; font-weight: 600;">Key Insights</div>
+            <div style="font-size: 12px; color: #d4c4b0; line-height: 1.7;">
+                <div style="margin-bottom: 10px; padding-left: 14px; position: relative;">
+                    <span style="position: absolute; left: 0; color: #fbbf24;">1.</span>
+                    <strong style="color: #fff;">95% market coverage</strong> — 895k dogs/year flow through online marketplaces
+                </div>
+                <div style="margin-bottom: 10px; padding-left: 14px; position: relative;">
+                    <span style="position: absolute; left: 0; color: #fbbf24;">2.</span>
+                    <strong style="color: #fff;">Pets4Homes dominates</strong> — 50% market share, only platform enforcing license display
+                </div>
+                <div style="margin-bottom: 10px; padding-left: 14px; position: relative;">
+                    <span style="position: absolute; left: 0; color: #fbbf24;">3.</span>
+                    <strong style="color: #fff;">FreeAds regulation gap</strong> — 46% of high-volume sellers, 0% license enforcement, only 4% enforce 8-week rule
+                </div>
+                <div style="margin-bottom: 10px; padding-left: 14px; position: relative;">
+                    <span style="position: absolute; left: 0; color: #fbbf24;">4.</span>
+                    <strong style="color: #fff;">French Bulldog leads</strong> — 6.6% of all dogs, health concerns well documented
+                </div>
+                <div style="margin-bottom: 10px; padding-left: 14px; position: relative;">
+                    <span style="position: absolute; left: 0; color: #fbbf24;">5.</span>
+                    <strong style="color: #fff;">Wisbech hotspot</strong> — 561 dogs from 112 sellers (5× national density)
+                </div>
+                <div style="padding-left: 14px; position: relative;">
+                    <span style="position: absolute; left: 0; color: #fbbf24;">6.</span>
+                    <strong style="color: #fff;">83% puppies</strong> — Market is overwhelmingly young dogs under 1 year
+                </div>
+            </div>
+        </div>
+
+        <!-- Methodology Column -->
+        <div style="flex: 0.8; border-left: 1px solid rgba(251, 191, 36, 0.15); padding-left: 25px;">
+            <div style="font-size: 11px; color: #fbbf24; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; font-weight: 600;">Methodology</div>
+            <div style="font-size: 11px; color: #a8998a; line-height: 1.8;">
+                <div style="margin-bottom: 14px;">
+                    <div style="color: #d4c4b0; font-weight: 500; margin-bottom: 3px;">Data Collection</div>
+                    Automated scraping of 10 UK platforms capturing ~19k listings representing ~62k dogs
+                </div>
+                <div style="margin-bottom: 14px;">
+                    <div style="color: #d4c4b0; font-weight: 500; margin-bottom: 3px;">Processing</div>
+                    Deduplication across platforms, freshness validation, puppy count inference from titles
+                </div>
+                <div style="margin-bottom: 14px;">
+                    <div style="color: #d4c4b0; font-weight: 500; margin-bottom: 3px;">Annualisation</div>
+                    29-day average listing age × 1.2 seasonality adjustment = 895k/year
+                </div>
+                <div style="background: rgba(251, 191, 36, 0.08); border-radius: 8px; padding: 10px 12px; margin-top: 16px;">
+                    <div style="color: #fbbf24; font-size: 10px; font-weight: 600; margin-bottom: 4px;">100% AI-GENERATED</div>
+                    <div style="color: #a8998a; font-size: 10px; line-height: 1.5;">
+                        No manual programming, Excel, or PowerPoint. Entire pipeline from scraping to slides built with AI tools.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-number">2</div>
+</div>
+
+<!-- SLIDE 3: Market Overview (was 2) -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -1608,7 +1682,7 @@
         </div>
 
         <div class="platforms-section">
-            <div class="platforms-label">9 Marketplaces analysed</div>
+            <div class="platforms-label">10 Marketplaces analysed</div>
             <div class="platforms-tags">
                 <span class="platform-tag">Pets4Homes</span>
                 <span class="platform-tag">FreeAds</span>
@@ -1619,19 +1693,20 @@
                 <span class="platform-tag">Petify</span>
                 <span class="platform-tag">ForeverPuppy</span>
                 <span class="platform-tag">Champdogs</span>
+                <span class="platform-tag">Gundogs Direct</span>
             </div>
         </div>
     </div>
 
-    
+
 
     <div class="methodology-footer" style="font-size:8px; color:#a8998a; text-align:left; position:absolute; bottom:20px; left:40px; right:80px;">
-        Methodology: Annualisation based on 29-day average listing age (59k × 365÷29 × 1.2 seasonality = 887k). Listings deduplicated by breed, location, and price band. Puppy/adult status, seller type, and freshness validated using platform fields and text parsing. All steps from data collection, cleaning, analysis, and this presentation were generated by AI using automated scripts and models.
+        Methodology: Annualisation based on 29-day average listing age (59k × 365÷29 × 1.2 seasonality = 895k). Listings deduplicated by breed, location, and price band. Puppy/adult status, seller type, and freshness validated using platform fields and text parsing. All steps from data collection, cleaning, analysis, and this presentation were generated by AI using automated scripts and models.
     </div>
-    <div class="slide-number">2</div>
+    <div class="slide-number">3</div>
 </div>
 
-<!-- SLIDE 3: From Raw Listings to 54k Dogs -->
+<!-- SLIDE 4: From Raw Listings to 54k Dogs -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -1640,7 +1715,7 @@
     <div class="deck-title">UK Dog Marketplace Analysis</div>
 
     <div class="header">
-        <h1>After deduplication and freshness checks,<br><span>18k listings</span> translate to <span>59k dogs</span> for sale</h1>
+        <h1>After deduplication and freshness checks,<br><span>19k listings</span> translate to <span>59k dogs</span> for sale</h1>
     </div>
 
     <div class="journey-content-v2">
@@ -1713,10 +1788,10 @@
     <div class="methodology-footer" style="font-size:8px; color:#a8998a; text-align:left; position:absolute; bottom:20px; left:40px; right:80px;">
         Methodology: Listings were deduplicated by matching breed, location, and price band (±20%), removing stale ads (>6 months), and consolidating cross-listed dogs across platforms. The number of dogs per listing was derived using litter size fields, sex counts, and text parsing of titles and descriptions. All steps were fully automated using AI-driven scripts and data validation.
     </div>
-    <div class="slide-number">3</div>
+    <div class="slide-number">4</div>
 </div>
 
-<!-- SLIDE 4: Platform Breakdown -->
+<!-- SLIDE 5: Platform Breakdown -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -1809,20 +1884,28 @@
                     <div class="td td-num">972</div>
                     <div class="td td-num">6.0</div>
                 </div>
+                <div class="table-row">
+                    <div class="td td-platform">
+                        <span class="platform-dot dot-10"></span>Gundogs Direct
+                    </div>
+                    <div class="td td-num">354</div>
+                    <div class="td td-num">354</div>
+                    <div class="td td-num">1.0</div>
+                </div>
             </div>
             <div class="table-footer">
                 <div class="tf tf-platform">Total</div>
-                <div class="tf tf-num">18,961</div>
-                <div class="tf tf-num">61,932</div>
-                <div class="tf tf-num">3.3</div>
+                <div class="tf tf-num">19,315</div>
+                <div class="tf tf-num">62,286</div>
+                <div class="tf tf-num">3.2</div>
             </div>
         </div>
 
         <div class="insight-panel">
             <div class="insight-card">
-                <div class="insight-value">51%</div>
+                <div class="insight-value">50%</div>
                 <div class="insight-label">Pets4Homes share</div>
-                <div class="insight-desc">Of all dogs listed<br>across 9 platforms</div>
+                <div class="insight-desc">Of all dogs listed<br>across 10 platforms</div>
             </div>
             <div class="insight-card">
                 <div class="insight-value">4.1</div>
@@ -1839,10 +1922,10 @@
     <div class="methodology-footer" style="font-size:8px; color:#a8998a; text-align:left; position:absolute; bottom:20px; left:40px; right:80px;">
         Methodology: Dogs per listing derived using litter size fields, sex counts, and text parsing of titles and descriptions. "Dogs listed" = listings × avg dogs per listing. All steps were fully automated using AI-driven scripts and data validation.
     </div>
-    <div class="slide-number">4</div>
+    <div class="slide-number">5</div>
 </div>
 
-<!-- SLIDE 5: Seller Analysis -->
+<!-- SLIDE 6: Seller Analysis -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -2001,10 +2084,10 @@
     <div class="methodology-footer" style="font-size:8px; color:#a8998a; text-align:left; position:absolute; bottom:20px; left:40px; right:80px;">
         Methodology: Sellers identified by platform username/ID; name + location used where user ID unavailable. Multi-listing sellers defined as those with 2+ active listings during snapshot period. All steps were fully automated using AI-driven scripts and data validation.
     </div>
-    <div class="slide-number">5</div>
+    <div class="slide-number">6</div>
 </div>
 
-<!-- SLIDE 6: Welfare & Regulation -->
+<!-- SLIDE 7: Welfare & Regulation -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -2117,10 +2200,10 @@
     <div class="methodology-footer" style="font-size:8px; color:#a8998a; text-align:left; position:absolute; bottom:20px; left:40px; right:80px;">
         Methodology: License status from platform fields where available. "3+ listings" used as proxy for commercial breeding activity requiring license under Animal Welfare Regulations 2018. All steps were fully automated using AI-driven scripts and data validation.
     </div>
-    <div class="slide-number">6</div>
+    <div class="slide-number">7</div>
 </div>
 
-<!-- SLIDE 7: Listing Freshness -->
+<!-- SLIDE 8: Listing Freshness -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -2265,10 +2348,10 @@
     <div class="methodology-footer" style="font-size:8px; color:#a8998a; text-align:left; position:absolute; bottom:20px; left:40px; right:80px;">
         Methodology: Listing age calculated from published date to snapshot date. All steps were fully automated using AI-driven scripts and data validation.
     </div>
-    <div class="slide-number">7</div>
+    <div class="slide-number">8</div>
 </div>
 
-<!-- SLIDE 8: Puppy Age Profile -->
+<!-- SLIDE 9: Puppy Age Profile -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -2407,10 +2490,10 @@
     <div class="methodology-footer" style="font-size:8px; color:#a8998a; text-align:left; position:absolute; bottom:20px; left:40px; right:80px;">
         Methodology: Age derived from date of birth, age fields, and ready-to-leave dates. Puppies.co.uk excluded due to insufficient age data coverage (&lt;10%). All steps were fully automated using AI-driven scripts and data validation.
     </div>
-    <div class="slide-number">8</div>
+    <div class="slide-number">9</div>
 </div>
 
-<!-- SLIDE 9: 8-Week Regulation -->
+<!-- SLIDE 10: 8-Week Regulation -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -2484,10 +2567,10 @@
     <div class="methodology-footer" style="font-size:8px; color:#a8998a; text-align:left; position:absolute; bottom:20px; left:40px; right:80px;">
         Methodology: Ready-to-leave dates parsed from platform fields and listing text. Under-8-week puppies checked for future ready dates. All steps were fully automated using AI-driven scripts and data validation.
     </div>
-    <div class="slide-number">9</div>
+    <div class="slide-number">10</div>
 </div>
 
-<!-- SLIDE 10: Top Breeds -->
+<!-- SLIDE 11: Top Breeds -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -2647,10 +2730,10 @@
     <div class="methodology-footer" style="font-size:8px; color:#a8998a; text-align:left; position:absolute; bottom:20px; left:40px; right:80px;">
         Methodology: Prices extracted from listing fields. Outliers (&lt;£50 or &gt;£10,000) excluded. Median used to reduce impact of extreme values. All steps were fully automated using AI-driven scripts and data validation.
     </div>
-    <div class="slide-number">10</div>
+    <div class="slide-number">11</div>
 </div>
 
-<!-- SLIDE 11: Geography -->
+<!-- SLIDE 12: Geography -->
 <div class="slide content-slide">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -2796,7 +2879,7 @@
     <div class="methodology-footer" style="font-size:8px; color:#a8998a; text-align:left; position:absolute; bottom:20px; left:40px; right:80px;">
         Methodology: Location derived from listing postcodes and location fields. Cities and regions aggregated by total dogs listed. All steps were fully automated using AI-driven scripts and data validation.
     </div>
-    <div class="slide-number">11</div>
+    <div class="slide-number">12</div>
 </div>
 
 </body>

@@ -366,6 +366,36 @@ PLATFORM_CONFIG = {
             "vet_checked": "vet_checked",
         }
     },
+    "gundogs_direct": {
+        "file_pattern": "gundogs_direct_data*.csv",
+        "mapping": {
+            "url": "url",
+            "id": "ad_id",
+            "title": "title",
+            "breed": "breed",
+            "price": "price",
+            "location": "location",
+            "date_of_birth": "date_of_birth",
+            "ready_to_leave": "ready_to_leave",
+            "age": "age",
+            "litter_size": "litter_size",
+            "available_puppies": "total_available",
+            "posted_date_iso": "published_at",
+            "seller_name": "seller_name",
+            "member_since": "member_since",
+            "verified_breeder": "verified_breeder",
+            "health_checked": "health_checked",
+            "hip_scored": "hip_scored",
+            "elbow_scored": "elbow_scored",
+            "eye_tested": "eye_tested",
+            "vaccinated": "vaccinated",
+            "microchipped": "microchipped",
+            "wormed": "wormed",
+            "kc_registered": "kc_registered",
+            "original_breeder": "original_breeder",
+            "viewable_with_mother": "viewable_with_mother",
+        }
+    },
 }
 
 
