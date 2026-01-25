@@ -383,22 +383,37 @@
    ========================================================================== */
 
 /* When ?print-pdf is in URL, Reveal adds .print-pdf to html */
-html.print-pdf .reveal-viewport,
-html.print-pdf body {
+html.print-pdf,
+html.print-pdf body,
+html.print-pdf .reveal-viewport {
     background: #1a1612 !important;
+}
+
+html.print-pdf .reveal .slides {
+    width: 1280px !important;
+    height: auto !important;
+}
+
+html.print-pdf .reveal .slides > section,
+html.print-pdf .reveal .slides > section > section {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
 }
 
 html.print-pdf .reveal .slides section {
     page-break-after: always !important;
     page-break-inside: avoid !important;
     height: 720px !important;
+    min-height: 720px !important;
+    max-height: 720px !important;
     width: 1280px !important;
     padding: 40px 60px !important;
     box-sizing: border-box !important;
     background: linear-gradient(145deg, #1a1612 0%, #241e18 40%, #2a231c 70%, #1a1612 100%) !important;
     position: relative !important;
-    display: block !important;
     overflow: hidden !important;
+    margin: 0 !important;
 }
 
 /* Data slides need flex layout */
