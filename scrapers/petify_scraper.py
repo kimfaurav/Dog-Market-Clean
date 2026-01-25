@@ -13,40 +13,90 @@ from playwright.async_api import async_playwright
 
 OUTPUT_DIR = Path(__file__).parent.parent / "Input" / "Raw CSVs"
 BASE_URL = "https://www.petify.uk"
-LISTINGS_URL = f"{BASE_URL}/for-sale/dogs?page="
+
+# Popular breeds to scrape
+BREEDS = [
+    'french-bulldog', 'labrador-retriever', 'cockapoo', 'cocker-spaniel',
+    'golden-retriever', 'german-shepherd', 'cavapoo', 'dachshund',
+    'miniature-dachshund', 'english-bulldog', 'pug', 'shih-tzu',
+    'chihuahua', 'border-collie', 'yorkshire-terrier', 'maltese',
+    'pomeranian', 'jack-russell', 'staffordshire-bull-terrier', 'labradoodle',
+    'rottweiler', 'siberian-husky', 'cane-corso', 'american-bully'
+]
 
 
-async def get_listing_urls(page, max_pages=50):
-    """Scrape all listing URLs from paginated results"""
-    urls = []
+async def get_location_urls(page, breed):
+    """Get all location URLs for a specific breed"""
+    url = f"{BASE_URL}/puppies-and-dogs-for-sale/{breed}"
+    await page.goto(url, wait_until='networkidle', timeout=30000)
+    await page.wait_for_timeout(1000)
 
-    for page_num in range(1, max_pages + 1):
-        print(f"  Scanning page {page_num}...", end=" ")
+    # Find location links (pattern: /puppies-and-dogs-for-sale/{breed}/in/{location}/{id})
+    links = await page.query_selector_all(f'a[href*="/puppies-and-dogs-for-sale/{breed}/in/"]')
+    location_urls = []
 
-        await page.goto(f"{LISTINGS_URL}{page_num}", wait_until='networkidle', timeout=30000)
-        await page.wait_for_timeout(1000)
+    for link in links:
+        href = await link.get_attribute('href')
+        if href and re.search(r'/in/[^/]+/\d+$', href):
+            full_url = href if href.startswith('http') else f"{BASE_URL}{href}"
+            if full_url not in location_urls:
+                location_urls.append(full_url)
 
-        # Find all listing links - Petify uses cards with links to /for-sale/breed/location/id
-        links = await page.query_selector_all('a[href*="/for-sale/"][href*="-dogs/"]')
-        page_urls = []
+    return location_urls
 
-        for link in links:
-            href = await link.get_attribute('href')
-            if href and re.search(r'/\d+$', href):  # URLs ending in ID number
-                full_url = href if href.startswith('http') else f"{BASE_URL}{href}"
-                if full_url not in urls:
-                    page_urls.append(full_url)
 
-        urls.extend(page_urls)
-        print(f"found {len(page_urls)} listings (total: {len(urls)})")
+async def get_listings_from_location(page, location_url):
+    """Get individual listing URLs from a breed+location page"""
+    await page.goto(location_url, wait_until='networkidle', timeout=30000)
+    await page.wait_for_timeout(2000)  # Extra wait for JS content
 
-        if len(page_urls) == 0:
-            print("  No more listings found, stopping.")
-            break
+    # Find listing links (pattern: /for-sale/{breed}-dogs/{location}/{id})
+    links = await page.query_selector_all('a[href*="/for-sale/"][href*="-dogs/"]')
+    listing_urls = []
+
+    for link in links:
+        href = await link.get_attribute('href')
+        if href and re.search(r'-dogs/[^/]+/\d+$', href):
+            full_url = href if href.startswith('http') else f"{BASE_URL}{href}"
+            if full_url not in listing_urls:
+                listing_urls.append(full_url)
+
+    return listing_urls
+
+
+async def get_listing_urls(page, max_listings=500):
+    """Scrape listing URLs by navigating through breed and location pages"""
+    all_urls = set()
+
+    for breed in BREEDS:
+        print(f"  Scanning breed: {breed}...", end=" ")
+
+        try:
+            # Get location URLs for this breed
+            location_urls = await get_location_urls(page, breed)
+            breed_listings = 0
+
+            # Visit each location to get individual listings
+            for loc_url in location_urls[:10]:  # Limit locations per breed
+                listing_urls = await get_listings_from_location(page, loc_url)
+                new_urls = [u for u in listing_urls if u not in all_urls]
+                all_urls.update(new_urls)
+                breed_listings += len(new_urls)
+
+                if len(all_urls) >= max_listings:
+                    print(f"found {breed_listings} (total: {len(all_urls)}) - reached limit")
+                    return list(all_urls)
+
+                await asyncio.sleep(0.3)
+
+            print(f"found {breed_listings} (total: {len(all_urls)})")
+
+        except Exception as e:
+            print(f"error: {str(e)[:30]}")
 
         await asyncio.sleep(0.5)
 
-    return urls
+    return list(all_urls)
 
 
 async def scrape_listing(page, url):
@@ -137,47 +187,31 @@ async def scrape_listing(page, url):
         if seller_type_match:
             listing['seller_type'] = seller_type_match.group(1)
 
-        # SELLER NAME - This is the critical fix!
-        # Look for the seller name which appears after the avatar/profile section
-        # Try multiple patterns to find the actual name
+        # SELLER INITIALS - Petify only shows initials, not full names (privacy feature)
+        # Look for initials in the avatar element
+        try:
+            avatar = await page.query_selector('[class*="avatar"] span, [class*="initials"]')
+            if avatar:
+                initials = await avatar.inner_text()
+                initials = initials.strip()
+                # Validate it looks like initials (1-3 uppercase letters)
+                if initials and re.match(r'^[A-Z]{1,3}$', initials):
+                    listing['seller_initials'] = initials
+        except:
+            pass
 
-        # Pattern 1: Look for name near "Member since" but BEFORE the "Since"
-        # The page structure typically shows: [Avatar] [Name] [Member since Month Year]
-
-        # Try to get seller info from the seller card/section
-        seller_section = await page.query_selector('[class*="seller"], [class*="breeder"], [class*="profile"]')
-        if seller_section:
-            seller_text = await seller_section.inner_text()
-            # The name is usually the first line before "Member since" or "Since"
-            lines = [l.strip() for l in seller_text.split('\n') if l.strip()]
-            for i, line in enumerate(lines):
-                # Skip common non-name lines
-                if line.lower() in ['domestic breeder', 'licensed breeder', 'private seller', 'rehome']:
-                    continue
-                if line.lower().startswith('since ') or line.lower().startswith('member since'):
-                    continue
-                if re.match(r'^[A-Z][a-z]+\s+[A-Z]$', line) or re.match(r'^[A-Z][a-z]+\s+[A-Z][a-z]+', line):
-                    # Looks like a name (e.g., "Charli K" or "John Smith")
-                    listing['seller_name'] = line
-                    break
-
-        # Fallback: Try regex on body text
-        if 'seller_name' not in listing:
-            # Look for pattern like initials in a circle followed by name
-            name_patterns = [
-                r'(?:Posted by|Seller|Breeder)[:\s]*([A-Z][a-z]+(?:\s+[A-Z]\.?)?)',
-                r'Contact\s+([A-Z][a-z]+(?:\s+[A-Z]\.?)?)',
-            ]
-            for pattern in name_patterns:
-                name_match = re.search(pattern, body_text)
-                if name_match:
-                    name = name_match.group(1).strip()
-                    if name.lower() not in ['the', 'this', 'seller', 'breeder', 'domestic', 'licensed']:
-                        listing['seller_name'] = name
-                        break
+        # Fallback: extract initials from profile section text
+        if 'seller_initials' not in listing:
+            profile = await page.query_selector('[class*="profile"]')
+            if profile:
+                profile_text = await profile.inner_text()
+                # Look for standalone 1-3 letter patterns that look like initials
+                initials_match = re.search(r'\b([A-Z]{2,3})\b', profile_text)
+                if initials_match:
+                    listing['seller_initials'] = initials_match.group(1)
 
         # Member since - capture full month year
-        member_match = re.search(r'(?:Member\s+)?[Ss]ince\s+([A-Za-z]+\s+\d{4})', body_text)
+        member_match = re.search(r'[Ss]ince\s+([A-Za-z]+\s+\d{4})', body_text)
         if member_match:
             listing['member_since'] = member_match.group(1)
 
@@ -227,7 +261,7 @@ async def main():
             listing = await scrape_listing(page, url)
             listings.append(listing)
 
-            seller = listing.get('seller_name', 'NO_NAME')
+            seller = listing.get('seller_initials', 'NO_INITIALS')
             if 'error' in listing:
                 print(f"ERROR: {listing['error'][:30]}")
             else:
@@ -246,14 +280,16 @@ async def main():
     save_results(listings)
 
     # Summary
-    with_name = sum(1 for l in listings if l.get('seller_name'))
+    with_initials = sum(1 for l in listings if l.get('seller_initials'))
     with_price = sum(1 for l in listings if l.get('price'))
+    with_member_since = sum(1 for l in listings if l.get('member_since'))
     errors = sum(1 for l in listings if l.get('error'))
 
     print(f"\n{'=' * 60}")
     print(f"DONE! {len(listings)} listings scraped")
     if len(listings) > 0:
-        print(f"  With seller_name: {with_name} ({100*with_name/len(listings):.0f}%)")
+        print(f"  With seller_initials: {with_initials} ({100*with_initials/len(listings):.0f}%)")
+        print(f"  With member_since: {with_member_since} ({100*with_member_since/len(listings):.0f}%)")
         print(f"  With price: {with_price} ({100*with_price/len(listings):.0f}%)")
         print(f"  Errors: {errors}")
         print(f"\nSaved to: {OUTPUT_DIR / 'petify_data_v3.csv'}")
@@ -268,7 +304,7 @@ def save_results(listings):
         'date_of_birth', 'age', 'ready_to_leave',
         'males_available', 'females_available',
         'posted_ago', 'posted_date',
-        'seller_type', 'seller_name', 'member_since',
+        'seller_type', 'seller_initials', 'member_since',
         'kc_registered', 'microchipped', 'vaccinated', 'wormed',
         'health_checked', 'id_verified',
         'views', 'url', 'scraped_at', 'error'

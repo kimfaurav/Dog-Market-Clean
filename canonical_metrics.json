@@ -59,7 +59,7 @@
     "petify": {
       "listings": 603,
       "puppies": 3315,
-      "unique": 602,
+      "unique": 601,
       "avg": 5.5,
       "share": 5.3
     },
@@ -200,10 +200,10 @@
     }
   ],
   "sellers": {
-    "total": 17603,
+    "total": 17083,
     "pct_one_listing": 94,
     "rescue_count": 21,
-    "high_volume": 175,
+    "high_volume": 159,
     "by_platform": {
       "champdogs": {
         "total_sellers": 145,
@@ -219,7 +219,7 @@
         "pct_one_listing": 94,
         "max_listings": 3,
         "high_volume": 5,
-        "hv_pct": 2.9,
+        "hv_pct": 3.1,
         "license_sellers": 0,
         "license_pct": 0.0
       },
@@ -228,7 +228,7 @@
         "pct_one_listing": 93,
         "max_listings": 9,
         "high_volume": 74,
-        "hv_pct": 42.3,
+        "hv_pct": 46.5,
         "license_sellers": 0,
         "license_pct": 0.0
       },
@@ -246,7 +246,7 @@
         "pct_one_listing": 89,
         "max_listings": 5,
         "high_volume": 12,
-        "hv_pct": 6.9,
+        "hv_pct": 7.5,
         "license_sellers": 0,
         "license_pct": 0.0
       },
@@ -260,20 +260,20 @@
         "license_pct": 0.0
       },
       "petify": {
-        "total_sellers": 520,
-        "pct_one_listing": 90,
-        "max_listings": 7,
-        "high_volume": 16,
-        "hv_pct": 9.1,
+        "total_sellers": 1,
+        "pct_one_listing": 0,
+        "max_listings": 0,
+        "high_volume": 0,
+        "hv_pct": 0.0,
         "license_sellers": 0,
-        "license_pct": 0.0
+        "license_pct": 0
       },
       "pets4homes": {
         "total_sellers": 7186,
         "pct_one_listing": 95,
         "max_listings": 8,
         "high_volume": 54,
-        "hv_pct": 30.9,
+        "hv_pct": 34.0,
         "license_sellers": 44,
         "license_pct": 81.5
       },
@@ -281,10 +281,10 @@
         "total_sellers": 530,
         "pct_one_listing": 95,
         "max_listings": 81,
-        "high_volume": 13,
-        "hv_pct": 7.5,
+        "high_volume": 8,
+        "hv_pct": 5.0,
         "license_sellers": 2,
-        "license_pct": 15.4
+        "license_pct": 25.0
       },
       "puppies": {
         "total_sellers": 562,
@@ -328,8 +328,8 @@
         "is_rescue": false
       },
       {
-        "name": "The Canine Club",
-        "location": "Godstone, Surrey",
+        "name": "Ritchie",
+        "location": "Wisbech, Cambridgeshire",
         "listings": 8,
         "platforms": [
           "pets4homes"
@@ -338,8 +338,8 @@
         "is_rescue": false
       },
       {
-        "name": "Ritchie",
-        "location": "Wisbech, Cambridgeshire",
+        "name": "The Canine Club",
+        "location": "Godstone, Surrey",
         "listings": 8,
         "platforms": [
           "pets4homes"
@@ -388,8 +388,8 @@
         "is_rescue": true
       },
       {
-        "name": "tinqpudney1",
-        "location": "Colchester",
+        "name": "jollydog",
+        "location": "Langport",
         "listings": 5,
         "platforms": [
           "freeads"
@@ -864,8 +864,8 @@
     "unique_after_dedupe": 18380,
     "duplicates_removed": 937,
     "duplicate_groups": 343,
-    "sellers_total": 17603,
-    "sellers_high_volume": 175,
+    "sellers_total": 17083,
+    "sellers_high_volume": 159,
     "platforms_count": 10
   }
 }
