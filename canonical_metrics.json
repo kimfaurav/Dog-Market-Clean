@@ -318,6 +318,16 @@
         "is_rescue": true
       },
       {
+        "name": "Val",
+        "location": "Eastry, Kent",
+        "listings": 11,
+        "platforms": [
+          "freeads"
+        ],
+        "has_license": false,
+        "is_rescue": false
+      },
+      {
         "name": "justdogz",
         "location": "Wisbech",
         "listings": 9,
@@ -368,16 +378,6 @@
         "is_rescue": false
       },
       {
-        "name": "Since J",
-        "location": "Birmingham",
-        "listings": 7,
-        "platforms": [
-          "petify"
-        ],
-        "has_license": false,
-        "is_rescue": false
-      },
-      {
         "name": "5 Star Licensed Breeder",
         "location": "Blackpool, Lancashire",
         "listings": 6,
@@ -388,14 +388,14 @@
         "is_rescue": false
       },
       {
-        "name": "Since J",
-        "location": "London",
+        "name": "La'al Marras Rescue Group",
+        "location": "Cumbria",
         "listings": 6,
         "platforms": [
-          "petify"
+          "freeads"
         ],
         "has_license": false,
-        "is_rescue": false
+        "is_rescue": true
       }
     ]
   },
