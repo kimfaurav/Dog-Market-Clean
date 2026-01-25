@@ -275,6 +275,9 @@ def compute_metrics():
     # Seller key for deduplication
     df['seller_key'] = df['seller_name'].fillna('UNKNOWN') + '|' + df['location'].fillna('UNKNOWN')
 
+    # Exclude Petify from seller analysis (only has initials, not usable for seller identification)
+    df.loc[df['platform'] == 'petify', 'seller_key'] = 'UNKNOWN|UNKNOWN'
+
     # Map Preloved's user_type='Licensed Breeder' to license_num for consistent tracking
     licensed_breeder_mask = df['user_type'] == 'Licensed Breeder'
     df.loc[licensed_breeder_mask & df['license_num'].isna(), 'license_num'] = 'LICENSED'
