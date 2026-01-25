@@ -318,16 +318,6 @@
         "is_rescue": true
       },
       {
-        "name": "Val",
-        "location": "Eastry, Kent",
-        "listings": 11,
-        "platforms": [
-          "freeads"
-        ],
-        "has_license": false,
-        "is_rescue": false
-      },
-      {
         "name": "justdogz",
         "location": "Wisbech",
         "listings": 9,
@@ -396,6 +386,16 @@
         ],
         "has_license": false,
         "is_rescue": true
+      },
+      {
+        "name": "tinqpudney1",
+        "location": "Colchester",
+        "listings": 5,
+        "platforms": [
+          "freeads"
+        ],
+        "has_license": false,
+        "is_rescue": false
       }
     ]
   },
