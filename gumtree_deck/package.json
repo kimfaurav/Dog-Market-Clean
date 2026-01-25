@@ -1,0 +1,13 @@
+{
+  "name": "gumtree-intelligence-deck",
+  "version": "1.0.0",
+  "description": "Gumtree Supply-Side Intelligence Engine presentation",
+  "scripts": {
+    "serve": "npx serve . -p 8000",
+    "pdf": "node scripts/export-pdf.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.40.0",
+    "serve": "^14.2.0"
+  }
+}
