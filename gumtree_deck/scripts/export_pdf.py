@@ -31,9 +31,12 @@ OUTPUT_PATH = DECK_DIR / "deck.pdf"
 TEMP_DIR = DECK_DIR / ".pdf_temp"
 PORT = 8000
 
+# Scale factor for high-resolution output (2 = retina quality)
+SCALE_FACTOR = 2
+
 
 def export_pdf():
-    """Export deck to PDF by capturing each slide as an image"""
+    """Export deck to PDF by capturing each slide as a high-res image"""
 
     # Create temp directory
     TEMP_DIR.mkdir(exist_ok=True)
@@ -53,12 +56,15 @@ def export_pdf():
         print("Launching browser...")
         with sync_playwright() as p:
             browser = p.chromium.launch()
-            page = browser.new_page()
 
-            # Set viewport to match slide dimensions
-            page.set_viewport_size({"width": 1280, "height": 720})
+            # Create context with high DPI for crisp rendering
+            context = browser.new_context(
+                viewport={"width": 1280, "height": 720},
+                device_scale_factor=SCALE_FACTOR
+            )
+            page = context.new_page()
 
-            # Load the presentation (without print-pdf mode)
+            # Load the presentation
             url = f"http://localhost:{PORT}/index.html"
             print(f"Loading {url}...")
             page.goto(url, wait_until="networkidle", timeout=60000)
@@ -73,7 +79,7 @@ def export_pdf():
 
             # Get total number of slides
             total_slides = page.evaluate("() => Reveal.getTotalSlides()")
-            print(f"Found {total_slides} slides")
+            print(f"Found {total_slides} slides (capturing at {SCALE_FACTOR}x resolution)")
 
             # Capture each slide
             slide_images = []
@@ -82,13 +88,14 @@ def export_pdf():
 
                 # Navigate to slide
                 page.evaluate(f"() => Reveal.slide({i})")
-                time.sleep(0.5)  # Wait for transition
+                time.sleep(0.3)  # Wait for transition
 
-                # Screenshot
+                # Screenshot (will be 2560x1440 at 2x scale)
                 img_path = TEMP_DIR / f"slide_{i:03d}.png"
                 page.screenshot(path=str(img_path))
                 slide_images.append(img_path)
 
+            context.close()
             browser.close()
 
         # Convert images to PDF
@@ -96,11 +103,12 @@ def export_pdf():
         images = [Image.open(p).convert("RGB") for p in slide_images]
 
         if images:
+            # Save with high DPI for print quality
             images[0].save(
                 str(OUTPUT_PATH),
                 save_all=True,
                 append_images=images[1:] if len(images) > 1 else [],
-                resolution=150.0
+                resolution=300.0  # 300 DPI for print quality
             )
 
         # Cleanup temp files
