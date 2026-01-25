@@ -377,3 +377,280 @@
 .reveal .progress span {
     background: linear-gradient(90deg, var(--gt-orange), var(--gt-orange-dark));
 }
+
+/* ==========================================================================
+   PRINT-PDF MODE - Critical for PDF export
+   ========================================================================== */
+
+/* When ?print-pdf is in URL, Reveal adds .print-pdf to html */
+html.print-pdf .reveal-viewport,
+html.print-pdf body {
+    background: #1a1612 !important;
+}
+
+html.print-pdf .reveal .slides section {
+    page-break-after: always !important;
+    page-break-inside: avoid !important;
+    height: 720px !important;
+    width: 1280px !important;
+    padding: 40px 60px !important;
+    box-sizing: border-box !important;
+    background: linear-gradient(145deg, #1a1612 0%, #241e18 40%, #2a231c 70%, #1a1612 100%) !important;
+    position: relative !important;
+    display: block !important;
+    overflow: hidden !important;
+}
+
+/* Data slides need flex layout */
+html.print-pdf .reveal .slides section.content-slide[style*="padding: 45px"] {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Cover slide */
+html.print-pdf .reveal .cover-slide {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+/* Section slide */
+html.print-pdf .reveal .section-slide {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+/* Flow boxes */
+html.print-pdf .reveal .flow-horizontal {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 18px !important;
+}
+
+html.print-pdf .reveal .flow-step {
+    text-align: center !important;
+    padding: 32px 30px !important;
+    background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)) !important;
+    border: 1px solid rgba(251,191,36,0.12) !important;
+    border-radius: 22px !important;
+    min-width: 185px !important;
+}
+
+html.print-pdf .reveal .flow-step-highlight {
+    background: linear-gradient(145deg, rgba(251,191,36,0.12), rgba(245,158,11,0.08)) !important;
+    border: 1px solid rgba(251,191,36,0.25) !important;
+}
+
+html.print-pdf .reveal .flow-number {
+    font-size: 52px !important;
+    font-weight: 800 !important;
+    color: #fff !important;
+}
+
+/* Tables */
+html.print-pdf .reveal .platform-table,
+html.print-pdf .reveal .seller-table,
+html.print-pdf .reveal .age-distribution {
+    background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)) !important;
+    border: 1px solid rgba(251,191,36,0.1) !important;
+    border-radius: 14px !important;
+}
+
+html.print-pdf .reveal .table-row,
+html.print-pdf .reveal .seller-row {
+    display: flex !important;
+}
+
+html.print-pdf .reveal .table-header,
+html.print-pdf .reveal .seller-header {
+    display: flex !important;
+    background: rgba(251,191,36,0.08) !important;
+}
+
+/* Insight panel */
+html.print-pdf .reveal .insight-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+}
+
+html.print-pdf .reveal .insight-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)) !important;
+    border: 1px solid rgba(251,191,36,0.1) !important;
+    border-radius: 16px !important;
+    padding: 22px 24px !important;
+}
+
+html.print-pdf .reveal .insight-card-highlight {
+    background: linear-gradient(145deg, rgba(251,191,36,0.1), rgba(245,158,11,0.05)) !important;
+    border-color: rgba(251,191,36,0.25) !important;
+}
+
+/* Dual table content */
+html.print-pdf .reveal .dual-table-content,
+html.print-pdf .reveal .welfare-content,
+html.print-pdf .reveal .freshness-content,
+html.print-pdf .reveal .puppy-age-content {
+    display: flex !important;
+    gap: 30px !important;
+}
+
+html.print-pdf .reveal .dual-table-left,
+html.print-pdf .reveal .dual-table-right,
+html.print-pdf .reveal .welfare-left,
+html.print-pdf .reveal .welfare-right,
+html.print-pdf .reveal .freshness-left,
+html.print-pdf .reveal .freshness-right,
+html.print-pdf .reveal .puppy-age-left,
+html.print-pdf .reveal .puppy-age-right {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Freshness bars */
+html.print-pdf .reveal .freshness-bars,
+html.print-pdf .reveal .stacked-bars {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+}
+
+html.print-pdf .reveal .freshness-row,
+html.print-pdf .reveal .stacked-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+}
+
+html.print-pdf .reveal .bar-container {
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+    flex: 1 !important;
+}
+
+html.print-pdf .reveal .stacked-bar-container {
+    display: flex !important;
+    flex: 1 !important;
+    height: 24px !important;
+    border-radius: 5px !important;
+    overflow: hidden !important;
+}
+
+/* Cards grid */
+html.print-pdf .reveal .card-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+}
+
+html.print-pdf .reveal .card-grid-3 {
+    grid-template-columns: repeat(3, 1fr) !important;
+}
+
+/* Journey cards */
+html.print-pdf .reveal .journey-cards {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 24px !important;
+}
+
+html.print-pdf .reveal .jc-card {
+    background: rgba(255,255,255,0.02) !important;
+    border: 1px solid rgba(251,191,36,0.1) !important;
+    border-radius: 16px !important;
+    padding: 22px 26px !important;
+    width: 280px !important;
+}
+
+/* Diagram */
+html.print-pdf .reveal .diagram {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 20px !important;
+}
+
+/* Platform tags */
+html.print-pdf .reveal .platforms-tags {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+    justify-content: center !important;
+}
+
+/* Age distribution table */
+html.print-pdf .reveal .age-header,
+html.print-pdf .reveal .age-row {
+    display: flex !important;
+}
+
+/* Regulation box */
+html.print-pdf .reveal .regulation-box {
+    background: linear-gradient(145deg, rgba(251,191,36,0.08), rgba(245,158,11,0.04)) !important;
+    border: 1px solid rgba(251,191,36,0.2) !important;
+    border-radius: 14px !important;
+    padding: 22px 24px !important;
+}
+
+html.print-pdf .reveal .reg-rule {
+    display: flex !important;
+    align-items: center !important;
+    gap: 22px !important;
+}
+
+/* Platform safeguard boxes */
+html.print-pdf .reveal .platform-safeguard {
+    border-radius: 12px !important;
+    padding: 16px 18px !important;
+}
+
+/* Age insight cards */
+html.print-pdf .reveal .age-insight-card {
+    display: flex !important;
+    gap: 16px !important;
+    align-items: center !important;
+}
+
+/* Hotspot box */
+html.print-pdf .reveal .hotspot-box {
+    background: rgba(251,191,36,0.08) !important;
+    border: 1px solid rgba(251,191,36,0.2) !important;
+    border-radius: 12px !important;
+    padding: 18px 20px !important;
+}
+
+/* Legends */
+html.print-pdf .reveal .freshness-legend,
+html.print-pdf .reveal .stacked-legend {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 14px !important;
+}
+
+/* Verticals table */
+html.print-pdf .reveal table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+}
+
+/* Methodology footer */
+html.print-pdf .reveal .methodology-footer {
+    position: absolute !important;
+    bottom: 18px !important;
+    left: 60px !important;
+    right: 60px !important;
+}
+
+/* Ensure text colors are preserved */
+html.print-pdf .reveal,
+html.print-pdf .reveal * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+}
