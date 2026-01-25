@@ -20,7 +20,7 @@
 }
 
 .reveal-viewport {
-    background: linear-gradient(145deg, #1a1612 0%, #241e18 40%, #2a231c 70%, #1a1612 100%);
+    background: #1e1915;
 }
 
 .reveal {
@@ -410,7 +410,7 @@ html.print-pdf .reveal .slides section {
     width: 1280px !important;
     padding: 40px 60px !important;
     box-sizing: border-box !important;
-    background: linear-gradient(145deg, #1a1612 0%, #241e18 40%, #2a231c 70%, #1a1612 100%) !important;
+    background: #1e1915 !important;
     position: relative !important;
     overflow: hidden !important;
     margin: 0 !important;
