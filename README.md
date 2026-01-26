@@ -1,45 +1,22 @@
-# UK Dog Market Analysis
+# UK Dog Market Intelligence
 
 Analysis of ~19,000 dog listings across 10 UK platforms, representing ~59,000 dogs for sale.
-
-## Current Status (Jan 24, 2026)
-
-**Latest session completed:**
-- Fixed Gundogs Direct scraper (seller_name regex was broken - captured wrong field)
-- Re-ran full pipeline with corrected data
-- Added scraper QA validation script (`scrapers/qa_scraper_output.py`)
-- Updated all slides with correct Gundogs data
-- Slide refinements: compressed tables, fixed stacked bar percentages, improved text
-- Generated new PDF with all changes
-
-**Next steps / TODO:**
-- Review final PDF for any remaining issues
-- Consider adding more platforms if needed
-- Merge metrics-tooling branch to main when ready
-
-**Key files modified this session:**
-- `scrapers/gundogs_direct_scraper.py` - fixed seller_name regex
-- `scrapers/qa_scraper_output.py` - NEW: validates scraper output before pipeline
-- `uk_dog_market_slide.html` - multiple slide refinements
-- `canonical_metrics.json` - regenerated with correct Gundogs data
 
 ## Quick Start
 
 ```bash
-# 1. Run the data pipeline (Input CSVs → derived.csv)
-python pipeline/run_pipeline.py
+# Install dependencies
+pip install -r requirements.txt
+playwright install chromium
 
-# 2. Generate canonical metrics
-python canonical_metrics.py
-
-# 3. Generate slides (optional - updates HTML from metrics)
-python generate_slides.py
-
-# 4. Generate PDF screenshots
-python screenshot_slides.py
+# Full rebuild
+python pipeline/run_pipeline.py           # Raw CSVs → derived.csv
+python canonical_metrics.py               # derived.csv → canonical_metrics.json
+python gumtree_deck/build_deck.py         # Render presentation
+python gumtree_deck/scripts/export_pdf.py # Export to PDF
 ```
 
-## Folder Structure
+## Project Structure
 
 ```
 Dog_Market_Clean/
@@ -47,33 +24,40 @@ Dog_Market_Clean/
 ├── output/
 │   ├── facts/facts.csv       # Normalized facts table
 │   └── views/derived.csv     # Enriched analysis view
-├── pipeline/                 # ETL pipeline scripts
+├── pipeline/                 # ETL pipeline
 │   ├── run_pipeline.py       # Master runner
 │   ├── pipeline_01_build_facts.py
 │   ├── pipeline_02_build_derived.py
 │   └── pipeline_03_build_summary.py
 ├── scrapers/                 # Platform scrapers
-│   ├── gundogs_direct_scraper.py  # Gundogs Direct scraper
-│   └── qa_scraper_output.py       # QA validation for scraper output
-├── canonical_metrics.py      # Generates canonical_metrics.json
-├── canonical_metrics.json    # Single source of truth for all metrics
-├── generate_slides.py        # Generates HTML slides
-├── screenshot_slides.py      # Converts HTML to PDF
-├── uk_dog_market_slide.html  # Final presentation
-├── uk_dog_market_slides.pdf  # PDF export
-└── slide_screenshots/        # Individual slide PNGs
+│   ├── petify_scraper.py
+│   ├── gundogs_direct_scraper.py
+│   └── qa_scraper_output.py
+├── gumtree_deck/             # Presentation deck
+│   ├── templates/index.html.j2  # Jinja2 template
+│   ├── build_deck.py            # Template renderer
+│   ├── index.html               # Generated output
+│   ├── deck.pdf                 # PDF export
+│   └── scripts/export_pdf.py
+├── canonical_metrics.py      # Generates metrics JSON
+├── canonical_metrics.json    # Single source of truth
+├── PROCESS.md                # Detailed process documentation
+├── requirements.txt          # Python dependencies
+└── _archive/                 # Historical files
 ```
 
 ## Data Pipeline
 
 ```
-Input CSVs → pipeline_01 → facts.csv → pipeline_02 → derived.csv
-                                                          ↓
-                                              canonical_metrics.py
-                                                          ↓
-                                              canonical_metrics.json
-                                                          ↓
-                                              uk_dog_market_slide.html
+Input/Raw CSVs/  →  pipeline/  →  output/views/derived.csv
+                                          ↓
+                               canonical_metrics.py
+                                          ↓
+                               canonical_metrics.json
+                                          ↓
+                               gumtree_deck/build_deck.py
+                                          ↓
+                               gumtree_deck/index.html + deck.pdf
 ```
 
 ## Platforms Covered (10)
@@ -97,17 +81,13 @@ Input CSVs → pipeline_01 → facts.csv → pipeline_02 → derived.csv
 - **Total dogs:** 59,146
 - **Unique sellers:** ~17,500
 - **Annualized estimate:** 893,308 dogs/year
-- **Market share:** 94.4% of UK dog sales
+
+## Documentation
+
+- **[PROCESS.md](PROCESS.md)** - Detailed process guide with platform quirks, data quality notes, and validation checklist
+- **[gumtree_deck/README.md](gumtree_deck/README.md)** - Presentation build guide
+- **[pipeline/README.md](pipeline/README.md)** - Pipeline documentation
 
 ## Regenerating Outputs
 
-All metrics flow from `canonical_metrics.json`. To update:
-
-1. Modify source CSVs in `Input/Raw CSVs/`
-2. Run `python pipeline/run_pipeline.py`
-3. Run `python canonical_metrics.py`
-4. Slides will reflect new metrics
-
-## Archive
-
-Historical analysis scripts and documentation are preserved in `_archive/`.
+All metrics flow from `canonical_metrics.json`. See [PROCESS.md](PROCESS.md) for the complete rebuild process and validation steps.

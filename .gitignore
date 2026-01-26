@@ -1,3 +1,31 @@
+# Backups
 .backups/
+
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.egg-info/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp/Debug
+debug_*.html
+*.log
+.pdf_temp/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Claude
+.claude/
