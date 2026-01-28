@@ -89,16 +89,16 @@ async def scrape():
         types[t] = types.get(t, 0) + 1
     print(f"By type: {types}")
     
-    with open('foreverpuppy_ALL.json', 'w') as f:
+    with open('foreverpuppy_FINAL.json', 'w') as f:
         json.dump(unique, f, indent=2)
-    
+
     fields = ['ad_id','ad_type','title','price','breed','location','microchipped','vaccinated','boys','girls','url']
-    with open('foreverpuppy_ALL.csv', 'w', newline='') as f:
+    with open('foreverpuppy_FINAL.csv', 'w', newline='') as f:
         w = csv.DictWriter(f, fieldnames=fields, extrasaction='ignore')
         w.writeheader()
         w.writerows(unique)
     
-    print(f"Saved: foreverpuppy_ALL.csv & .json")
+    print(f"Saved: foreverpuppy_FINAL.csv & .json")
     prices = [int(l['price'].replace('£','').replace(',','')) for l in unique if l.get('price')]
     if prices: print(f"Price range: £{min(prices)} - £{max(prices)}, Avg: £{sum(prices)//len(prices)}")
 

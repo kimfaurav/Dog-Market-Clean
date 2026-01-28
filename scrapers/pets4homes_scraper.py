@@ -328,7 +328,7 @@ class Pets4HomesScraper:
     def __init__(self):
         self.seen_urls = set()
         self.results = []
-        self.output_file = os.path.join(os.getcwd(), 'pets4homes_v6_complete.csv')
+        self.output_file = os.path.join(os.getcwd(), 'pets4homes_v7_complete.csv')
         print(f"Output: {self.output_file}")
         
     def _request(self, url, retries=3):

@@ -4,20 +4,20 @@ Complete inventory of all platform scrapers recovered and installed in the proje
 
 ## Recovery Summary
 
-| Platform | URL Collector | Enrichment | Source Location | Status |
-|----------|---------------|------------|-----------------|--------|
-| Pets4Homes | - | `pets4homes_scraper.py` | `~/Desktop/Pets/P4H/pets4homes_scraper_v7.py` | ✅ Recovered |
-| FreeAds | `freeads_url_collector.py` | `freeads_scraper.py` | `~/Desktop/Pets/Freeads/` | ✅ Recovered |
-| Gumtree | `gumtree_url_collector.py` | `gumtree_scraper.py` | `~/Desktop/Pets/Gumtree/` | ✅ Recovered |
-| Preloved | - | `preloved_scraper.py` | `~/Desktop/Pets/Preloved/preloved_PRODUCTION.py` | ✅ Recovered |
-| Kennel Club | `kennel_club_url_collector.py` | `kennel_club_scraper.py` | `~/Desktop/Pets/freeads-breeds/` | ✅ Recovered |
-| Champdogs | - | `champdogs_scraper.py` | `~/Desktop/Pets/Champdogs/champdogs_scraper_PRODUCTION.py` | ✅ Recovered |
-| ForeverPuppy | - | `foreverpuppy_scraper.py` | `~/Desktop/Pets/ForeverPuppy/foreverpuppy_ALL.py` | ✅ Recovered |
-| Puppies | - | `puppies_scraper.py` | `~/Desktop/Pets/puppies_golden_scraper.py` | ✅ Recovered |
-| Petify | - | `petify_scraper.py` | Already in project | ✅ Present |
-| Gundogs Direct | - | `gundogs_direct_scraper.py` | Already in project | ✅ Present |
+| Platform | Scraper(s) | Output File | Pipeline Expects | Status |
+|----------|------------|-------------|------------------|--------|
+| Pets4Homes | `pets4homes_scraper.py` | `pets4homes_v7_complete.csv` | `pets4homes_v7_complete*.csv` | ✅ Match |
+| FreeAds | `freeads_url_collector.py` + `freeads_scraper.py` | `freeads_enriched_COMPLETE.csv` | `freeads_enriched_COMPLETE*.csv` | ✅ Match |
+| Gumtree | `gumtree_url_collector.py` + `gumtree_scraper.py` | `gumtree_final.csv` | `gumtree_final*.csv` | ✅ Match |
+| Preloved | `preloved_scraper.py` | `preloved_enriched.csv` | `preloved_enriched*.csv` | ✅ Match |
+| Kennel Club | `kennel_club_url_collector.py` + `kennel_club_scraper.py` | `kc_data_PERFECT.csv` | `kc_data_PERFECT*.csv` | ✅ Match |
+| Champdogs | `champdogs_scraper.py` | `champdogs_complete.csv` | `champdogs_complete*.csv` | ✅ Match |
+| ForeverPuppy | `foreverpuppy_scraper.py` | `foreverpuppy_FINAL.csv` | `foreverpuppy_FINAL*.csv` | ✅ Match |
+| Puppies | `puppies_scraper.py` | `puppies_final.csv` | `puppies_final*.csv` | ✅ Match |
+| Petify | `petify_scraper.py` | `petify_data_v3.csv` | `petify_data*.csv` | ✅ Match |
+| Gundogs Direct | `gundogs_direct_scraper.py` | `gundogs_direct_data.csv` | `gundogs_direct_data*.csv` | ✅ Match |
 
-**All 10 platforms now have scrapers.**
+**All 10 platforms now have scrapers with outputs matching pipeline expectations.**
 
 ---
 
@@ -31,10 +31,12 @@ Complete inventory of all platform scrapers recovered and installed in the proje
 | Framework | requests + BeautifulSoup |
 | Type | Combined (URL discovery + enrichment) |
 | Headless | Yes (no browser needed) |
+| **Output** | `pets4homes_v7_complete.csv` |
 
 **Usage:**
 ```bash
 python scrapers/pets4homes_scraper.py
+# Output: pets4homes_v7_complete.csv
 ```
 
 **Notes:**
@@ -77,6 +79,7 @@ python scrapers/freeads_scraper.py
 | Enrichment | `scrapers/gumtree_scraper.py` |
 | Framework | Playwright (sync) |
 | Headless | No (`headless=False` required) |
+| **Output** | `gumtree_final.csv` |
 
 **Usage:**
 ```bash
@@ -87,7 +90,8 @@ python gumtree_url_collector.py
 # → gumtree_ULTIMATE_urls.txt
 
 # Phase 2: Enrich (1-2 hours)
-python gumtree_scraper.py gumtree_ULTIMATE_urls.txt output.json
+python gumtree_scraper.py gumtree_ULTIMATE_urls.txt gumtree_final.json
+# Output: gumtree_final.csv
 ```
 
 **Notes:**
@@ -127,14 +131,17 @@ python scrapers/preloved_scraper.py
 | Enrichment | `scrapers/kennel_club_scraper.py` |
 | Framework | Selenium |
 | Headless | No (visible browser) |
+| **Output** | `kc_data_PERFECT.csv` |
 
 **Usage:**
 ```bash
 # Phase 1: Collect from search
 python scrapers/kennel_club_url_collector.py
+# → kc_data.csv
 
 # Phase 2: Enrich each listing
 python scrapers/kennel_club_scraper.py
+# Output: kc_data_PERFECT.csv
 ```
 
 **Notes:**
@@ -173,10 +180,12 @@ python scrapers/champdogs_scraper.py
 | Framework | Playwright (async) |
 | Type | Combined |
 | Headless | Yes |
+| **Output** | `foreverpuppy_FINAL.csv` |
 
 **Usage:**
 ```bash
 python scrapers/foreverpuppy_scraper.py
+# Output: foreverpuppy_FINAL.csv
 ```
 
 **Notes:**
@@ -194,11 +203,13 @@ python scrapers/foreverpuppy_scraper.py
 | Framework | Playwright (sync) |
 | Type | Combined |
 | Headless | No (`headless=False`) |
+| **Output** | `puppies_final.csv` |
 
 **Usage:**
 ```bash
 python scrapers/puppies_scraper.py
 python scrapers/puppies_scraper.py --resume  # Resume from checkpoint
+# Output: puppies_final.csv
 ```
 
 **Notes:**

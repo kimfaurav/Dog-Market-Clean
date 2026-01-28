@@ -70,7 +70,7 @@ def enrich_listing(driver, url):
         return None
 
 # Load existing data
-with open('/Users/kimfaura/Desktop/Pets/KennelClub/kc_data.csv', 'r') as f:
+with open('kc_data.csv', 'r') as f:
     rows = list(csv.DictReader(f))
 
 print(f"🐕 Full KC enrichment (Email, Sire, Dam)...\n")
@@ -113,14 +113,14 @@ try:
                 print(f"   ✓ {' | '.join(extras)}")
         
         if i % 50 == 0:
-            with open('/Users/kimfaura/Desktop/Pets/KennelClub/kc_data_full.csv', 'w', newline='') as f:
+            with open('kc_data_PERFECT.csv', 'w', newline='') as f:
                 fieldnames = list(rows[0].keys())
                 w = csv.DictWriter(f, fieldnames=fieldnames)
                 w.writeheader()
                 w.writerows(rows)
             print(f"\n💾 Progress saved ({i}/{len(rows)})\n")
     
-    with open('/Users/kimfaura/Desktop/Pets/KennelClub/kc_data_full.csv', 'w', newline='') as f:
+    with open('kc_data_PERFECT.csv', 'w', newline='') as f:
         fieldnames = list(rows[0].keys())
         w = csv.DictWriter(f, fieldnames=fieldnames)
         w.writeheader()
@@ -136,7 +136,7 @@ try:
     print(f"   Sire health tested: {sum(1 for r in rows if r.get('sire_health_tested'))}")
     print(f"   Dam health tested: {sum(1 for r in rows if r.get('dam_health_tested'))}")
     print(f"   With prices: {sum(1 for r in rows if r.get('price'))}")
-    print(f"\n💾 Saved to: /Users/kimfaura/Desktop/Pets/KennelClub/kc_data_full.csv")
+    print(f"\n💾 Saved to: kc_data_PERFECT.csv")
     
 finally:
     driver.quit()

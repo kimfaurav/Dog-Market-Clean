@@ -170,7 +170,7 @@ def extract_listing(page, url):
 
 def main():
     url_file = sys.argv[1] if len(sys.argv) > 1 else 'gumtree_urls.txt'
-    output_file = sys.argv[2] if len(sys.argv) > 2 else 'gumtree_ENRICHED.json'
+    output_file = sys.argv[2] if len(sys.argv) > 2 else 'gumtree_final.json'
     
     with open(url_file, 'r') as f:
         all_urls = [line.strip() for line in f if line.strip().startswith('http')]

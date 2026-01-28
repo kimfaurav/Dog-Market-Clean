@@ -28,8 +28,8 @@ class PuppiesGoldenScraper:
         self.page = None
         self.timestamp = datetime.now().strftime("%Y%m%d")
         
-        self.csv_file = f"puppies_{self.timestamp}.csv"
-        self.json_file = f"puppies_{self.timestamp}.json"
+        self.csv_file = "puppies_final.csv"
+        self.json_file = "puppies_final.json"
         self.urls_file = "puppies_urls_cache.json"
         self.progress_file = "puppies_progress.json"
         
